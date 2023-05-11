@@ -1,0 +1,16 @@
+A diferença entre realizar a função `printf` em variáveis `vet`, `*vet` e `&vet` está relacionada ao tipo e ao valor que cada uma dessas expressões representa.
+
+- `vet`: refere-se ao próprio vetor, que é um conjunto de elementos do mesmo tipo armazenados de forma contínua na memória. 
+Quando usado como argumento para a função `printf`, o nome do vetor é convertido em um ponteiro para o primeiro elemento do vetor. 
+Portanto, ao usar `printf("%p", vet)`, você estará imprimindo o endereço de memória do primeiro elemento do vetor.
+
+- `*vet`: refere-se ao primeiro elemento do vetor. 
+Quando usado como argumento para a função `printf`, a expressão `*vet` é avaliada como o valor do primeiro elemento do vetor. 
+Portanto, ao usar `printf("%d", *vet)`, você estará imprimindo o valor do primeiro elemento do vetor.
+
+- `&vet`: refere-se ao endereço de memória do vetor como um todo. 
+Quando usado como argumento para a função `printf`, a expressão `&vet` é avaliada como o endereço de memória do vetor como um todo. 
+Portanto, ao usar `printf("%p", &vet)`, você estará imprimindo o endereço de memória do vetor como um todo.
+
+É importante lembrar que, embora essas expressões possam parecer similares, elas representam coisas diferentes na memória. 
+Portanto, é importante usar a expressão correta em cada situação para evitar erros ou comportamentos inesperados em seu programa.

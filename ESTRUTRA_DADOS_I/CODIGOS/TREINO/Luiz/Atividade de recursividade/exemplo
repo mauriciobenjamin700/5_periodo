@@ -1,0 +1,33 @@
+ Crie uma função recursiva que calcule a exponenciação de
+um valor b por um expoente p sem usar o operador de
+exponenciação. 
+
+
+Escreva uma função recursiva que escreva na tela todos os
+números inteiros positivos desde um valor K informado pelo
+usuário até 0.
+
+
+Escreva um algoritmo recursivo que escreva na tela a soma
+de todos os números inteiros positivos de K até 0.
+
+
+Escreva uma função recursiva que calcule a soma de  
+os números compreendidos entre os valores A e B passados
+por parâmetro.
+
+
+Escreva uma função recursiva que calcule os juros
+compostos de um valor. Para isso o programa deverá ler um
+valor inicial, o número de meses e a taxa de juros ao mês, e
+passar estes valores à função como parâmetros.
+
+
+Escreva uma função que faça a procura sequencial de um  
+valor passado por parâmetro num vetor também passado por 
+parâmetro 
+
+int *maiorMenorMedia(int col, int linh, int **mat);
+void mostrarMaiorMenorMeida(int *vol, int t);
+void mostrarDados(int l, int c, int **m);
+int **preencheMatriz(int col, int lin);

@@ -1,0 +1,14 @@
+Em C, a função `main` é o ponto de entrada do programa. Ela é a primeira função a ser executada quando o programa é iniciado. 
+
+A diferença entre `int main` e `void main` é o tipo de retorno da função `main`. 
+
+A função `main` deve sempre retornar um valor inteiro para indicar ao sistema operacional se o programa executou com sucesso ou se houve algum erro. 
+Portanto, a forma correta de declarar a função `main` é usando `int main`, em que `int` é o tipo de dado retornado. 
+O valor retornado pela função `main` é geralmente zero para indicar que o programa foi executado com sucesso, 
+ou um valor diferente de zero para indicar que ocorreu um erro.
+
+A declaração `void main` não é uma forma válida de declarar a função `main`, pois não retorna um valor inteiro. 
+Embora essa forma de declaração seja aceita por alguns compiladores,
+ ela não é padrão na linguagem C e pode causar comportamentos imprevisíveis em diferentes plataformas ou ambientes de compilação.
+
+Portanto, sempre use `int main` como forma padrão de declaração da função `main` em seus programas em C.
