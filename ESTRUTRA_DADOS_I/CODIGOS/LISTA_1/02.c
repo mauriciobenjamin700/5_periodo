@@ -1,10 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
-2. Escreva um programa que contenha duas variaveis inteiras. Compare seus endereços e exiba o maior endereço.
-*/
-
 int main(void){
     int x,y;
 

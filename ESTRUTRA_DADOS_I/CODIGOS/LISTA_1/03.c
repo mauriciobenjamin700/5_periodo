@@ -1,8 +1,4 @@
 #include <stdio.h>
-/*
-3. Escreva um programa que contenha duas variaveis inteiras. Leia essas vari ´ aveis do ´
-teclado. Em seguida, compare seus enderec¸os e exiba o conteudo do maior enderec¸o.
-*/
 
 int main(void){
     int x,y;
