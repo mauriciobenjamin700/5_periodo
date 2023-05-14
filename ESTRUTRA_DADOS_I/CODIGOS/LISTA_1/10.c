@@ -1,9 +1,8 @@
 #include <stdio.h>
-
-#define SIZE 5
+#include <stdlib.h>
 
 int main() {
-    int array[SIZE];
+    int SIZE = 5, array[SIZE];
     int *ptr;
 
     // Lê o array do teclado
@@ -13,7 +12,7 @@ int main() {
     }
 
     // Imprime o dobro de cada valor lido
-    printf("O dobro dos valores lidos é:\n");
+    printf("O dobro dos valores lidos:\n");
     for (ptr = array; ptr < array + SIZE; ptr++) {
         printf("%d\n", *ptr * 2);
     }
