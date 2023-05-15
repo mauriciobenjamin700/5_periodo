@@ -12,5 +12,7 @@ Portanto, ao usar `printf("%d", *vet)`, você estará imprimindo o valor do prim
 Quando usado como argumento para a função `printf`, a expressão `&vet` é avaliada como o endereço de memória do vetor como um todo. 
 Portanto, ao usar `printf("%p", &vet)`, você estará imprimindo o endereço de memória do vetor como um todo.
 
+- `int vet[5] = {0} ou {}`: O vetor por padrão sera zerado, sem a necessidade de criar algum laço para zerar o vetor.
+
 É importante lembrar que, embora essas expressões possam parecer similares, elas representam coisas diferentes na memória. 
 Portanto, é importante usar a expressão correta em cada situação para evitar erros ou comportamentos inesperados em seu programa.
