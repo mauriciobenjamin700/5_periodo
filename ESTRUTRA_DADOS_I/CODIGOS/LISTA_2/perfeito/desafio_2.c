@@ -14,10 +14,6 @@ int main(void)
         total_intens ++;
         array = (int *) realloc(array,total_intens * sizeof(int));
 
-        //printf("inicio Valor do indice == %d", indice);
-        
-        //printf("fim Valor do indice == %d", indice);
-
         array[total_intens-1] = x;
         
 
@@ -64,8 +60,6 @@ int main(void)
         printf("\nVetor na posicao %d possui valor %d", i,array[i]);
     }
     
-
-
     free(array);
     return 0;
     }
