@@ -1,31 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int troca(int *x, int *y){
+int troca(int *x, int *y)
+{
     int maior;
 
-    if (*x < *y){
+    if (*x < *y)
+	{
         maior = *y;
         *y = *x;
         return maior;
-
     }
-    else{
+    else
+	{
         return *x;
     }
 }
 
-int main(){
+int main()
+{
 
     int x,y;
 
-    printf("\n informe um valor para x: ");
+    printf("\nInforme um valor inteiro para x: ");
     scanf("%d", &x);
 
-    printf("\ninforme um valor para y: ");
+    printf("\nInforme um valor inteiro para y: ");
     scanf("%d", &y);
 
     x = troca(&x,&y);
+    
     printf("\nMaior valor == %d \nMenor valor == %d\n", x,y);
 
 

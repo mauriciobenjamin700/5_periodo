@@ -1,12 +1,15 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int main(void) {
-    int array[5] = {0,1,2,3,4},*ponteiro,i,tam;
+int main(void) 
+{
+    int array[5] = {1,2,3,4,5},*ponteiro,i,tam;
     ponteiro = array;
     tam = sizeof(array)/sizeof(array[0]);
-    for(i=0;i<tam;i++){
+    for(i=0;i<tam;i++)
+	{
         *ponteiro += 1;
-        printf("%d ",*ponteiro);
+        printf("%d\n",*ponteiro);
         ponteiro++;
     }
     return 0;

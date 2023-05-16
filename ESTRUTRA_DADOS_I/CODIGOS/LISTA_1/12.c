@@ -1,46 +1,57 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int ordena(int *x,int *y,int *z){
+int ordena(int *x,int *y,int *z)
+{
     int maior,menor,meio,sinal;
 
-    if (*x != *y && *x != *z && *y != *z){
+    if (*x != *y && *x != *z && *y != *z)
+	{
 
         // Caso X seja o maior
-        if (*x > *y && *x > *z){
+        if (*x > *y && *x > *z)
+		{
             maior = *x;
 
-            if (*y>*z){
+            if (*y>*z)
+			{
                 meio = *y;
                 menor = *z;
             }
-            else{
+            else
+			{
                 meio = *z;
                 menor = *y;
             }
         } 
         //Caso y seja o maior
-        else if (*y > *x && *y > *z){
+        else if (*y > *x && *y > *z)
+		{
             maior = *y;
 
-            if (*x>*z){
+            if (*x>*z)
+			{
                 meio = *x;
                 menor = *z;
             }
-            else{
+            else
+			{
                 meio = *z;
                 menor = *x;
             }
         }
         // Caso Z seja o maior
-        else{
+        else
+		{
             maior = *z;
 
-            if (*x>*y){
+            if (*x>*y)
+			{
                 meio = *x;
                 menor = *y;
             }
-            else{
+            else
+			{
                 meio = *y;
                 menor = *x;
             }
@@ -63,7 +74,8 @@ int ordena(int *x,int *y,int *z){
     return sinal;
 }
 
-int main(void){
+int main(void)
+{
     int x,y,z, sinal;
 
     scanf("%d", &x);
@@ -72,10 +84,12 @@ int main(void){
 
     sinal = ordena(&x,&y,&z);
 
-    if (sinal == 0){
+    if (sinal == 0)
+	{
         printf("\nOs valores sao diferentes");
     }
-    else{
+    else
+	{
         printf("\nOs valores sao iguais");
     }
 

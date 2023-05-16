@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int negativos(float *vet, int N){
     int i,num_negativo=0;

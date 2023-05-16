@@ -26,7 +26,8 @@ int main(void)
     }
 
     //alternativas
-    int somatorio=0,media=0, menor=0,maior=0;
+    int somatorio=0, menor=0,maior=0;
+    float media=0;
 
     //letra A & C ao mesmo tempo
     for(i=0;i<total_intens;i++)
@@ -51,7 +52,7 @@ int main(void)
 
     //Letra B
     media = somatorio/total_intens;
-    printf("\nMedia dos valores == %d", media);
+    printf("\nMedia dos valores == %.2f", media);
     
 
     //Letra C

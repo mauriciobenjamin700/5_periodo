@@ -23,8 +23,8 @@ int main(void){
     int topo_y = (COLUNAS/2)/2;
     int base_y = COLUNAS - topo_y;
 
-    for (i=esquerda_x;i<direita_x;i++){
-        for(j=topo_y;j<base_y;j++){
+    for (i=esquerda_x;i<=direita_x;i++){
+        for(j=topo_y;j<=base_y;j++){
             matriz[i][j] = 1;
         }
     }
@@ -35,8 +35,8 @@ int main(void){
 
     // letra d: Calcular o maior círculo inscrito ao retângulo e marcar os pontos internos com 2
     int raio_maximo = fmin(direita_x - centro_x, base_y - centro_y);
-    for (i=0;i<LINHAS;i++){
-        for (j=0;j<COLUNAS;j++){
+    for (i=0;i<=LINHAS;i++){
+        for (j=0;j<=COLUNAS;j++){
             double distancia = sqrt(pow(i - centro_x, 2) + pow(j - centro_y, 2));
             if (distancia <= raio_maximo){
                 matriz[i][j] = 2;
@@ -52,6 +52,8 @@ int main(void){
         printf("\n");
     }
     printf("Deseja encerrar? :");
+    
+    //para previnir que o usuário feche a matris tentando visualizar, tem um scan ali em baixo, até ele digitar algo e dar enter, a matriz fica na tela
     int sinal;
     scanf("%d", &sinal);
     if(sinal){

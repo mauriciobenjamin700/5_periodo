@@ -1,27 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define SIZE 5
 
-void imprime_array(int *array, int tamanho){
+int tamanho;
+
+void imprime_array(int *array){
    
     int *ponteiro;
-    for (ponteiro=array;ponteiro<array+tamanho;ponteiro++){
+    for (ponteiro=array;ponteiro<array+tamanho;ponteiro++)
+	{
         printf("%d\n", *ponteiro);
     }
-
-
 }
 
 int main(void){
-    int vetor[5],i;
-    int tamanho = sizeof(vetor)/sizeof(int);
+    int vetor[SIZE],i;
+    tamanho = sizeof(vetor)/sizeof(int);
 
-    for(i=0;i<5;i++){
+    for(i=0;i<SIZE;i++)
+	{
         vetor[i] = i;
     }
 
-    imprime_array(vetor, tamanho);
-
+    imprime_array(vetor);
 
     return 0;
 }

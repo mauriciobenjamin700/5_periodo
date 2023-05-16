@@ -1,21 +1,33 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-void verifica(int A[], int *max, int *min,int tam){
+int tamanho;
+
+void verifica(int A[], int *max, int *min)
+{
     int i;
-    for(i=0;i<tam;i++){
-        if(A[i]>*max){
+    for(i=0;i<tamanho;i++)
+	{
+        if(A[i]>*max)
+		{
             *max = A[i];
         }
-        if(A[i]<*min){
+        if(A[i]<*min)
+		{
             *min = A[i];
         }
     }
 }
 
 
-int main(void){
+int main(void)
+{
     int A[5] =  {1,2,3,4,5}, min=A[0],max=A[0];
-    verifica(A,&max,&min,sizeof(A)/sizeof(A[0]));
-    printf("Max: %d\nMin: %d\n",max,min);
+
+    tamanho = sizeof(A)/sizeof(A[0]);
+
+    verifica(A,&max,&min);
+
+    printf("\nValor Maximo: %d\nValor Minimo: %d\n",max,min);
     return 0;
 }

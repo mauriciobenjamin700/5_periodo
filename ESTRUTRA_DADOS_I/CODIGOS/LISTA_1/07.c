@@ -1,24 +1,27 @@
-void func(int *a, int *b){
+#include <stdio.h>
+
+void func(int *a, int *b)
+{
     *a = *a + *b;
 
 }
 
-#include <stdio.h>
-
-int main(void){
+int main(void)
+{
 
     int x,y;
 
-    printf("\n informe um valor para x: ");
+    printf("\nInforme um valor inteiro para x: ");
     scanf("%d", &x);
 
-    printf("\ninforme um valor para y: ");
+    printf("\nInforme um valor inteiro para y: ");
     scanf("%d", &y);
 
-    printf("A soma dde %d com %d -> ", x,y);
+    printf("A soma de %d com %d -> ", x,y);
+    
     func(&x,&y);
+    
     printf("%d", x);
-
 
     return 0;
 }
