@@ -1,46 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int obtem_produtos_zerados(int codigo[], int estoque[],int numero_produtos,int *ponteiro)
-{
-    int produtos_estoque_zerado[numero_produtos];//deve conter apenas o codigo dos produtos zerados no estoque
-    int i;
+int obtem_produtos_zerados(int *codigo, int *estoque,int *cod_prod_zerados,int quant_prod){
+    int i,quant_prod_zerados=0;
+    cod_prod_zerados = (int*) realloc(cod_prod_zerados,quant_prod * sizeof(int));
 
-    for(i=0;i<numero_produtos;i++)
-    {
-        if (estoque[i]==0)
-        {
-            produtos_estoque_zerado[i] = codigo[i]; // adaptar para alocar dinamicamente
-
+    for(i=0;i<quant_prod;i++){
+        if(*estoque == 0){
+            *cod_prod_zerados = *codigo;
+            quant_prod_zerados++;
+            cod_prod_zerados++;
         }
-        else
-        {
-            produtos[i] = 0;
-        }
+        estoque++;
+        codigo++;
     }
 
-    *ponteiro = sizeof(produtos_estoque_zerado)/sizeof(int);
-
-    return produtos_estoque_zerado;
+    return quant_prod_zerados;
 }
 
 
-int main(void)
-{
-    // tamanhos ficticios, adaptar depois
-    int codigo[3] = {1,2,3},estoque[3] = {4,6,0},numero_produtos, n_est_zerado;
-    int *ponteiro_vetor;
-    int i;
+int main(void){
 
-    numero_produtos = sizeof(codigo)/sizeof(int);
+    int codigo[3] = {1,2,3}, estoque[3] = {5,2,0},*cod_prod_zerados,quant_prod_zerados,quant_prod,i;
+    cod_prod_zerados = (int*) malloc(1*sizeof(int));
+    quant_prod = sizeof(codigo)/sizeof(codigo[0]);
+    quant_prod_zerados = obtem_produtos_zerados(codigo,estoque,cod_prod_zerados,quant_prod);
 
-    ponteiro_vetor = obtem_produtos_zerados(codigo,estoque,numero_produtos,&n_est_zerado);
-
-    printf("\nTotal de produtos fora de estoque == %d", n_est_zerado);
-
-    for(i=0;i<numero_produtos;i++)
-    {
-        printf("\nVetor[%d], codigo do do produto com estoque zerado %d", i,ponteiro_vetor[i]);
+    printf("Total de produtos fora de estoque == %d\n",quant_prod_zerados);
+    for(i=0;i<quant_prod_zerados;i++){
+        printf("Vetor[%d], codigo do do produto com estoque zerado %d",i,*cod_prod_zerados);
+        cod_prod_zerados++;
     }
 
     return 0;
