@@ -11,10 +11,10 @@ int main(void){
     int i,j;
     
     // letra b: Preenchendo as dimensões do retangulo com 1 (começa no 25 e vai até 75)
-    int esquerda_x = (LINHAS/2)/2;
+    int esquerda_x = (LINHAS/2)*0.5;
     int direita_x = LINHAS - esquerda_x;
 
-    int topo_y = (COLUNAS/2)/2;
+    int topo_y = (COLUNAS/2)*0.5;
     int base_y = COLUNAS - topo_y;
 
     for (i=esquerda_x;i<=direita_x;i++){
