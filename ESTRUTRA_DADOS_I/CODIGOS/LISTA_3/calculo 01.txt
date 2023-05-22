@@ -1,0 +1,31 @@
+Para calcular a maior esfera possível em uma matriz tridimensional, você precisará percorrer todos os pontos da matriz e verificar se 
+cada ponto está dentro ou fora da esfera. Aqui está um exemplo de como você pode fazer isso em pseudocódigo:
+
+1. Inicialize um valor de raio máximo como zero.
+2. Percorra todos os pontos da matriz tridimensional.
+   - Para cada ponto (x, y, z) na matriz:
+     - Verifique se o ponto (x, y, z) está dentro da esfera com raio igual ao raio máximo.
+       - Se o ponto estiver dentro da esfera, continue para o próximo ponto.
+       - Caso contrário, continue para o próximo passo.
+     - Inicie um raio mínimo como zero.
+     - Percorra todos os pontos da matriz tridimensional novamente.
+       - Para cada ponto (i, j, k) na matriz:
+         - Calcule a distância entre os pontos (x, y, z) e (i, j, k).
+         - Se a distância for maior que o raio mínimo, atualize o raio mínimo.
+     - Se o raio mínimo for maior que o raio máximo, atualize o raio máximo.
+3. A maior esfera possível terá um raio igual ao raio máximo encontrado.
+
+Esse algoritmo pode ser bastante complexo, dependendo do tamanho da matriz e da eficiência da sua implementação. 
+Tenha em mente que calcular a maior esfera possível em uma matriz tridimensional pode ser um problema computacionalmente exigente, 
+especialmente para matrizes grandes.
+
+A fórmula para calcular a área de uma esfera é dada por:
+
+Área = 4πr^2
+
+onde:
+- Área é a área da esfera,
+- π (pi) é uma constante aproximadamente igual a 3.14159,
+- r é o raio da esfera.
+
+Portanto, para calcular a área da esfera, você precisa conhecer o valor do raio e aplicá-lo na fórmula acima.

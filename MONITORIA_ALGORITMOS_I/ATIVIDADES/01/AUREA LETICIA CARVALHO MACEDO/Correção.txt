@@ -1,0 +1,10 @@
+1
+	- Fez em portugol
+	- Codigo até que limpo mas o nome das variaveis tá complicado
+	
+
+2
+	- Fez em portugol
+	- Codigo até limpo mas o nome das variaveis tá complicado
+	- Logica aparentemente certa
+

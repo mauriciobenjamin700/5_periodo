@@ -1,0 +1,10 @@
+1 
+	- Fez em portugol
+	- codigo limpo e legivel
+	
+
+2
+
+	- Fez em portugol
+	- codigo limpo e legivel
+	- aparentemente logica certa
