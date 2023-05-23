@@ -1,8 +1,0 @@
-1
-	- Fez em portugol
-	- Codigo meio legivel
-	- Aparentemente tudo certo
-2
-	- Fez em portugol
-	- Codigo meio legivel
-	- Aparentemente tudo certo
