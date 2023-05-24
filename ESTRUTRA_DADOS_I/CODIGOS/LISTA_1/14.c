@@ -3,7 +3,7 @@
 
 int tamanho;
 
-void preenche_array(int *array, int *valor)
+void preenche_array(int *array, int *valor,int tamanho)
 {   
     int *ponteiro;
 
