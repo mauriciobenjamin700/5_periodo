@@ -1,0 +1,11 @@
+PARA COMPILAR:
+	gcc -c "nome do arquivo".c 
+
+PARA CRIAR EXECUTAVEL:
+	gcc "nome do arquivo".c -o "nome do arquivo executavel que será gerado"
+
+PARA CRIAR UM ARQUIVO .O Para executar no terminal (primeiro deve ser compilado):
+	gcc -o "nome do arquivo de saida" "arquivo compilado".o
+	./"nome do arquivo de saida"
+
+	
