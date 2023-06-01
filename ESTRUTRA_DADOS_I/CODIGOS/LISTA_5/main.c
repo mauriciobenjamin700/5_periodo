@@ -2,6 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+struct pessoa
+{
+    char nome[50];
+    int idade;
+    float altura;
+};
+
 char menu()
 {
     char sinal;
@@ -12,39 +20,44 @@ char menu()
     scanf("%c", &sinal);
 
     return sinal;
+
 }
 
 int main(void)
 {
+    Pessoa *vetor;
 
     char sinal=0;
+    int tamanho=0;
+
     int indice=0;
+
     int retorno=0;
+
     float altura=0;
 
-    
+    vetor = (Pessoa*) malloc(sizeof(Pessoa));
 
     sinal = menu();
-
-    servidor(1);
 
     while (sinal != '6')
     {
         switch (sinal)
         {
         case '1':
-            
-            add_pessoa();
-
+            tamanho = sizeof(vetor) / sizeof(Pessoa);
+            add_pessoa(vetor, tamanho);
+            printf("\nPessoa adicionada com sucesso!\n");
             break;
         
         case '2':
-
-            printf("\nAltura: ");
+            printf("Altura: ");
             fflush(stdin);
             scanf("%f", &altura);
 
-            indice = buscar_pessoa(altura);
+            tamanho = sizeof(vetor) / sizeof(Pessoa);
+
+            indice = buscar_pessoa(altura, vetor, tamanho);
 
             if (indice != -1)
             {
@@ -58,11 +71,15 @@ int main(void)
             break;
 
         case '3':
+
+
             printf("\nIndice que tera seu conteudo deletado: ");
             fflush(stdin);
             scanf("%d", &indice);
 
-            retorno = remover_pessoa(indice);
+            tamanho = sizeof(vetor) / sizeof(Pessoa);
+
+            retorno = remover_pessoa(indice,vetor, tamanho);
             
             if(retorno==0)
             {
@@ -73,22 +90,37 @@ int main(void)
                 printf("\nProcesso realizado com sucesso");
             }
 
+
             break;
 
         case '4':
-            mostrar_pessoas();
+            if(tamanho>0)
+            {
+                mostrar_pessoas(tamanho, vetor);
+            }
+            else
+            {
+                printf("\nNao cadastrou pessoas ainda!");
+            }
             break;
 
         case '5':
-
-            printf("\nAltura: ");
-            fflush(stdin);
-            scanf("%f", &altura);
-            mostrar_pessoa(altura);
+            if(tamanho>0)
+            {
+                
+                printf("\nAltura: ");
+                fflush(stdin);
+                scanf("%f", &altura);
+                mostrar_pessoa(altura, vetor, tamanho);
+            }
+            else
+            {
+                printf("\nNao cadastrou pessoas ainda!");
+            }
             break;
 
         case '6':
-            servidor(0);
+
             break;
 
         default:

@@ -1,0 +1,13 @@
+Criar uma TAD que implemente os atributos e métodos da struct
+- nome
+- idade
+- altura
+
+Apos isso, implementar os seguintes métodos:
+- Add pessoa no vetor
+- Buscar pessoa pela altura
+- Remover pessoa do vetor
+- Mostrar todas as pessoas cadastradas no vetor
+- Mostrar uma pessoa que possua uma altura especifica e informada
+
+para construir essa solução, deve-se ultilizar alocação dinamica.

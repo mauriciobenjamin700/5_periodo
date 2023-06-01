@@ -10,32 +10,14 @@ struct pessoa
     float altura;
 };
 
-Pessoa *vetor;
-
-//0 para liberar memoria, 1 para alocar
-void servidor(int sinal)
-{
-    if(sinal==1)
-    {
-    vetor = (Pessoa*) malloc(sizeof(Pessoa));
-    }
-    else
-    {
-        free(vetor);
-    }
-}
-
-
-void add_pessoa()
+void add_pessoa(Pessoa *vetor, int tamanho)
 {
     Pessoa p;
-
-    int tamanho = sizeof(vetor) / sizeof(Pessoa);
     
 
     vetor = (Pessoa*) realloc(vetor, tamanho+1 * sizeof(Pessoa));
 
-    printf("\n\nNome: ");
+    printf("\nNome: ");
     fflush(stdin);
     scanf ("%s", p.nome);
 
@@ -50,18 +32,12 @@ void add_pessoa()
     scanf("%f", &p.altura);
 
     vetor[tamanho] = p;
-
-    printf("\nPessoa adicionada com sucesso!\n");
 }
 
-int buscar_pessoa(float altura)
+int buscar_pessoa(float altura, Pessoa *vetor, int tamanho)
 {
     int i;
-
-    int tamanho = sizeof(vetor) / sizeof(Pessoa);
-
-    if (tamanho>0)
-    {
+    
     for (i=0;i<tamanho;i++)
     {
         if (vetor[i].altura == altura)
@@ -69,15 +45,13 @@ int buscar_pessoa(float altura)
             return i;
         }
     }
-    }
 
     return -1;
 }
 
-int remover_pessoa(int indice)
+int remover_pessoa(int indice, Pessoa *vetor, int tamanho)
 {
     int sinal = 0;
-    int tamanho = sizeof(vetor) / sizeof(Pessoa);
 
     if (indice < tamanho)
     {
@@ -96,39 +70,23 @@ int remover_pessoa(int indice)
     return sinal;
 }
 
-void mostrar_pessoas()
+void mostrar_pessoas(int tamanho, Pessoa *vetor)
 {
     int i;
-    int tamanho = sizeof(vetor) / sizeof(Pessoa);
-
-    if (tamanho>0)
-    {
 
     for (i=0;i<tamanho;i++)
     {
         printf("\nNome: %s\nIdade: %d \nAltura: %.2f\n", vetor[i].nome,vetor[i].idade,vetor[i].altura);
     }
-    }
-    else
-    {
-        printf("\nNao ha pessoas cadastradas ainda!\n");
-    }
 
 }
 
-void mostrar_pessoa(float altura)
+void mostrar_pessoa(float altura, Pessoa *vetor, int tamanho)
 {
     int i;
 
-    int tamanho = sizeof(vetor) / sizeof(Pessoa);
-
     // se sinal continuar igual a 0 é pq não encontrou a altura no vetor
     int sinal = 0;
-
-    if (tamanho>0)
-    {
-
-    
 
     for (i=0;i<tamanho;i++)
     {
@@ -145,9 +103,5 @@ void mostrar_pessoa(float altura)
     {
         printf("\nAltura nao encontrada no vetor");
     }
-    }
-    else
-    {
-        printf("\nNao ha pessoas cadastradas ainda!\n");
-    }
+
 }
