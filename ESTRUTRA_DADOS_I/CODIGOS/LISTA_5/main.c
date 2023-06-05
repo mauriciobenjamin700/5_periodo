@@ -1,6 +1,7 @@
-#include "definicao.h"
+#include "definicao.c"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 char menu()
 {
@@ -17,20 +18,22 @@ char menu()
 
 int main(void)
 {
-    Pessoa *vetor = NULL;
+    Pessoa *vetor;
 
-    int tamanho=0;
+    int tamanho=-1;
 
     char sinal=0;
     int indice=0;
     int retorno=0;
     float altura=0;
 
-    
+    int idade;
+
+    char nome[50];
 
     sinal = menu();
 
-    servidor(1, &vetor);
+    vetor = (Pessoa*) malloc(sizeof(Pessoa));
 
     while (sinal != '6')
     {
@@ -38,9 +41,27 @@ int main(void)
         {
         case '1':
 
+            
+            printf("\nNome: ");
+            fflush(stdin);
+            fgets(nome, sizeof(nome), stdin);
+            nome[strcspn(nome, "\n")] = '\0';
+
+
+            printf("\nIdade: ");
+            fflush(stdin);
+            scanf("%d", &idade);
+
+            printf("\nAltura: ");
+            fflush(stdin);
+            scanf("%f", &altura);
+
             tamanho++;
             
-            add_pessoa(vetor, tamanho);
+            vetor[tamanho] = add_pessoa(nome,idade, altura);
+            vetor = (Pessoa*) realloc(vetor, (tamanho+1) * sizeof(Pessoa));
+
+            printf("\nPessoa adicionada com sucesso!\n");
 
             break;
         
@@ -99,7 +120,7 @@ int main(void)
             break;
 
         case '6':
-            servidor(0, vetor);
+            free(vetor);
             break;
 
         default:
