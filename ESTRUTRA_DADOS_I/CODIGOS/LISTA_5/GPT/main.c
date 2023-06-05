@@ -1,10 +1,9 @@
-#include "definicao.h"
+#include "tad.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 char menu()
 {
-    
     char sinal;
 
     printf("\n1 - Adicionar Pessoa\n2 - Buscar pessoa pela altura\n3 - Remover pessoa do vetor\n4 - Mostrar todas as pessoas\n5 - Mostrar uma pessoa de acordo com a altura informada\n6 - Sair\nSua resposta: ");
@@ -17,9 +16,6 @@ char menu()
 
 int main(void)
 {
-    Pessoa *vetor = NULL;
-
-    int tamanho=0;
 
     char sinal=0;
     int indice=0;
@@ -30,17 +26,15 @@ int main(void)
 
     sinal = menu();
 
-    servidor(1, &vetor);
+    servidor(1);
 
     while (sinal != '6')
     {
         switch (sinal)
         {
         case '1':
-
-            tamanho++;
             
-            add_pessoa(vetor, tamanho);
+            add_pessoa();
 
             break;
         
@@ -50,8 +44,7 @@ int main(void)
             fflush(stdin);
             scanf("%f", &altura);
 
-            
-            indice = buscar_pessoa(altura, vetor, tamanho);
+            indice = buscar_pessoa(altura);
 
             if (indice != -1)
             {
@@ -69,8 +62,7 @@ int main(void)
             fflush(stdin);
             scanf("%d", &indice);
 
-
-            retorno = remover_pessoa(indice, vetor, tamanho);
+            retorno = remover_pessoa(indice);
             
             if(retorno==0)
             {
@@ -79,14 +71,12 @@ int main(void)
             else
             {
                 printf("\nProcesso realizado com sucesso");
-                tamanho --;
             }
 
             break;
 
         case '4':
-
-            mostrar_pessoas(vetor, tamanho);
+            mostrar_pessoas();
             break;
 
         case '5':
@@ -94,12 +84,11 @@ int main(void)
             printf("\nAltura: ");
             fflush(stdin);
             scanf("%f", &altura);
-
-            mostrar_pessoa(altura, vetor, tamanho);
+            mostrar_pessoa(altura);
             break;
 
         case '6':
-            servidor(0, vetor);
+            servidor(0);
             break;
 
         default:
