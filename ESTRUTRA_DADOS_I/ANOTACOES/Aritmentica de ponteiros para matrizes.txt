@@ -1,0 +1,2 @@
+usando 2 for
+(vetor * i) + j
