@@ -105,7 +105,7 @@ void mostrar_pessoas(Pessoa *vetor, int tamanho)
 
 void mostrar_pessoa(float altura, Pessoa *vetor, int tamanho)
 {
-    printf("\nEntrei na funcao\n");
+
     int i;
 
 
@@ -113,17 +113,12 @@ void mostrar_pessoa(float altura, Pessoa *vetor, int tamanho)
     int sinal = 0;
 
     if (tamanho>=0)
-    {
-
-        printf("\nEntrei no if\n");
-    
-    
+    {    
     for (i=0;i<=tamanho;i++)
     {
         printf("\nComecei o for\n");
         if (vetor[i].altura == altura)
         {
-            printf("\nachei\n");
         printf("\nNome: %s\nIdade: %d \nAltura: %.2f\n", vetor[i].nome,vetor[i].idade,vetor[i].altura);
         sinal = 1;
         break;

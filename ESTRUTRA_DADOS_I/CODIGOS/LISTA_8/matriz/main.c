@@ -12,7 +12,8 @@ int main(){
 	atribui(M,2,3,3); 
 	atribui(M,3,0,15); 
 	atribui(M,4,1,21);
-	// verificando se a inserção foi feita corretamente a = acessa(M,1,2);
+	// verificando se a inserção foi feita corretamente 
+	a = acessa(M,1,2);
 	b = acessa(M,2,3);
 	c = acessa(M,3,0);
 	d = acessa(M,4,1);

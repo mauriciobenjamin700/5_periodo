@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-#include "imagem.h"
+#include "imagem.c"
 
 int main(){
 
@@ -25,6 +25,13 @@ int main(){
         Já essa segunda funcionará pq ele ta chamando a função, atribuindo nessa função dentro da imagem e tambem a função de printar dentro da imagem.
 
     */
+
+    img ->pixels[10].valor = 255;
+    printf("\nvalor [10] = %d ", img->pixels[10].valor);
+
+    setPixelValue(img, 3,2, 255);
+    printf("\nvalor da posição 3,2 %d\n", getPixelValue(img, 3, 2));
+
 
     liberarImagem(img);
         
