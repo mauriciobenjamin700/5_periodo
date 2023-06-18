@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "exemplo1.h": "c",
+        "exemplostring.h": "c",
+        "imagem.h": "c",
+        "stdlib.h": "c",
+        "time.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "enabled"
+}

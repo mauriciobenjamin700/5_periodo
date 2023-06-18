@@ -1,0 +1,4 @@
+Alguns dos algoritmos de ordenação mais comuns são: 
+	Selection Sort (ordenação por seleção) 
+	Bubble Sort (Ordenação por bolha). 
+	Insertion Sort (ordenação por inserção)
