@@ -1,0 +1,1 @@
+void criar(double array[], int tamanho, char nome[]);
