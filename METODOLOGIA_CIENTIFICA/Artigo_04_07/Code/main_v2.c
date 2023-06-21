@@ -9,17 +9,17 @@ resultados
 #include <time.h>
 #include "ordenacao.c"
 #include "arquivo.c"
+#include <windows.h>
 
-
-#define SIZE 100000
+#define SIZE 1000
 
 #define TRY 30
 
-//retorna o tempo de execução em segundos
-double diffTime(clock_t start, clock_t end)
+//retorna tempo de execução em milissegundos
+double diffTime(LARGE_INTEGER start, LARGE_INTEGER end, LARGE_INTEGER frenquency)
 {
     // Calcula o tempo decorrido
-    double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
+    double time_taken = (end.QuadPart - start.QuadPart) * 1000.0 / frenquency.QuadPart;
     return time_taken;
     //printf("%lf segundos\n", time_taken);
 }
@@ -32,6 +32,10 @@ int main(void)
     int num,i=0,j=0;
     //planejo fazer um vetor de double para armazenar os resultados e depois salvar em arquivos
     double result1[TRY], result2[TRY], result3[TRY];
+    
+    //frequencia do sistema operacional
+    LARGE_INTEGER start, end, frequency;
+    QueryPerformanceFrequency(&frequency);
 
     // Inicializa a semente com o valor do relógio do sistema
     srand(time(NULL));
@@ -51,29 +55,29 @@ int main(void)
         
         // Mede o tempo de execução do Bubble Sort
 
-        clock_t start = clock();
+        QueryPerformanceCounter(&start);
         bubbleSort(vetor1,SIZE);
-        clock_t end = clock();
-        result1[j] = diffTime(start, end);
+        QueryPerformanceCounter(&end);
+        result1[j] = diffTime(start, end, frequency);
         /*
         printf("\nBUBBLE SORT: ");
         printf("%lf segundos\n", diffTime(start, end));
         */
 
-        start = clock();
+        QueryPerformanceCounter(&start);
         insertionSort(vetor2,SIZE);
-        end = clock();
-        result2[j] = diffTime(start, end);
+        QueryPerformanceCounter(&end);
+        result2[j] = diffTime(start, end, frequency);
        
         /*
         printf("\nINSERTION SORT: ");
         printf("%lf segundos\n", diffTime(start, end));
         */
 
-        start = clock();
+        QueryPerformanceCounter(&start);
         selectionSort(vetor3,SIZE);
-        end = clock();
-        result3[j] = diffTime(start, end);
+        QueryPerformanceCounter(&end);
+        result3[j] = diffTime(start, end, frequency);
         /*
         printf("\nSELECTION SORT: ");
         printf("%lf segundos\n", diffTime(start, end));
