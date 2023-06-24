@@ -27,7 +27,7 @@ void inserir(Pessoa* lista)
     lista[posicoes].id = -1;
 }
 
-void mostrarElemento(Pessoa lista)
+void mostrarPessoa(Pessoa lista)
 {
     printf("\nID: %d\nNome: %s\nIdade: %d\nAltura: %.2f\n", lista.id,lista.nome,lista.idade,lista.altura);
 }
@@ -43,7 +43,7 @@ void removerPessoa(Pessoa* lista)
     //se encontrou a pessoa
     if(idx != -1)
     {
-        tamanho = contarElementos(lista);
+        tamanho = contrarPessoasNaLista(lista);
         while (idx < tamanho-1);
         {
             lista[idx] = lista[idx+1];
@@ -60,10 +60,10 @@ void removerPessoa(Pessoa* lista)
 
 }
 
-void mostrarTodaLista(Pessoa* lista, int tamanho)
+void mostrarTodasPessoas(Pessoa* lista)
 {
     int i;
-    int tamanho = contarElementos(lista);
+    int tamanho = contrarPessoasNaLista(lista);
     for(i=0;i<tamanho;i++)
     {
         mostrarElemento(lista[i]);        
@@ -72,7 +72,7 @@ void mostrarTodaLista(Pessoa* lista, int tamanho)
     
 }
 
-int contarElementos(Pessoa* lista)
+int contrarPessoasNaLista(Pessoa* lista)
 {
     int i=0;
 
@@ -85,11 +85,11 @@ int contarElementos(Pessoa* lista)
 
 }
 
-void inserirOrdenado(Pessoa* lista)
+void inserirPessoaOrdenado(Pessoa *lista)
 {
     Pessoa aux;
 
-    int tamanho = contarElementos(lista)
+    int tamanho = contrarPessoasNaLista(lista);
     aux.id = tamanho;
     scanf("%d", &aux.idade);
     scanf("%f", &aux.altura);
@@ -108,7 +108,7 @@ int buscarPessoa(Pessoa* lista)
     printf("\nID: ");
     scanf("%d", &id);
 
-    int tamanho = contarElementos(lista);
+    int tamanho = contrarPessoasNaLista(lista);
 
     for(i=0;i<tamanho;i++)
     {
