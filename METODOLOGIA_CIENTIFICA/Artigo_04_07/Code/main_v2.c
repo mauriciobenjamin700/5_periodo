@@ -11,7 +11,7 @@ resultados
 #include "arquivo.c"
 #include <windows.h>
 
-#define SIZE 1000
+#define SIZE 100000
 
 #define TRY 30
 

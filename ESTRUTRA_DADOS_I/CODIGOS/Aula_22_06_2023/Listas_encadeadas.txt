@@ -1,0 +1,10 @@
+Qualidades:
+	Controle de memória
+	Armazenar dados diversos
+
+Pode ser implementada de forma:
+	Estatitica:
+		Usando vetor
+		Pode ser acessado usando [indice]
+	Dinamica:
+		Usando ponteiro
