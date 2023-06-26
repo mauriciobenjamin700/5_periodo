@@ -6,8 +6,9 @@ int menu()
 {
     int opc;
 
-    printf("\n1 - Inserir no inicio\n2 - Inserir no fim\n3 - Inserir ordenado\n4 - Mostrar Todas as Pessoas\n5 - Contar Pessoas na Lista\n6 - Buscar Pessoa\n7 - Remover Pessoa\n8 - Liberar Memoria\n 0 - Sair\nEntrada: ");
+    printf("\n\n1 - Inserir no inicio\n2 - Inserir no fim\n3 - Inserir ordenado\n4 - Mostrar Todas as Pessoas\n5 - Contar Pessoas na Lista\n6 - Buscar Pessoa\n7 - Remover Pessoa\n8 - Liberar Memoria\n0 - Sair\n\nEntrada: ");
     scanf("%d", &opc);
+
 
     return opc;
 }
@@ -16,59 +17,71 @@ int menu()
 int main(void)
 {
     Pessoa* lista;
-    Pessoa p;
 
-    p.id = 0;
-    p.altura = 1.0;
-    p.idade = 20;
-    scanf("%s", p.nome);
+    lista = iniciar();
 
     int opc;
-
-    lista = (Pessoa*) malloc (sizeof(Pessoa));
-
-    lista[0] = p;
 
     opc = menu();
 
     while (opc !=0)
     {
-        switch (opc)
+
+        if(opc==1)
         {
-        case 1:
-            inserirPessoaInicio(lista);
-            break;
-        
-        case 2:
-            inserirPessoaFim(lista);
-            break;
-        
-        case 3:
-            //inserirPessoaOrdenado(lista);
-            printf("Falta fazer");
-            break;
-        case 4:
-            mostrarTodasPessoas(lista);
-            break;
-        case 5:
-            contrarPessoasNaLista(lista);
-            break;
-        case 6:
-            printf("\nPessoa na posicao: [%d]", buscarPessoa(lista));
-            break;
-        case 7:
-            removerPessoa(lista);
-            break;
-        case 8:
-            liberarMemoria(lista);
-            break;
-        case 0:
-            printf("\nPrograma Encerrado!");
-            break;
-        default:
-            printf("\nOpcao Invalida!");
+            inserirPessoaInicio(lista);//funciona
+        }
+        else if(opc==2)
+        {
+            
+            inserirPessoaFim(lista); //funciona
+            
+        }
+        else if(opc==3)
+        {
+            inserirPessoaOrdenado(lista);
+        }
+        else if(opc==4)
+        {   
+
+            mostrarTodasPessoas(lista);//funciona
+    
+        }
+        else if(opc==5)
+        {
+
+            printf("\nPesssoas: %d", contrarPessoasNaLista(lista)); //funciona
+
+        }
+        else if(opc==6)
+        {
+
+            printf("\nPessoa na posicao: [%d]\n", buscarPessoa(lista)); // funciona
+
+        }
+        else if(opc==7)
+        {
+            removerPessoa(lista); //funciona mais ou menos
+
+        }
+        else if(opc==8)
+        {   
+
+            liberarMemoria(lista); //funciona
+            
+        }
+        else if(opc==0)
+        {
+            printf("\nPrograma Encerrado!");//funciona
             break;
         }
+        else
+        {
+
+            printf("\nOpcao Invalida!");
+        }
+
+        opc = menu();
     }
     
     return 0;
