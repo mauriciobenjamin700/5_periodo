@@ -129,9 +129,9 @@ void inserirPessoaOrdenado(Pessoa *lista)
 }
 
 
-void mostrarPessoa(Pessoa lista)
+void mostrarPessoa(Pessoa p)
 {
-    printf("\nID: %d\nNome: %s\nIdade: %d\nAltura: %.2f\n", lista.id,lista.nome,lista.idade,lista.altura);
+    printf("\nID: %d\nNome: %s\nIdade: %d\nAltura: %.2f\n", p.id,p.nome,p.idade,p.altura);
 }
 
 void mostrarTodasPessoas(Pessoa* lista)
@@ -208,31 +208,3 @@ void liberarMemoria(Pessoa *lista)
     free(lista);
     printf("\nMemoria liberada com sucesso!");
 }
-
-//implementando bubble sort
-/*
-
-void bubbleSort(Pessoa* lista, int tamanho) {
-
-    int trocou, int aux;
-
-    for (int i = 0; i < tamanho - 1; i++) {
-        trocou = 0;
-
-        for (int j = 0; j < tamanho - 1 - i; j++) {
-            if ((lista[j]).idade > (lista[j + 1]).idade) 
-            {
-                aux = lista[j];
-                lista[j] = lista[j+1];
-                lista[j+1] = aux;
-                trocou = 1;
-            }
-        }
-
-        if (!trocou) {
-            // Se nenhuma troca ocorreu na passagem atual, o lista está ordenado
-            break;
-        }
-    }
-}
-*/
