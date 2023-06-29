@@ -39,7 +39,7 @@ int main(void)
         }
         else if(opc==3)
         {
-            lista = inserirPessoaOrdenado(lista);
+            lista = inserirPessoaOrdenado(lista); // funciona extranho
         }
         else if(opc==4)
         {   
