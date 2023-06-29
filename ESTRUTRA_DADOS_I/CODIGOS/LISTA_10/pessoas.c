@@ -11,38 +11,72 @@ struct pessoa
 };
 
 
-Pessoa *criarLista(Pessoa* lista){
-    return lista = NULL;
+Pessoa* criarLista()
+{
+    Pessoa* lista;
+    lista = NULL;
+    return lista;
 }
 
 Pessoa *inserirPessoaInicio(Pessoa* lista){
     Pessoa *new = (Pessoa *) malloc(sizeof(Pessoa));
+
     new->id = contrarPessoasNaLista(lista);
+
+    printf("\nNome: ");
+    setbuf(stdin,NULL);
     scanf("%s",new->nome);
+
+    printf("\nAltura: ");
+    setbuf(stdin,NULL);
     scanf("%f",&new->altura);
+
+    printf("\nIdade: ");
+    setbuf(stdin,NULL);
     scanf("%d",&new->idade);
+
     new->prox = lista;
     lista = new;
     return lista;
 }
 
-Pessoa* inserirPessoaOrdenado(Pessoa* lista){
+Pessoa* inserirPessoaOrdenado(Pessoa* lista)
+{
+
+    Pessoa* aux;
     Pessoa* new = (Pessoa*) malloc(sizeof(Pessoa));
+
     new->id = contrarPessoasNaLista(lista);
+
+    printf("\nNome: ");
+    setbuf(stdin,NULL);
     scanf("%s",new->nome);
+
+    printf("\nAltura: ");
+    setbuf(stdin,NULL);
     scanf("%f",&new->altura);
+
+    printf("\nIdade: ");
+    setbuf(stdin,NULL);
     scanf("%d",&new->idade);
 
-    if(lista == NULL || new->idade <= lista->idade){
+    if(lista == NULL || new->idade <= lista->idade)
+    {
         new->prox = lista;
         lista = new;
         return lista;
-    }else{
-        Pessoa *aux = lista;
-        while(aux->prox != NULL &&  new->idade > aux->idade){
+    }
+    else
+    {
+        aux = lista;
+
+        while(aux->prox != NULL &&  new->idade > aux->idade)
+        {
             aux = aux->prox;
         }
+
         new->prox = aux->prox;
+
         aux->prox = new;
 
     }
@@ -51,15 +85,31 @@ Pessoa* inserirPessoaOrdenado(Pessoa* lista){
 
 Pessoa* inserirPessoaFim(Pessoa* lista){
     Pessoa *aux,*new;
+
     new = (Pessoa*) malloc(sizeof(Pessoa));
+
+    printf("\nNome: ");
+    setbuf(stdin,NULL);
     scanf("%s",new->nome);
+
+    printf("\nAltura: ");
+    setbuf(stdin,NULL);
     scanf("%f",&new->altura);
+
+    printf("\nIdade: ");
+    setbuf(stdin,NULL);
     scanf("%d",&new->idade);
+
     new->prox = NULL;
     aux = lista;
-    if(aux == NULL){
+    
+    //Caso a lista esteja vazia
+    if(aux == NULL)
+    {
         aux = new;
-    }else{
+    }
+    else // 
+    {
         while (aux != NULL)
         {
             aux = aux->prox;
@@ -69,19 +119,24 @@ Pessoa* inserirPessoaFim(Pessoa* lista){
 
     return lista;
 }
-void mostrarTodasPessoas(Pessoa *lista){
-    if(lista != NULL){
-        printf("Nome: %s\nAltura: %.2f\nIdade: %d\n\n",lista->nome,lista->altura,lista->idade);
-        mostrarTodasPessoas(lista->prox);
+void mostrarTodasPessoas(Pessoa *lista)
+{
+    Pessoa* aux = lista;
+
+    if(aux != NULL)
+    {
+        mostrarPessoa(*aux);
+        mostrarTodasPessoas(aux->prox);
     }
 }
 
 void mostrarPessoa(Pessoa p){
-    printf("ID: %s\nNome: %s\nAltura: %.2f\nIdade: %d\n\n",p.id,p.nome,p.altura,p.idade);
+    printf("ID: %d\nNome: %s\nAltura: %.2f\nIdade: %d\n\n",p.id,p.nome,p.altura,p.idade);
 }
 
 int buscarPessoa(Pessoa *lista){
     int id, i=-1;
+
     Pessoa* aux = lista;
 
     printf("\nID: ");
@@ -100,8 +155,9 @@ int buscarPessoa(Pessoa *lista){
     return i;
 }
 
-void removerPessoa(Pessoa *lista){
-    int id, i=-1;
+void removerPessoa(Pessoa *lista)
+{
+    int id;
     Pessoa* aux = lista;
     Pessoa* ant;
 
@@ -109,11 +165,13 @@ void removerPessoa(Pessoa *lista){
     setbuf(stdin,NULL);
     scanf("%d", &id);
 
-    if(id == aux->id){
+    if(id == aux->id)
+    {
         lista = aux->prox;
         free(aux);
     }
-    else{
+    else
+    {
         ant = aux;
         aux = aux->prox;
         while (aux != NULL)
@@ -130,15 +188,21 @@ void removerPessoa(Pessoa *lista){
     
 }
 
-int contrarPessoasNaLista(Pessoa *lista){
-    if(lista != NULL){
-        return contrarPessoasNaLista(lista->prox)+1;
+int contrarPessoasNaLista(Pessoa *lista)
+{
+    Pessoa* aux = lista;
+
+    if(aux != NULL)
+    {
+        return 1 + contrarPessoasNaLista(aux->prox);
     }
     return 0;
 }
 
-void liberarMemoria(Pessoa *lista){
-    if(lista != NULL){
+void liberarMemoria(Pessoa *lista)
+{
+    if(lista != NULL)
+    {
         liberarMemoria(lista->prox);
         free(lista);
     }

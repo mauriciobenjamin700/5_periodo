@@ -1,13 +1,17 @@
 #include <stdio.h>
 #include "ordenacao.h"
 
-void bubbleSort(int array[], int size){
+void bubbleSort(int array[], int size)
+{
     int i, j;
     int temp;
 
-    for (i = 0; i < size - 1; i++) {
-        for (j = 0; j < size - i - 1; j++) {
-            if (array[j] > array[j + 1]) {
+    for (i = 0; i < size - 1; i++) 
+    {
+        for (j = 0; j < size - i - 1; j++) 
+        {
+            if (array[j] > array[j + 1]) 
+            {
                 // Troca os elementos
                 temp = array[j];
                 array[j] = array[j + 1];
@@ -18,14 +22,17 @@ void bubbleSort(int array[], int size){
 }
 
 
-void insertionSort(int array[], int size) {
+void insertionSort(int array[], int size) 
+{
     int i, key, j;
 
-    for (i = 1; i < size; i++) {
+    for (i = 1; i < size; i++) 
+    {
         key = array[i];
         j = i - 1;
 
-        while (j >= 0 && array[j] > key) {
+        while (j >= 0 && array[j] > key) 
+        {
             array[j + 1] = array[j];
             j = j - 1;
         }
@@ -33,27 +40,27 @@ void insertionSort(int array[], int size) {
     }
 }
 
-void swap(int* a, int* b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
 
-void selectionSort(int array[], int size) {
-    int i, j, min_idx;
+void selectionSort(int array[], int size) 
+{
+    int i, j, min_idx, aux;
     
     // Percorre a lista
-    for (i = 0; i < size - 1; i++) {
+    for (i = 0; i < size - 1; i++) 
+    {
         min_idx = i; // Assume que o elemento atual é o mínimo
 
         // Procura o mínimo na parte não ordenada
-        for (j = i + 1; j < size; j++) {
+        for (j = i + 1; j < size; j++) 
+        {
             if (array[j] < array[min_idx])
                 min_idx = j;
         }
 
         // Troca o mínimo com o primeiro elemento da parte não ordenada
-        swap(&array[min_idx], &array[i]);
+        aux = array[min_idx];
+        array[min_idx] = array[i];
+        array[i] = aux;
     }
 }
 

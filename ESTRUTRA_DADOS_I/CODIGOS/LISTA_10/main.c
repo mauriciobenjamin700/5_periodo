@@ -1,4 +1,4 @@
-#include "pessoas.h"
+#include "pessoas.c"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -7,7 +7,7 @@
 int main(){
 
     Pessoa *lista;
-    lista = criarLista(lista);
+    lista = criarLista();
 
     lista = inserirPessoaOrdenado(lista);
     lista = inserirPessoaOrdenado(lista);

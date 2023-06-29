@@ -1,6 +1,6 @@
 typedef struct pessoa Pessoa;
 
-Pessoa* criarLista(Pessoa* lista);
+Pessoa* criarLista();
 Pessoa* inserirPessoaInicio(Pessoa* lista);
 Pessoa* inserirPessoaOrdenado(Pessoa* lista);
 Pessoa* inserirPessoaFim(Pessoa* lista);
