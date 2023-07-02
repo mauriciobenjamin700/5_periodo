@@ -1,0 +1,5 @@
+Passo a passo para criar um diagrama de sequencia:
+	Escolher um caso de uso
+	Identificar os objetos que fazem parte da interação
+	Identificar o objeto que começa a interação
+	Identificar as mensagens trocadas entre os objetos

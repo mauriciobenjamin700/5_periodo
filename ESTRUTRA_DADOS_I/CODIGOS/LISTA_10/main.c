@@ -9,10 +9,10 @@ int main(){
     Pessoa *lista;
     lista = criarLista();
 
-    lista = inserirPessoaOrdenado(lista);
-    lista = inserirPessoaOrdenado(lista);
+    inserirPessoaOrdenado(lista);
+    inserirPessoaOrdenado(lista);
     mostrarTodasPessoas(lista);
-    lista = inserirPessoaOrdenado(lista);
+    inserirPessoaOrdenado(lista);
 
     printf("\nlista\n");
     mostrarTodasPessoas(lista);

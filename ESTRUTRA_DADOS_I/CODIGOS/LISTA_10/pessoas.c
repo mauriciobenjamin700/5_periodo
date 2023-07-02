@@ -18,7 +18,8 @@ Pessoa* criarLista()
     return lista;
 }
 
-Pessoa *inserirPessoaInicio(Pessoa* lista){
+Pessoa *inserirPessoaInicio(Pessoa* lista)
+{
     Pessoa *new = (Pessoa *) malloc(sizeof(Pessoa));
 
     new->id = contrarPessoasNaLista(lista);
@@ -37,6 +38,7 @@ Pessoa *inserirPessoaInicio(Pessoa* lista){
 
     new->prox = lista;
     lista = new;
+    lista->prox = NULL;
     return lista;
 }
 
@@ -64,6 +66,7 @@ Pessoa* inserirPessoaOrdenado(Pessoa* lista)
     {
         new->prox = lista;
         lista = new;
+        lista->prox = NULL;
         return lista;
     }
     else
