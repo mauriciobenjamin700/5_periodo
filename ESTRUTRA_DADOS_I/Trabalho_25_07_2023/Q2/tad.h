@@ -27,7 +27,6 @@ Cliente *buscarCliente(Cliente *clientes, char cpf[]);
 Cliente *liberarClientes(Cliente *clientes);
 Cliente *liberarClienteRota(Cliente *clientes);
 
-int vazio(Cliente *clientes);
 void mostrarTodos(Cliente *clientes);
 void mostrarCliente(Cliente *clientes);
 
