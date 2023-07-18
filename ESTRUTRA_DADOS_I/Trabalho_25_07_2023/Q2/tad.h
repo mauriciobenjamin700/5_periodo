@@ -24,7 +24,7 @@ Entregas efetuadas na primeira tentativa: 5 pontos;○ Entregas efetuadas na seg
 Cliente *criarListaCliente();
 Cliente *inserirCliente(Cliente *clientes);
 Cliente *buscarCliente(Cliente *clientes, char cpf[]);
-Cliente *liberarCliente(Cliente *clientes);
+Cliente *liberarClientes(Cliente *clientes);
 Cliente *liberarClienteRota(Cliente *clientes);
 
 int vazio(Cliente *clientes);

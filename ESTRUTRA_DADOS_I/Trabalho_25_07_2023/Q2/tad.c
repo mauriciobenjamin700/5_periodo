@@ -3,7 +3,6 @@
 #include "tad.h"
 
 //tavez o uso de uma váriavel global para contar quantos dados produtos existem para gerar os ID automaticamente seja interessante
-int id = 0;
 
 struct produto
 {
@@ -14,7 +13,6 @@ struct produto
 
 struct cliente 
 {   
-    int id;
     char nome[30];
     char cpf[11];
     char cep[8]; // atraves do cep conseguimos chegar em regioes especificas
@@ -69,8 +67,6 @@ Cliente *criarListaCliente(){
 
 Cliente *inserirCliente(Cliente *clientes){
     Cliente *new = (Cliente *) malloc(sizeof(Cliente)), *aux = clientes;
-	id += 1;
-    new->id = id;
 
      new->produtos = NULL;
 
@@ -105,4 +101,34 @@ Cliente *inserirCliente(Cliente *clientes){
         aux->prox = new; 
         return clientes;
     }
+}
+
+Cliente *liberarClientes(Cliente *clientes){
+    Cliente *temp = clientes;
+    while(temp != NULL){
+        clientes = temp->prox; //clientes é atualizada para o próximo nó na lista, ou seja, temp->prox.
+        free(temp); //A memória alocada para o nó atual, representada por temp, é liberada com a função free.
+        temp = clientes; //A variável temp é atualizada para o próximo nó, ou seja, clientes.
+    }
+    return NULL; //O endereço cliente não aponta para nenhum endereço da memória válido.
+}
+
+Cliente *buscarCliente(Cliente *clientes, char cpf[]){ 
+    Cliente *aux = clientes;
+
+    while(aux != NULL){
+        if(compara_str(cpf,aux->cpf)) return aux;
+        aux = aux->prox;
+    }
+    return NULL;
+}
+
+int compara_str(char str1[], char str2[]){
+    int i = 0;
+    while(str1[i] != '/0'){
+        if (str1[i] != str2[i]){
+            return 0;
+        }
+    }
+    return 1;
 }
