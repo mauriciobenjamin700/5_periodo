@@ -3,6 +3,7 @@
 #include "tad.h"
 
 //tavez o uso de uma váriavel global para contar quantos dados produtos existem para gerar os ID automaticamente seja interessante
+int id = 0;
 
 struct produto
 {
@@ -12,7 +13,8 @@ struct produto
 };
 
 struct cliente 
-{
+{   
+    int id;
     char nome[30];
     char cpf[11];
     char cep[8]; // atraves do cep conseguimos chegar em regioes especificas
@@ -61,3 +63,46 @@ struct transportadora
     Rota rotaAtiva;
 };
 
+Cliente *criarListaCliente(){
+    return NULL;
+}
+
+Cliente *inserirCliente(Cliente *clientes){
+    Cliente *new = (Cliente *) malloc(sizeof(Cliente)), *aux = clientes;
+	id += 1;
+    new->id = id;
+
+     new->produtos = NULL;
+
+	printf("Nome do cliente: ");
+	scanf(" %s", new->nome);
+
+    printf("CEP: ");
+	scanf("%d", &new->cep);
+	printf("Bairro: ");
+	scanf(" %s", new->bairro);
+	printf("Rua: ");
+	scanf(" %s", new->rua);
+	printf("Nº da casa:");
+	scanf(" %d", &new->numero_casa);
+    printf("Telefone: ");
+	scanf("%s", &new->telefone);
+    printf("Email: ");
+	scanf("%s", &new->email);
+    printf("Referencia: ");
+	scanf("%s", &new->referencia);
+
+    new->prox = NULL;
+
+	if(clientes == NULL) {
+        return new;
+    } 
+    else{
+        aux = clientes;
+        while(aux->prox != NULL){
+            aux = aux->prox; 
+        }
+        aux->prox = new; 
+        return clientes;
+    }
+}
