@@ -132,3 +132,30 @@ int compara_str(char str1[], char str2[]){
     }
     return 1;
 }
+
+Rota *criarRota(){
+    return NULL;
+}
+
+Rota *adiconarProdutos(Cliente *clientes, Rota *rotas){ 
+    Produto *newProduto = (Produto*) malloc(sizeof(Produto));
+    Cliente *aux;
+
+    printf("CPF cliente: ");
+    scanf("%s", aux->cpf);
+    aux = buscarCliente(clientes, aux->cpf);
+    if(aux != NULL){ 
+        newProduto->id = rand() % 100 + 10;
+        printf("Produto: ");
+        scanf(" %s", &newProduto->nome);
+        if(aux->produtos){ 
+            newProduto->prox = aux->produtos;
+            aux->produtos = newProduto;
+        }else{ 
+            newProduto->prox = NULL;
+            aux->produtos = newProduto;
+            rotas = inserirRota(rotas, aux);
+        }
+    }
+    return rotas;
+}
