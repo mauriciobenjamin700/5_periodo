@@ -45,3 +45,5 @@ void imprimirEscore();
 Transportadora* EntregaConcluida(Transportadora* t, char cpf[]);
 
 int compara_str(char str1[], char str2[]);
+
+Transportadora *EntregaFracassada(Transportadora *t, char cpf[]);

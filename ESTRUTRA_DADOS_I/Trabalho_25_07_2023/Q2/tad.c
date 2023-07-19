@@ -151,12 +151,14 @@ Cliente *buscarCliente(Cliente *clientes, char cpf[])
 
 Cliente* removerCliente(Cliente *clientes, char cpf[])
 {
+    //falta implementar
     Cliente* c = buscarCliente(clientes, cpf);
     
     if(c != NULL)
     {
-        
+        return c;
     }
+    exit(1);
 }
 
 int compara_str(char str1[], char str2[])
@@ -181,11 +183,12 @@ Rota *adicionarProdutos(Cliente *clientes, Rota *rotas)
 {
     Produto *newProduto = (Produto *)malloc(sizeof(Produto));
     Cliente *aux;
+    char cpf[11];
 
     printf("CPF cliente: ");
     setbuf(stdin, NULL);
-    scanf("%s", aux->cpf);
-    aux = buscarCliente(clientes, aux->cpf);
+    scanf("%s", cpf);
+    aux = buscarCliente(clientes, cpf);
     if (aux != NULL)
     {
         newProduto->id = rand() % 100 + 10;
@@ -211,11 +214,11 @@ Transportadora *EntregaConcluida(Transportadora *t, char cpf[])
 {
     if(t->rotaAtiva->tentativa == 1)
     {
-        Rota *aux = t->rotaAtiva;
+        Cliente *aux = t->rotaAtiva->filaT1;
 
-        while (compara_str(aux->filaT1->cpf, cpf) != 1)
+        while (compara_str(aux->cpf, cpf) != 1)
         {
-            aux = aux->filaT1->prox;
+            aux = aux->prox;
         }
         //remover da fila de entrega o cliente que recebeu
         t->score += 5;
@@ -225,18 +228,20 @@ Transportadora *EntregaConcluida(Transportadora *t, char cpf[])
     else if(t->rotaAtiva->tentativa == 2)
     {
         printf("Implementar depois!");
+        return t;
     }
     else if(t->rotaAtiva->tentativa == 3)
     {
         printf("Implementar depois!");
+        return t;
     }
     else
     {
-        Rota *aux = t->rotaAtiva;
+        Cliente *aux = t->rotaAtiva->filaT1;
 
-        while (compara_str(aux->filaDevolucao->cpf, cpf) != 1)
+        while (compara_str(aux->cpf, cpf) != 1)
         {
-            aux = aux->filaDevolucao->prox;
+            aux = aux->prox;
         }
         //remover da fila de entrega o cliente que recebeu
         t->score -= 0.8;
@@ -246,7 +251,7 @@ Transportadora *EntregaConcluida(Transportadora *t, char cpf[])
     
 }
 
-Transportadora *EntregaFracassada(Transportadora *t, char cpf[], float score)
+Transportadora *EntregaFracassada(Transportadora *t, char cpf[])
 {
     Rota *rota = t->rotaAtiva;
     Cliente *c = buscarCliente(t->rotaAtiva->filaT1, cpf);
