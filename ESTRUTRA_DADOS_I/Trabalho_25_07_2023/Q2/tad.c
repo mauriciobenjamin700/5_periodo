@@ -75,22 +75,36 @@ Cliente *inserirCliente(Cliente *clientes)
     new->produtos = NULL;
 
     printf("Nome do cliente: ");
-    scanf(" %s", new->nome);
+    setbuf(stdin,NULL);
+    scanf("%s", new->nome);
 
     printf("CEP: ");
-    scanf("%d", &new->cep);
+    setbuf(stdin,NULL);
+    scanf("%s", new->cep);
+
     printf("Bairro: ");
+    setbuf(stdin,NULL);
     scanf(" %s", new->bairro);
+
     printf("Rua: ");
+    setbuf(stdin,NULL);
     scanf(" %s", new->rua);
+
     printf("Nº da casa:");
-    scanf(" %d", &new->numero_casa);
+    setbuf(stdin,NULL);
+    scanf("%d", &new->numero_casa);
+
     printf("Telefone: ");
-    scanf("%s", &new->telefone);
+    setbuf(stdin,NULL);
+    scanf("%s", new->telefone);
+    
     printf("Email: ");
-    scanf("%s", &new->email);
+    setbuf(stdin,NULL);
+    scanf("%s", new->email);
+
     printf("Referencia: ");
-    scanf("%s", &new->referencia);
+    setbuf(stdin,NULL);
+    scanf("%s", new->referencia);
 
     new->prox = NULL;
 
@@ -148,7 +162,7 @@ Cliente* removerCliente(Cliente *clientes, char cpf[])
 int compara_str(char str1[], char str2[])
 {
     int i = 0;
-    while (str1[i] != '/0')
+    while (str1[i] != '\0')
     {
         if (str1[i] != str2[i])
         {
@@ -177,7 +191,7 @@ Rota *adicionarProdutos(Cliente *clientes, Rota *rotas)
         newProduto->id = rand() % 100 + 10;
         printf("Produto: ");
         setbuf(stdin, NULL);
-        scanf("%s", &newProduto->nome);
+        scanf("%s", newProduto->nome);
         if (aux->produtos)
         {
             newProduto->prox = aux->produtos;

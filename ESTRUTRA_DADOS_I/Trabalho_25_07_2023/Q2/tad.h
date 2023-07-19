@@ -38,11 +38,10 @@ Rota *inserirRota(Rota *rotas, Cliente *clientes);
 
 Rota *liberarRota(Rota *rotas);
 
-
-
 Produto *liberarProdutos(Produto *produtos);
 
 void imprimirEscore();
 
 Transportadora* EntregaConcluida(Transportadora* t, char cpf[]);
 
+int compara_str(char str1[], char str2[]);
