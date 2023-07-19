@@ -20,30 +20,29 @@ pode haver mais de uma entrega no mesmo endereço
 /*
 Entregas efetuadas na primeira tentativa: 5 pontos;○ Entregas efetuadas na segunda tentativa: 3 pontos;○ Entregas efetuadas na terceira tentativa: 2 pontos;○ Entregas não efetuadas e devolvidas para a Fila de Devolução de Produtos: -0,8 pontos(subtrair 0,8)
 */
-
+//ok
 Cliente *criarListaCliente();
 Cliente *inserirCliente(Cliente *clientes);
 Cliente *buscarCliente(Cliente *clientes, char cpf[]);
 Cliente *liberarClientes(Cliente *clientes);
+//questionavel
 Cliente *liberarClienteRota(Cliente *clientes);
-
+//questionavel
 void mostrarTodos(Cliente *clientes);
 void mostrarCliente(Cliente *clientes);
 
+//ok
 Rota *criarRota();
-Rota *adiconarProdutos(Cliente *clientes, Rota *rotas);
+Rota *adicionarProdutos(Cliente *clientes, Rota *rotas);
 Rota *inserirRota(Rota *rotas, Cliente *clientes);
-Rota *entregarFila(Rota *rotas, Pilha *pilhas);
-Rota *liberarRota(Rota *rotas);
-void mostrarRotas(Rota *rotas);
-void mostrarProduto(Produto *produtos);
 
-void removerPilha(Pilha *pilhas);
+Rota *liberarRota(Rota *rotas);
+
+
+
 Produto *liberarProdutos(Produto *produtos);
-Devolucao *criarFilaDevolucao();
-Devolucao *filaDevolucao(Devolucao *devolucao, Rota *rota);
-void inserirPilha(Rota *rotas, Pilha *pilhas);
-Pilha *criarPilha();
-void mostrarPilha(Pilha *pilhas);
 
 void imprimirEscore();
+
+Transportadora* EntregaConcluida(Transportadora* t, char cpf[]);
+
