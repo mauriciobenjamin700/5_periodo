@@ -210,6 +210,14 @@ Rota *adicionarProdutos(Cliente *clientes, Rota *rotas)
     return rotas;
 }
 
+Transportadora* criarTranspotadora(){
+    return NULL;
+}
+
+void imprimirEscore(Transportadora *t){
+    printf("Score: %.2f\n", t->score);
+}
+
 Transportadora *EntregaConcluida(Transportadora *t, char cpf[])
 {
     if(t->rotaAtiva->tentativa == 1)
@@ -277,4 +285,15 @@ Transportadora *EntregaFracassada(Transportadora *t, char cpf[])
     }
 
     return t;
+}
+
+
+
+Produto *liberarProdutos(Produto *produtos){
+    if(produtos != NULL){
+        liberarProdutos(produtos->prox);
+        free(produtos);
+    }else{
+        return NULL;
+    }
 }

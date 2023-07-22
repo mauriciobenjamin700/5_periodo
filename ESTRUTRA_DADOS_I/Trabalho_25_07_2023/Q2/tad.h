@@ -34,13 +34,24 @@ void mostrarCliente(Cliente *clientes);
 //ok
 Rota *criarRota();
 Rota *adicionarProdutos(Cliente *clientes, Rota *rotas);
+/* 
+Essa função de inserir rota devia ser do tipo void, e ter transportadora como paramêtro, já que era pra ela 
+inserir a rota em rota ativa da trasportadora, na minha opnião Ass.: Lazim
+*/
 Rota *inserirRota(Rota *rotas, Cliente *clientes);
 
+Transportadora*  criarTranspotadora();
+
+/*  
+E rota teria que ter uma id, pq se não ia ter só uma rota, do jeito que ta só vai ter uma rota, mas basicamente a função
+ia chamar as outras funções de liberar, pq limparia tudo e dps daria uma free em rota Ass.: Lazim 
+*/
 Rota *liberarRota(Rota *rotas);
+
 
 Produto *liberarProdutos(Produto *produtos);
 
-void imprimirEscore();
+void imprimirEscore(Transportadora *t);
 
 Transportadora* EntregaConcluida(Transportadora* t, char cpf[]);
 
