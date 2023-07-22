@@ -11,11 +11,58 @@ int main(void)
     {   
         opc = menu();
         printf("\n\nMenu enviou: %d", opc);
+
+        switch (opc)
+        {
+        case 11:
+            printf("\n\nREALIZAR  CADASTRO DO CLIENTE");
+            break;
+        
+        case 12:
+            printf("\n\nBUSCAR UM CLIENTE E MOSTRAR SUAS INFORMAÇÕES");
+            break;
+
+        case 13:
+            printf("\n\nREMOVER O CADASTRO DE UM CLIENTE");
+            break;
+
+        case 21:
+            printf("\n\nREALIZAR  CADASTRO DO CLIENTE");
+            break;
+
+        case 22:
+            printf("\n\nREALIZAR  CADASTRO DO CLIENTE");
+            break;
+
+        case 23:
+            printf("\n\nREALIZAR  CADASTRO DO CLIENTE");
+            break;
+        
+        case 31:
+            printf("\n\nREALIZAR  CADASTRO DO CLIENTE");
+            break;
+
+        case 32:
+            printf("\n\nREALIZAR  CADASTRO DO CLIENTE");
+            break;
+
+        case 33:
+            printf("\n\nREALIZAR  CADASTRO DO CLIENTE");
+            break;
+        
+        default:
+            break;
+        }
+
+
     } while (opc != 0);
     
+    printf("\nSISTEMA ENCERRADO...");
     
     return 0;
 }
+
+
 
 int menu()
 {
