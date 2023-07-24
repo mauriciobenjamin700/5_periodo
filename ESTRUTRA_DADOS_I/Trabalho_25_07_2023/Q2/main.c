@@ -29,7 +29,8 @@ int main(void)
 
 
         case 13:
-            printf("\n\nREMOVER O CADASTRO DE UM CLIENTE");
+            
+            removerCliente(t->listaClientes);
             break;
 
         case 21:
@@ -49,7 +50,7 @@ int main(void)
             break;
 
         case 32:
-            printf("\n\nREALIZAR  CADASTRO DO CLIENTE");
+            mostrarTClientes(t->listaClientes);
             break;
 
         case 33:
@@ -117,7 +118,7 @@ int menu()
 
     case 3:
         printf("----------TRANSPORTADORA----------");
-        printf("\n\n1 - Cadastrar\n2 - Buscar\n3 - Remover\n\nOPC: ");
+        printf("\n\n1 - Cadastrar\n2 - Mostrar todos os clientes\n3 - Remover\n\nOPC: ");
         scanf("%d", &opc);
 
         if(opc==1)

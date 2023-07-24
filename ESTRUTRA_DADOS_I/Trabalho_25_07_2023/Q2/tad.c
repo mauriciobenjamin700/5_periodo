@@ -157,6 +157,7 @@ void mostrarCliente(Cliente* c)
 {
     if(c!= NULL)
     {
+        printf("\n\n----------------------------------------");
         printf("\n\nNome do cliente: %s", c->nome);
 
         printf("\n\nCEP: %s", c->cep);
@@ -177,11 +178,57 @@ void mostrarCliente(Cliente* c)
     {
         printf("\n\nCliente sem Cadastro!");
     }
+}
     
+void mostrarTClientes(Cliente* clientes)
+{
+    Cliente* aux = clientes;
 
-
+    if (aux != NULL)
+    {
+        while (aux != NULL)
+        {
+            mostrarCliente(aux);
+            aux = aux->prox;
+        }
+    
+    }
+    else
+    {
+        printf("\n\nNao ha clientes cadastrados");
+    }
 }
 
+void removerCliente(Cliente *clientes)
+{
+    //falta implementar
+    Cliente* c = buscarCliente(clientes);
+    Cliente* anterior;
+    
+    if(c != NULL)
+    {
+        anterior = clientes;
+
+        while (anterior->prox != c)
+        {
+            anterior = anterior->prox;
+        }
+
+        anterior = c->prox;
+
+        //free(c);
+        liberarCliente(c);
+        
+    }
+    else
+    {
+        printf("\n\nCliente Nao encontrado!");
+    }
+}
+
+void liberarCliente(); // Fica por sua conta implementar isso lazi,
+
+/* não faz sentido liberar todos os clientes de uma vez
 Cliente *liberarClientes(Cliente *clientes)
 {
     Cliente *temp = clientes;
@@ -193,19 +240,7 @@ Cliente *liberarClientes(Cliente *clientes)
     }
     return NULL; // O endereço cliente não aponta para nenhum endereço da memória válido.
 }
-
-
-Cliente* removerCliente(Cliente *clientes)
-{
-    //falta implementar
-    Cliente* c = buscarCliente(clientes);
-    
-    if(c != NULL)
-    {
-        return c;
-    }
-    exit(1);
-}
+*/
 
 int compara_str(char str1[], char str2[])
 {

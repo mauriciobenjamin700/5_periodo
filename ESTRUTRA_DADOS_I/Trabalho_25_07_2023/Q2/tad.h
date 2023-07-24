@@ -27,11 +27,13 @@ Entregas efetuadas na primeira tentativa: 5 pontos;○ Entregas efetuadas na seg
 void cadastrarCliente(Cliente **clientes);
 Cliente *buscarCliente(Cliente *clientes);
 Cliente *liberarClientes(Cliente *clientes);
+void mostrarCliente(Cliente* c);
+void mostrarTClientes(Cliente* clientes);
+
 //questionavel
 Cliente *liberarClienteRota(Cliente *clientes);
 //questionavel
-void mostrarTodos(Cliente *clientes);
-void mostrarCliente(Cliente* c);
+
 
 //ok
 Rota *criarRota();
