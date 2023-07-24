@@ -19,7 +19,7 @@ struct cliente
     char bairro[30], rua[30];
     int numero_casa;
     char telefone[20];
-    char email[30];
+    char email[40];
     char referencia[50];
     Produto *produtos; // aponta para os produtos do cliente
     Cliente *prox;     // acessa todos os clientes
@@ -71,17 +71,21 @@ Cliente *criarListaCliente()
     return NULL;
 }
 */
-void cadastrarCliente(Cliente *clientes)
+void cadastrarCliente(Cliente **clientes)
 {
     // usa lista encadeada simples
     Cliente* new = (Cliente *)malloc(sizeof(Cliente));
-    Cliente* aux = clientes;
+    Cliente* aux = *clientes; // Usamos *clientes para acessar a variável original
 
     new->produtos = NULL;
 
     printf("\n\nNome do cliente: ");
     setbuf(stdin,NULL);
     scanf("%[^\n]", new->nome);
+
+    printf("\n\nCPF: ");
+    setbuf(stdin,NULL);
+    scanf("%s", new->cpf);
 
     printf("\n\nCEP: ");
     setbuf(stdin,NULL);
@@ -95,7 +99,7 @@ void cadastrarCliente(Cliente *clientes)
     setbuf(stdin,NULL);
     scanf("%[^\n]", new->rua);
 
-    printf("\n\nNº da casa:");
+    printf("\n\nNº da casa: ");
     setbuf(stdin,NULL);
     scanf("%d", &new->numero_casa);
 
@@ -113,26 +117,33 @@ void cadastrarCliente(Cliente *clientes)
 
     new->prox = NULL;
 
-    if (clientes == NULL)
+    if (*clientes == NULL)
     {
-        clientes = new;
+        *clientes = new;
+        printf("\n\nIF 1");
     }
     else
     {
-        aux = clientes;
+        aux = *clientes;
         while (aux->prox != NULL)
         {
             aux = aux->prox;
         }
         aux->prox = new;
+        printf("\n\nIF 2");
 
     }
 }
 
-Cliente *buscarCliente(Cliente *clientes, char cpf[])
+Cliente *buscarCliente(Cliente *clientes)
 {
+    char cpf[11];
     Cliente *aux = clientes;
 
+    printf("\n\nCPF do cliente: ");
+    setbuf(stdin,NULL);
+    scanf("%s", cpf);
+    
     while (aux != NULL)
     {
         if (compara_str(cpf, aux->cpf))
@@ -140,6 +151,35 @@ Cliente *buscarCliente(Cliente *clientes, char cpf[])
         aux = aux->prox;
     }
     return NULL;
+}
+
+void mostrarCliente(Cliente* c)
+{
+    if(c!= NULL)
+    {
+        printf("\n\nNome do cliente: %s", c->nome);
+
+        printf("\n\nCEP: %s", c->cep);
+
+        printf("\n\nBairro: %s", c->bairro);
+
+        printf("\n\nRua: %s", c->rua);
+
+        printf("\n\nNº da casa: %d", c->numero_casa);
+
+        printf("\n\nTelefone: %s", c->telefone);
+        
+        printf("\n\nEmail: %s", c->email);
+
+        printf("\n\nReferencia: %s",c->referencia);
+    }
+    else
+    {
+        printf("\n\nCliente sem Cadastro!");
+    }
+    
+
+
 }
 
 Cliente *liberarClientes(Cliente *clientes)
@@ -155,10 +195,10 @@ Cliente *liberarClientes(Cliente *clientes)
 }
 
 
-Cliente* removerCliente(Cliente *clientes, char cpf[])
+Cliente* removerCliente(Cliente *clientes)
 {
     //falta implementar
-    Cliente* c = buscarCliente(clientes, cpf);
+    Cliente* c = buscarCliente(clientes);
     
     if(c != NULL)
     {
@@ -176,6 +216,7 @@ int compara_str(char str1[], char str2[])
         {
             return 0;
         }
+        i++;
     }
     return 1;
 }
@@ -282,10 +323,10 @@ Transportadora *EntregaConcluida(Transportadora *t, char cpf[])
     
 }
 
-Transportadora *EntregaFracassada(Transportadora *t, char cpf[])
+Transportadora *EntregaFracassada(Transportadora *t)
 {
     Rota *rota = t->rotaAtiva;
-    Cliente *c = buscarCliente(t->rotaAtiva->filaT1, cpf);
+    Cliente *c = buscarCliente(t->rotaAtiva->filaT1);
 
     Cliente* pilhaT2;
 

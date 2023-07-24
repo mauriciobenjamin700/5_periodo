@@ -24,14 +24,14 @@ Entregas efetuadas na primeira tentativa: 5 pontos;○ Entregas efetuadas na seg
 //removi esse função, quando iniciamos a transportadora ja criamos a lista de clientes
 //Cliente *criarListaCliente();
 // optei por trocar pra void por questão de eficiencia
-void cadastrarCliente(Cliente *clientes);
-Cliente *buscarCliente(Cliente *clientes, char cpf[]);
+void cadastrarCliente(Cliente **clientes);
+Cliente *buscarCliente(Cliente *clientes);
 Cliente *liberarClientes(Cliente *clientes);
 //questionavel
 Cliente *liberarClienteRota(Cliente *clientes);
 //questionavel
 void mostrarTodos(Cliente *clientes);
-void mostrarCliente(Cliente *clientes);
+void mostrarCliente(Cliente* c);
 
 //ok
 Rota *criarRota();
@@ -61,4 +61,4 @@ Transportadora* EntregaConcluida(Transportadora* t, char cpf[]);
 
 int compara_str(char str1[], char str2[]);
 
-Transportadora *EntregaFracassada(Transportadora *t, char cpf[]);
+Transportadora *EntregaFracassada(Transportadora *t);

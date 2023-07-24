@@ -18,13 +18,15 @@ int main(void)
         {
 
         case 11:
-            cadastrarCliente(t->listaClientes);
+            cadastrarCliente(&t->listaClientes); //ok
             printf("\n\nCadastro Realizado com sucesso!");
             break;
         
         case 12:
-            printf("\n\nBUSCAR UM CLIENTE E MOSTRAR SUAS INFORMAÇÕES");
+            
+            mostrarCliente(buscarCliente(t->listaClientes)); //ok
             break;
+
 
         case 13:
             printf("\n\nREMOVER O CADASTRO DE UM CLIENTE");
