@@ -51,7 +51,7 @@ struct rota
 
     // talvez considerar ter mais de uma rota e apontar para a proxima rota -> "(por  ser  uma  transportadora  de  pequeno porte, épermitido apenas uma rota de entrega por vez, mas podendo ser feitas quantas  rotas  for  necessário)."
 
-    int tentativa;
+    int tentativa, pessoas, entregasRealizadas;
 };
 
 struct transportadora
@@ -60,6 +60,7 @@ struct transportadora
     int entregasRealizadas;
     Rota* rotaAtiva;
     Cliente* listaClientes;
+    FilaDevolucao* fDev;
 };
 
 struct filaDevolucao
@@ -312,6 +313,8 @@ Rota *criarRota()
     r->pilhaT2 = NULL;
     r->pilhaT2 = NULL;
     r->pilhaT3 = NULL;
+    r->pessoas = 0;
+    r->entregasRealizadas = 0;
 
     r->tentativa = 1;
 
@@ -349,6 +352,12 @@ void concluirRota(Transportadora* t)
         free(r);
         
         r = NULL;
+
+        printf("\n\nRota encerrada com sucesso!");
+    }
+    else
+    {
+        printf("\n\nRota em execucao ainda, nao pode ser encerrada!");
     }
 }
 
@@ -366,6 +375,7 @@ void clienteRota(Transportadora* t)
             t->rotaAtiva->filaT1 = cliente;
             cliente->prox = NULL; // Garantir que o cliente adicionado seja o último da fila
             printf("\n\nCliente adicionado à fila de entrega");
+            t->rotaAtiva->pessoas ++;
         }
         else //Detalhe importante, de tal forma não é possivel tratar caso o usuário adicione o mesmo cliente duas vezes a fila, pensamos em usar um vetor de string e checar se o nome na lista ja tinha sido adicionado mas provavelmente ia ficar pesado e desnecessário para essa etapa
         {
@@ -377,6 +387,7 @@ void clienteRota(Transportadora* t)
             fila->prox = cliente;
             cliente->prox = NULL; // Garantir que o cliente adicionado seja o último da fila
             printf("\n\nCliente adicionado à fila de entrega");
+            t->rotaAtiva->pessoas ++;
         }
     }
     else
@@ -517,7 +528,7 @@ void imprimirEscore(Transportadora *t)
     printf("\n\nPercentual de rendimento: %.2f", (t->score/(t->entregasRealizadas*5))*100);
     
 }
-
+/*
 Transportadora *EntregaConcluida(Transportadora *t)
 {
     if(t->rotaAtiva->tentativa == 1)
@@ -559,6 +570,54 @@ Transportadora *EntregaConcluida(Transportadora *t)
     
 }
 
+*/
+
+void concluirEntrega(Transportadora* t)
+{
+    char resultado;
+    printf("\n\nEntrega Realizada com sucesso? [s/n]");
+    setbuf(stdin,NULL);
+    scanf("%c", &resultado);
+
+    Cliente* primeiro;
+
+
+    if(resultado == 's')
+    {
+        sucesso(t);
+        
+    }
+    else if(resultado == 'n')
+    {
+        if(t->rotaAtiva->tentativa == 1)
+        {
+            Falha1(t);
+        }
+        else if(t->rotaAtiva->tentativa == 2)
+        {
+            Falha2(t);
+        }
+        else if(t->rotaAtiva->tentativa == 3)
+        {
+            Falha3(t,t->fDev);
+        }
+        
+    }
+    else
+    {
+        printf("\n\nOpcao invalida");
+    }
+
+}
+
+void sucesso(Transportadora* t)
+{
+    t->rotaAtiva->entregasRealizadas ++;
+    t->score += 5;
+    t->rotaAtiva->filaT1 = t->rotaAtiva->filaT1->prox;
+}
+
+// faça usando void, será mais útil 
 Transportadora *Falha1(Transportadora *t)
 {
     Rota *rota = t->rotaAtiva;
@@ -625,7 +684,7 @@ Transportadora *Falha3(Transportadora *t, FilaDevolucao *fila)
     else
     {
         aux = fila->produto;
-        while(aux-> != NULL){
+        while(aux->prox != NULL){
             aux = aux->prox;
         }
         

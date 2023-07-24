@@ -21,3 +21,9 @@ void imprimirEscore(Transportadora *t);
 Transportadora *EntregaConcluida(Transportadora *t);
 Transportadora *Falha1(Transportadora *t);
 void liberarProdutos(Produto *produtos);
+
+void sucesso(Transportadora* t)
+
+Transportadora *Falha1(Transportadora *t)
+Transportadora *Falha2(Transportadora *t)
+Transportadora *Falha3(Transportadora *t, FilaDevolucao *fila)
