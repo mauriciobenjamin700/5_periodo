@@ -34,7 +34,7 @@ int main(void)
             break;
 
         case 21:
-            printf("\n\nREALIZAR  CADASTRO DO CLIENTE");
+            
             break;
 
         case 22:
@@ -101,7 +101,7 @@ int menu()
 
     case 2:
         printf("----------ROTA----------");
-        printf("\n\n1 - Cadastrar\n2 - Buscar\n3 - Remover\n\nOPC: ");
+        printf("\n\n1 - Nova Rota\n2 - Adicionar Cliente a fila de entrega\n3 - Adicionar produto para o cliente\n\n4 - Mostrar fila de entrega\n\n5 - Concluir entrega\n6 - Concluir Rota\n\nOPC: ");
         scanf("%d", &opc);
 
         if(opc==1)
@@ -111,7 +111,16 @@ int menu()
             return 22; 
 
         else if(opc==3)
-            return 23; 
+            return 23;
+
+        else if(opc==4)
+            return 24;
+
+        else if(opc==5)
+            return 25;
+
+        else if(opc==6)
+            return 26; 
 
         else return 0;       
         break;

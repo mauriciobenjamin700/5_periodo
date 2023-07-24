@@ -58,11 +58,17 @@ struct rota
 struct transportadora
 {
     float score;
+    int entregasRealizadas;
     Rota* rotaAtiva;
     Cliente* listaClientes;
 };
 
 // ###################################################### CLIENTE #############################################
+/*
+Clentes são pessoas das quais nos fornecem seus dados, tais dados serão armazenados na transportadora para facilitar
+na hora de realizar a entrega do produto para o cliente.
+
+*/
 
 //poderia trocar pra void
 /*
@@ -120,7 +126,7 @@ void cadastrarCliente(Cliente **clientes)
     if (*clientes == NULL)
     {
         *clientes = new;
-        printf("\n\nIF 1");
+
     }
     else
     {
@@ -130,7 +136,6 @@ void cadastrarCliente(Cliente **clientes)
             aux = aux->prox;
         }
         aux->prox = new;
-        printf("\n\nIF 2");
 
     }
 }
@@ -256,10 +261,99 @@ int compara_str(char str1[], char str2[])
     return 1;
 }
 // #################################################### ROTA #######################################################
+/*
+Rotas são o percurso que o entregador deve fazer para entregar todos os produtos para seu respectivo cliente
+esse percurso deve abranger toda a FILA de entrega, visitando de cliente em cliente para entregar seus produtos
+caso o cliente não consiga receber o produto, deve anotar isso e ir para o próximo cliente
+
+para uma rota existir, deve haver pelomenos um cliente
+antes de inciar a rota, deve-se primeiro separar todos os clientes que irão ser adicionados na rota
+cada cliente pode ter N produtos
+depois de uma rota ser iniciada, ela não deverá ser parada até ser concluida
+Somente depois de uma rota ser completamente concluida que poderá ser iniciado outra rota
+*/
+
 Rota *criarRota()
 {
-    return NULL;
+    Rota* r = (Rota*) malloc (sizeof(Rota));
+
+    r->filaT1 = NULL;
+    r->pilhaT2 = NULL;
+    r->pilhaT2 = NULL;
+    r->pilhaT3 = NULL;
+    r->filaDevolucao = NULL;
+    r->tentativa = 1;
+
+    return r;
 }
+
+void criarRota(Transportadora* t)
+{
+    Transportadora* temp = t;
+
+    if(temp->rotaAtiva == NULL)
+    {
+        temp->rotaAtiva = criarRota();
+        printf("\n\nRota criada com sucesso!");
+    }
+    else
+    {
+        printf("\n\nJa existe uma rota em andamento!");
+    }
+
+}
+
+void concluirRota(Transportadora* t)
+{
+    Transportadora* temp = t;
+    Rota* r = temp->rotaAtiva;
+
+    if(r->filaT1 == NULL & r->pilhaT2 == NULL && r->pilhaT3 == NULL && r->filaDevolucao == NULL)
+    {
+        
+    }
+}
+
+void clienteRota(Transportadora* t)
+{
+    //esta função deve localizar um cliente e adicionalo a fila de entrega da rota
+    char cpf[11];
+
+    Cliente* fila = t->rotaAtiva->filaT1;
+    Cliente* listaCliente = t->listaClientes;
+
+    printf("\n\nCPF do cliente: ");
+    setbuf(stdin,NULL);
+    scanf("%s", cpf);
+
+    //cliente já cadastrado?
+    Cliente* cliente = buscarCliente(listaCliente);
+
+    if (cliente != NULL)
+    {
+        //fila está vazia?
+        if(listaCliente == NULL)
+        {
+            fila = cliente;
+            printf("\n\nCliente adicionando a fila de entrega");
+        }
+        else
+        {
+            while (fila->prox != NULL)
+            {
+                fila = fila->prox;
+            }
+            fila->prox = cliente;
+        }
+        
+    }
+    else
+    printf("\n\nCliente nao possui cadastro!");
+    
+}
+void produtoCliente();
+
+
 /*
 Rota *adicionarProdutos(Cliente *clientes, Rota *rotas)
 {
@@ -292,6 +386,11 @@ Rota *adicionarProdutos(Cliente *clientes, Rota *rotas)
     return rotas;
 }*/
 //####################################################### TRANSPORTADORA ######################################3
+/*
+Uma transportadora é um local que recebe e envia produtos para seus respectivos donos
+
+*/
+
 //troquei pra void pra testar
 Transportadora* criarTranspotadora()
 {
@@ -302,19 +401,19 @@ Transportadora* criarTranspotadora()
     t->listaClientes = NULL;
     t->rotaAtiva = NULL;
     t->score = 0;
+    t->entregasRealizadas = 0;
     }
     else
     {
         printf("\n\nFalha na alocação!");
     }
 
-
     return t;
   
 }
 
 void imprimirEscore(Transportadora *t){
-    printf("Score: %.2f\n", t->score);
+    printf("\n\nScore: %.2f", t->score);
 }
 
 Transportadora *EntregaConcluida(Transportadora *t, char cpf[])
