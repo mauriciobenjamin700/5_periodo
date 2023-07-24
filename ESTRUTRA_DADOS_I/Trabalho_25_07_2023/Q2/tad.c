@@ -48,7 +48,6 @@ struct rota
     Cliente *pilhaT2; // poderá realizar até 3 tentativas
     Cliente *pilhaT3;
 
-    Cliente *filaDevolucao;
 
     // talvez considerar ter mais de uma rota e apontar para a proxima rota -> "(por  ser  uma  transportadora  de  pequeno porte, épermitido apenas uma rota de entrega por vez, mas podendo ser feitas quantas  rotas  for  necessário)."
 
@@ -61,6 +60,11 @@ struct transportadora
     int entregasRealizadas;
     Rota* rotaAtiva;
     Cliente* listaClientes;
+};
+
+struct filaDevolucao
+{
+    Produto *produto;
 };
 
 // ###################################################### CLIENTE #############################################
@@ -160,6 +164,8 @@ Cliente *buscarCliente(Cliente *clientes)
 
 void mostrarCliente(Cliente* c)
 {
+    Produto* aux = c->produtos;
+
     if(c!= NULL)
     {
         printf("\n\n----------------------------------------");
@@ -178,6 +184,22 @@ void mostrarCliente(Cliente* c)
         printf("\n\nEmail: %s", c->email);
 
         printf("\n\nReferencia: %s",c->referencia);
+
+        if(c->produtos != NULL)
+        {
+            printf("\n\nProdutos associados: ");
+            while (aux != NULL)
+            {
+                printf("\n\n");
+                printf("ID: %d", aux->id);
+                printf("\nNome: %s", aux->nome);
+
+                aux = aux->prox;
+            }
+        }
+
+        
+        
     }
     else
     {
@@ -290,7 +312,7 @@ Rota *criarRota()
     r->pilhaT2 = NULL;
     r->pilhaT2 = NULL;
     r->pilhaT3 = NULL;
-    r->filaDevolucao = NULL;
+
     r->tentativa = 1;
 
     return r;
@@ -317,12 +339,12 @@ void concluirRota(Transportadora* t)
     Transportadora* temp = t;
     Rota* r = temp->rotaAtiva;
 
-    if(r->filaT1 == NULL && r->pilhaT2 == NULL && r->pilhaT3 == NULL && r->filaDevolucao == NULL)
+    if(r->filaT1 == NULL && r->pilhaT2 == NULL && r->pilhaT3 == NULL)
     {
         free(r->filaT1);
         free(r->pilhaT2);
         free(r->pilhaT3);
-        free(r->filaDevolucao);
+
 
         free(r);
         
@@ -363,9 +385,72 @@ void clienteRota(Transportadora* t)
     }
 }
 
-void produtoCliente();
+void produtoCliente(Transportadora* t)
+{
+    Cliente* c = buscarCliente(t->listaClientes);
 
+    Produto* p = (Produto*) malloc(sizeof(Produto));
 
+    Produto* aux;
+
+    p->id = rand() % 100;
+
+    printf("\n\nNome do produto: ");
+    setbuf(stdin,NULL);
+    scanf("%[^\n]", p->nome);
+    
+    p->prox = NULL;
+
+       
+    if (c->produtos == NULL)
+    {
+       
+        c->produtos = p;
+        printf("\n\nProduto Adicionado com sucesso!");
+    }
+    else
+    {
+        aux = c->produtos;
+        while (aux != NULL)
+        {
+            aux = aux->prox;
+        }
+        aux = p;
+        printf("\n\nProduto Adicionado com sucesso!");
+        
+    }
+    
+    
+}
+
+void mostrarFilaEntrega(Transportadora* t)
+{
+    Cliente* fila;
+    Cliente* pilha;
+    
+    if(t->rotaAtiva->tentativa == 1)
+    {
+        fila = t->rotaAtiva->filaT1;
+
+        mostrarTClientes(fila);
+    }
+    else if(t->rotaAtiva->tentativa == 2)
+    {
+        pilha = t->rotaAtiva->pilhaT2;
+        
+        mostrarTClientes(pilha);
+    }
+    else if(t->rotaAtiva->tentativa == 3)
+    {
+        pilha = t->rotaAtiva->pilhaT3;
+        
+        mostrarTClientes(pilha);
+    }
+    else
+    {
+        printf("\n\nProdutos direcionados para a fila de devolucao!\nNao ha produtos para serem entregues");
+    } 
+}
 /*
 Rota *adicionarProdutos(Cliente *clientes, Rota *rotas)
 {
@@ -433,7 +518,7 @@ void imprimirEscore(Transportadora *t)
     
 }
 
-Transportadora *EntregaConcluida(Transportadora *t, char cpf[])
+Transportadora *EntregaConcluida(Transportadora *t)
 {
     if(t->rotaAtiva->tentativa == 1)
     {
@@ -446,23 +531,27 @@ Transportadora *EntregaConcluida(Transportadora *t, char cpf[])
     }
     else if(t->rotaAtiva->tentativa == 2)
     {
-        printf("Implementar depois!");
+        t->rotaAtiva->pilhaT2 = t->rotaAtiva->pilhaT2->prox;
+
+        //remover da pilha de entrega o cliente que recebeu
+        t->score += 3;
+
         return t;
     }
     else if(t->rotaAtiva->tentativa == 3)
     {
-        printf("Implementar depois!");
+        t->rotaAtiva->pilhaT3 = t->rotaAtiva->pilhaT3->prox;
+
+        //remover da pilha de entrega o cliente que recebeu
+        t->score += 2;
+
         return t;
     }
     else
     {
         Cliente *aux = t->rotaAtiva->filaT1;
 
-        while (compara_str(aux->cpf, cpf) != 1)
-        {
-            aux = aux->prox;
-        }
-        //remover da fila de entrega o cliente que recebeu
+        //remover da fila de devolução
         t->score -= 0.8;
 
         return t;
@@ -470,12 +559,12 @@ Transportadora *EntregaConcluida(Transportadora *t, char cpf[])
     
 }
 
-Transportadora *EntregaFracassada(Transportadora *t)
+Transportadora *Falha1(Transportadora *t)
 {
     Rota *rota = t->rotaAtiva;
     Cliente *c = buscarCliente(t->rotaAtiva->filaT1);
 
-    Cliente* pilhaT2;
+    Cliente* aux;
 
     // caso a pilha de devoluções referentes a segunda tentativa esteja vazia
     if (rota->pilhaT2 == NULL)
@@ -486,18 +575,67 @@ Transportadora *EntregaFracassada(Transportadora *t)
     else
     {
         //caso não seja o primeiro elemento, devemos adicionar no fim pois é uma pilha
-        pilhaT2 = rota->pilhaT2;
-        while ( pilhaT2->prox != NULL) 
-        {
-            pilhaT2 = pilhaT2->prox;
-        }
-        pilhaT2->prox = c;
+        aux = c;
+        aux->prox = rota->pilhaT2;
+        rota->pilhaT2 = aux;
+
         
     }
 
     return t;
 }
 
+Transportadora *Falha2(Transportadora *t)
+{
+    Rota *rota = t->rotaAtiva;
+    Cliente *c = buscarCliente(t->rotaAtiva->pilhaT2);
+
+    Cliente* aux;
+
+    // caso a pilha de devoluções referentes a segunda tentativa esteja vazia
+    if (rota->pilhaT3 == NULL)
+    {
+        // o cliente sera adicionado na pilha de devolução como primeiro elemento
+        rota->pilhaT3 = c;
+    }
+    else
+    {
+        //caso não seja o primeiro elemento, devemos adicionar no fim pois é uma pilha
+        aux = c;
+        aux->prox = rota->pilhaT3;
+        rota->pilhaT3 = aux;
+
+        
+    }
+
+    return t;
+}
+
+Transportadora *Falha3(Transportadora *t, FilaDevolucao *fila)
+{
+    Cliente *c = buscarCliente(t->rotaAtiva->pilhaT3);
+    Cliente* aux;
+
+    // caso a pilha de devoluções referentes a segunda tentativa esteja vazia
+    if (fila->produto== NULL)
+    {
+        // o cliente sera adicionado na pilha de devolução como primeiro elemento
+        fila->produto = c;
+    }
+    else
+    {
+        aux = fila->produto;
+        while(aux-> != NULL){
+            aux = aux->prox;
+        }
+        
+        aux = c;
+
+        
+    }
+
+    return t;
+}
 //######################################################PRODUTO####################################################
 
 void liberarProdutos(Produto *produtos)
@@ -515,3 +653,21 @@ void liberarProdutos(Produto *produtos)
     }
 
 }
+/*
+void liberarListaClientes(Cliente *listaClientes){
+    Cliente *aux = listaClientes;
+
+    if(listaVaziaClientes(listaClientes)){
+        printf("\nLista esvaziada!\n");
+
+    }else{
+        while(aux){
+            aux = aux->proximo;
+            free(listaClientes);
+            listaClientes = aux;
+        }
+
+        printf("\nLista Esvaziada!\n");
+    }
+}
+*/

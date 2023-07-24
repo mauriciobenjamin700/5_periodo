@@ -2,6 +2,7 @@ typedef struct produto Produto;
 typedef struct cliente Cliente;
 typedef struct rota Rota;
 typedef struct transportadora Transportadora;
+typedef struct filaDevolucao FilaDevolucao;
 
 void cadastrarCliente(Cliente **clientes);
 Cliente *buscarCliente(Cliente *clientes);
@@ -17,6 +18,6 @@ void clienteRota(Transportadora* t);
 void produtoCliente();
 Transportadora* criarTranspotadora();
 void imprimirEscore(Transportadora *t);
-Transportadora *EntregaConcluida(Transportadora *t, char cpf[]);
-Transportadora *EntregaFracassada(Transportadora *t);
+Transportadora *EntregaConcluida(Transportadora *t);
+Transportadora *Falha1(Transportadora *t);
 void liberarProdutos(Produto *produtos);

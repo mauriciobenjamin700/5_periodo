@@ -43,7 +43,11 @@ int main(void)
             break;
 
         case 23:
-            printf("\n\nREALIZAR  CADASTRO DO CLIENTE");
+            produtoCliente(t); //ok
+            break;
+
+        case 24:
+            mostrarFilaEntrega(t); //ok
             break;
         
         case 31:
@@ -124,7 +128,7 @@ int menu()
 
     case 3:
         printf("----------TRANSPORTADORA----------");
-        printf("\n\n1 - Mostrar desempenho da Transportadora\n2 - Mostrar todos os clientes\n\nOPC: ");
+        printf("\n\n1 - Mostrar desempenho da Transportadora\n2 - Mostrar todos os clientes\n3 - Voltar\n\nOPC: ");
         scanf("%d", &opc);
 
         if(opc==1)
@@ -134,7 +138,7 @@ int menu()
             return 32; 
         
         else if(opc==3)
-            return 33; 
+            return 0; 
 
         else return 0;       
         break;
