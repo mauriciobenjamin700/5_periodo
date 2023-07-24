@@ -18,6 +18,7 @@ int main(void)
         {
 
         case 11:
+
             cadastrarCliente(&t->listaClientes); //ok
             printf("\n\nCadastro Realizado com sucesso!");
             break;
@@ -34,11 +35,11 @@ int main(void)
             break;
 
         case 21:
-            
+            ativarRota(t); //ok
             break;
 
         case 22:
-            printf("\n\nREALIZAR  CADASTRO DO CLIENTE");
+            clienteRota(t); //ok
             break;
 
         case 23:
@@ -53,10 +54,6 @@ int main(void)
             mostrarTClientes(t->listaClientes);
             break;
 
-        case 33:
-            printf("\n\nREALIZAR  CADASTRO DO CLIENTE");
-            break;
-        
         default:
             break;
 
@@ -65,7 +62,7 @@ int main(void)
 
     } while (opc != 0);
     
-    printf("\nSISTEMA ENCERRADO...");
+    printf("\n\nSISTEMA ENCERRADO...");
     
     return 0;
 }
@@ -101,7 +98,7 @@ int menu()
 
     case 2:
         printf("----------ROTA----------");
-        printf("\n\n1 - Nova Rota\n2 - Adicionar Cliente a fila de entrega\n3 - Adicionar produto para o cliente\n\n4 - Mostrar fila de entrega\n\n5 - Concluir entrega\n6 - Concluir Rota\n\nOPC: ");
+        printf("\n\n1 - Nova Rota\n2 - Adicionar Cliente a fila de entrega\n3 - Adicionar produto para o cliente\n4 - Mostrar fila de entrega\n5 - Concluir entrega\n6 - Concluir Rota\n\nOPC: ");
         scanf("%d", &opc);
 
         if(opc==1)
@@ -127,7 +124,7 @@ int menu()
 
     case 3:
         printf("----------TRANSPORTADORA----------");
-        printf("\n\n1 - Cadastrar\n2 - Mostrar todos os clientes\n3 - Remover\n\nOPC: ");
+        printf("\n\n1 - Mostrar desempenho da Transportadora\n2 - Mostrar todos os clientes\n\nOPC: ");
         scanf("%d", &opc);
 
         if(opc==1)

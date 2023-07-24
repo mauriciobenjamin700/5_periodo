@@ -222,7 +222,10 @@ void removerCliente(Cliente *clientes)
         anterior = c->prox;
 
         //free(c);
-        liberarCliente(c);
+        printf("225\n");
+        liberarProdutos(c->produtos);
+        free(c);
+        printf("\n\nCliente removido com sucesso!");
         
     }
     else
@@ -232,8 +235,10 @@ void removerCliente(Cliente *clientes)
 }
 
 void liberarCliente(Cliente *cliente){
+    printf("237\n");
     liberarProdutos(cliente->produtos);
     free(cliente);
+
     
 } // Fica por sua conta implementar isso lazi,
 
@@ -312,7 +317,7 @@ void concluirRota(Transportadora* t)
     Transportadora* temp = t;
     Rota* r = temp->rotaAtiva;
 
-    if(r->filaT1 == NULL & r->pilhaT2 == NULL && r->pilhaT3 == NULL && r->filaDevolucao == NULL)
+    if(r->filaT1 == NULL && r->pilhaT2 == NULL && r->pilhaT3 == NULL && r->filaDevolucao == NULL)
     {
         free(r->filaT1);
         free(r->pilhaT2);
@@ -327,41 +332,37 @@ void concluirRota(Transportadora* t)
 
 void clienteRota(Transportadora* t)
 {
-    //esta função deve localizar um cliente e adicionalo a fila de entrega da rota
-    char cpf[11];
-
-    Cliente* fila = t->rotaAtiva->filaT1;
-    Cliente* listaCliente = t->listaClientes;
-
-    printf("\n\nCPF do cliente: ");
-    setbuf(stdin,NULL);
-    scanf("%s", cpf);
-
-    //cliente já cadastrado?
-    Cliente* cliente = buscarCliente(listaCliente);
+    // Cliente já cadastrado?
+    Cliente* cliente = buscarCliente(t->listaClientes);
+    Cliente* fila;
 
     if (cliente != NULL)
     {
-        //fila está vazia?
-        if(listaCliente == NULL)
+        // Fila está vazia?
+        if (t->rotaAtiva->filaT1 == NULL)
         {
-            fila = cliente;
-            printf("\n\nCliente adicionando a fila de entrega");
+            t->rotaAtiva->filaT1 = cliente;
+            cliente->prox = NULL; // Garantir que o cliente adicionado seja o último da fila
+            printf("\n\nCliente adicionado à fila de entrega");
         }
-        else
+        else //Detalhe importante, de tal forma não é possivel tratar caso o usuário adicione o mesmo cliente duas vezes a fila, pensamos em usar um vetor de string e checar se o nome na lista ja tinha sido adicionado mas provavelmente ia ficar pesado e desnecessário para essa etapa
         {
+            fila = t->rotaAtiva->filaT1;
             while (fila->prox != NULL)
             {
                 fila = fila->prox;
             }
             fila->prox = cliente;
+            cliente->prox = NULL; // Garantir que o cliente adicionado seja o último da fila
+            printf("\n\nCliente adicionado à fila de entrega");
         }
-        
     }
     else
-    printf("\n\nCliente nao possui cadastro!");
-    
+    {
+        printf("\n\nCliente não possui cadastro!");
+    }
 }
+
 void produtoCliente();
 
 
@@ -423,7 +424,10 @@ Transportadora* criarTranspotadora()
   
 }
 
-void imprimirEscore(Transportadora *t){
+void imprimirEscore(Transportadora *t)
+{
+    printf("----------DESEMPENHO OBTIDO----------");
+    printf("\n\nEntregas Realizadas: %.2f", t->score);
     printf("\n\nScore: %.2f", t->score);
 }
 
@@ -431,12 +435,8 @@ Transportadora *EntregaConcluida(Transportadora *t, char cpf[])
 {
     if(t->rotaAtiva->tentativa == 1)
     {
-        Cliente *aux = t->rotaAtiva->filaT1;
+        t->rotaAtiva->filaT1 = t->rotaAtiva->filaT1->prox;
 
-        while (compara_str(aux->cpf, cpf) != 1)
-        {
-            aux = aux->prox;
-        }
         //remover da fila de entrega o cliente que recebeu
         t->score += 5;
 
@@ -498,14 +498,18 @@ Transportadora *EntregaFracassada(Transportadora *t)
 
 //######################################################PRODUTO####################################################
 
-Produto *liberarProdutos(Produto *produtos)
-{
-    if(produtos != NULL)
-    {
-        liberarProdutos(produtos->prox);
-        free(produtos);
-    }else
-    {
-        return NULL;
+void liberarProdutos(Produto *produtos)
+{   
+    Produto* aux;
+    printf("504\n");
+    while(produtos != NULL)
+    {   
+        aux = produtos;
+        produtos = produtos->prox;
+        printf("510\n");
+        free(aux->nome);
+
+        free(aux);
     }
+
 }
