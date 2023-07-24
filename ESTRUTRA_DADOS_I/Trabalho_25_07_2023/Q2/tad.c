@@ -231,7 +231,11 @@ void removerCliente(Cliente *clientes)
     }
 }
 
-void liberarCliente(); // Fica por sua conta implementar isso lazi,
+void liberarCliente(Cliente *cliente){
+    liberarProdutos(cliente->produtos);
+    free(cliente);
+    
+} // Fica por sua conta implementar isso lazi,
 
 /* não faz sentido liberar todos os clientes de uma vez
 Cliente *liberarClientes(Cliente *clientes)
@@ -287,7 +291,7 @@ Rota *criarRota()
     return r;
 }
 
-void criarRota(Transportadora* t)
+void ativarRota(Transportadora* t)
 {
     Transportadora* temp = t;
 
@@ -310,7 +314,14 @@ void concluirRota(Transportadora* t)
 
     if(r->filaT1 == NULL & r->pilhaT2 == NULL && r->pilhaT3 == NULL && r->filaDevolucao == NULL)
     {
+        free(r->filaT1);
+        free(r->pilhaT2);
+        free(r->pilhaT3);
+        free(r->filaDevolucao);
+
+        free(r);
         
+        r = NULL;
     }
 }
 
@@ -493,7 +504,6 @@ Produto *liberarProdutos(Produto *produtos)
     {
         liberarProdutos(produtos->prox);
         free(produtos);
-        return produtos;
     }else
     {
         return NULL;
