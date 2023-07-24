@@ -21,8 +21,10 @@ pode haver mais de uma entrega no mesmo endereço
 Entregas efetuadas na primeira tentativa: 5 pontos;○ Entregas efetuadas na segunda tentativa: 3 pontos;○ Entregas efetuadas na terceira tentativa: 2 pontos;○ Entregas não efetuadas e devolvidas para a Fila de Devolução de Produtos: -0,8 pontos(subtrair 0,8)
 */
 //ok
-Cliente *criarListaCliente();
-Cliente *inserirCliente(Cliente *clientes);
+//removi esse função, quando iniciamos a transportadora ja criamos a lista de clientes
+//Cliente *criarListaCliente();
+// optei por trocar pra void por questão de eficiencia
+void cadastrarCliente(Cliente *clientes);
 Cliente *buscarCliente(Cliente *clientes, char cpf[]);
 Cliente *liberarClientes(Cliente *clientes);
 //questionavel
@@ -37,14 +39,16 @@ Rota *adicionarProdutos(Cliente *clientes, Rota *rotas);
 /* 
 Essa função de inserir rota devia ser do tipo void, e ter transportadora como paramêtro, já que era pra ela 
 inserir a rota em rota ativa da trasportadora, na minha opnião Ass.: Lazim
+aceitavel
 */
 Rota *inserirRota(Rota *rotas, Cliente *clientes);
 
-Transportadora*  criarTranspotadora();
+Transportadora* criarTranspotadora();
 
 /*  
 E rota teria que ter uma id, pq se não ia ter só uma rota, do jeito que ta só vai ter uma rota, mas basicamente a função
 ia chamar as outras funções de liberar, pq limparia tudo e dps daria uma free em rota Ass.: Lazim 
+aceitavel
 */
 Rota *liberarRota(Rota *rotas);
 

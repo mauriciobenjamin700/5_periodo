@@ -62,55 +62,60 @@ struct transportadora
     Cliente* listaClientes;
 };
 
+// ###################################################### CLIENTE #############################################
+
+//poderia trocar pra void
+/*
 Cliente *criarListaCliente()
 {
     return NULL;
 }
-
-Cliente *inserirCliente(Cliente *clientes)
+*/
+void cadastrarCliente(Cliente *clientes)
 {
     // usa lista encadeada simples
-    Cliente *new = (Cliente *)malloc(sizeof(Cliente)), *aux = clientes;
+    Cliente* new = (Cliente *)malloc(sizeof(Cliente));
+    Cliente* aux = clientes;
 
     new->produtos = NULL;
 
-    printf("Nome do cliente: ");
+    printf("\n\nNome do cliente: ");
     setbuf(stdin,NULL);
-    scanf("%s", new->nome);
+    scanf("%[^\n]", new->nome);
 
-    printf("CEP: ");
+    printf("\n\nCEP: ");
     setbuf(stdin,NULL);
     scanf("%s", new->cep);
 
-    printf("Bairro: ");
+    printf("\n\nBairro: ");
     setbuf(stdin,NULL);
-    scanf(" %s", new->bairro);
+    scanf("%[^\n]", new->bairro);
 
-    printf("Rua: ");
+    printf("\n\nRua: ");
     setbuf(stdin,NULL);
-    scanf(" %s", new->rua);
+    scanf("%[^\n]", new->rua);
 
-    printf("Nº da casa:");
+    printf("\n\nNº da casa:");
     setbuf(stdin,NULL);
     scanf("%d", &new->numero_casa);
 
-    printf("Telefone: ");
+    printf("\n\nTelefone: ");
     setbuf(stdin,NULL);
     scanf("%s", new->telefone);
     
-    printf("Email: ");
+    printf("\n\nEmail: ");
     setbuf(stdin,NULL);
     scanf("%s", new->email);
 
-    printf("Referencia: ");
+    printf("\n\nReferencia: ");
     setbuf(stdin,NULL);
-    scanf("%s", new->referencia);
+    scanf("%[^\n]", new->referencia);
 
     new->prox = NULL;
 
     if (clientes == NULL)
     {
-        return new;
+        clientes = new;
     }
     else
     {
@@ -120,20 +125,8 @@ Cliente *inserirCliente(Cliente *clientes)
             aux = aux->prox;
         }
         aux->prox = new;
-        return clientes;
-    }
-}
 
-Cliente *liberarClientes(Cliente *clientes)
-{
-    Cliente *temp = clientes;
-    while (temp != NULL)
-    {
-        clientes = temp->prox; // clientes é atualizada para o próximo nó na lista, ou seja, temp->prox.
-        free(temp);            // A memória alocada para o nó atual, representada por temp, é liberada com a função free.
-        temp = clientes;       // A variável temp é atualizada para o próximo nó, ou seja, clientes.
     }
-    return NULL; // O endereço cliente não aponta para nenhum endereço da memória válido.
 }
 
 Cliente *buscarCliente(Cliente *clientes, char cpf[])
@@ -148,6 +141,19 @@ Cliente *buscarCliente(Cliente *clientes, char cpf[])
     }
     return NULL;
 }
+
+Cliente *liberarClientes(Cliente *clientes)
+{
+    Cliente *temp = clientes;
+    while (temp != NULL)
+    {
+        clientes = temp->prox; // clientes é atualizada para o próximo nó na lista, ou seja, temp->prox.
+        free(temp);            // A memória alocada para o nó atual, representada por temp, é liberada com a função free.
+        temp = clientes;       // A variável temp é atualizada para o próximo nó, ou seja, clientes.
+    }
+    return NULL; // O endereço cliente não aponta para nenhum endereço da memória válido.
+}
+
 
 Cliente* removerCliente(Cliente *clientes, char cpf[])
 {
@@ -173,12 +179,12 @@ int compara_str(char str1[], char str2[])
     }
     return 1;
 }
-
+// #################################################### ROTA #######################################################
 Rota *criarRota()
 {
     return NULL;
 }
-
+/*
 Rota *adicionarProdutos(Cliente *clientes, Rota *rotas)
 {
     Produto *newProduto = (Produto *)malloc(sizeof(Produto));
@@ -194,7 +200,7 @@ Rota *adicionarProdutos(Cliente *clientes, Rota *rotas)
         newProduto->id = rand() % 100 + 10;
         printf("Produto: ");
         setbuf(stdin, NULL);
-        scanf("%s", newProduto->nome);
+        scanf("%[^\n]", newProduto->nome);
         if (aux->produtos)
         {
             newProduto->prox = aux->produtos;
@@ -208,10 +214,27 @@ Rota *adicionarProdutos(Cliente *clientes, Rota *rotas)
         }
     }
     return rotas;
-}
+}*/
+//####################################################### TRANSPORTADORA ######################################3
+//troquei pra void pra testar
+Transportadora* criarTranspotadora()
+{
+    Transportadora* t = (Transportadora*) malloc(sizeof(Transportadora));
 
-Transportadora* criarTranspotadora(){
-    return NULL;
+    if(t)
+    {
+    t->listaClientes = NULL;
+    t->rotaAtiva = NULL;
+    t->score = 0;
+    }
+    else
+    {
+        printf("\n\nFalha na alocação!");
+    }
+
+
+    return t;
+  
 }
 
 void imprimirEscore(Transportadora *t){
@@ -287,13 +310,17 @@ Transportadora *EntregaFracassada(Transportadora *t, char cpf[])
     return t;
 }
 
+//######################################################PRODUTO####################################################
 
-
-Produto *liberarProdutos(Produto *produtos){
-    if(produtos != NULL){
+Produto *liberarProdutos(Produto *produtos)
+{
+    if(produtos != NULL)
+    {
         liberarProdutos(produtos->prox);
         free(produtos);
-    }else{
+        return produtos;
+    }else
+    {
         return NULL;
     }
 }

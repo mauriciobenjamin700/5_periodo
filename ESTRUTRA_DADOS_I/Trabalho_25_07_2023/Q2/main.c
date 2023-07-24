@@ -7,15 +7,19 @@ int main(void)
 {
     int opc;
 
+    Transportadora* t;
+
+    t = criarTranspotadora();
+
     do
     {   
         opc = menu();
-        printf("\n\nMenu enviou: %d", opc);
-
         switch (opc)
         {
+
         case 11:
-            printf("\n\nREALIZAR  CADASTRO DO CLIENTE");
+            cadastrarCliente(t->listaClientes);
+            printf("\n\nCadastro Realizado com sucesso!");
             break;
         
         case 12:
@@ -52,6 +56,7 @@ int main(void)
         
         default:
             break;
+
         }
 
 
