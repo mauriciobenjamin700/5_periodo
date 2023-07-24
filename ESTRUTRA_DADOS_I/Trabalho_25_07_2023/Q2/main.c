@@ -47,7 +47,7 @@ int main(void)
             break;
         
         case 31:
-            printf("\n\nREALIZAR  CADASTRO DO CLIENTE");
+            imprimirEscore(t);
             break;
 
         case 32:

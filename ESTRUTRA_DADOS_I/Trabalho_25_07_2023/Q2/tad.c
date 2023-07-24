@@ -209,7 +209,7 @@ void removerCliente(Cliente *clientes)
     //falta implementar
     Cliente* c = buscarCliente(clientes);
     Cliente* anterior;
-    
+    printf("212");
     if(c != NULL)
     {
         anterior = clientes;
@@ -223,7 +223,7 @@ void removerCliente(Cliente *clientes)
 
         //free(c);
         printf("225\n");
-        liberarProdutos(c->produtos);
+        liberarCliente(c);
         free(c);
         printf("\n\nCliente removido com sucesso!");
         
@@ -427,8 +427,10 @@ Transportadora* criarTranspotadora()
 void imprimirEscore(Transportadora *t)
 {
     printf("----------DESEMPENHO OBTIDO----------");
-    printf("\n\nEntregas Realizadas: %.2f", t->score);
+    printf("\n\nEntregas Realizadas: %d", t->entregasRealizadas);
     printf("\n\nScore: %.2f", t->score);
+    printf("\n\nPercentual de rendimento: %.2f", (t->score/(t->entregasRealizadas*5))*100);
+    
 }
 
 Transportadora *EntregaConcluida(Transportadora *t, char cpf[])
