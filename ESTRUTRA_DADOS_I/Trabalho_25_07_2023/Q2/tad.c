@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tad.h"
+#include <string.h>
 
 // tavez o uso de uma váriavel global para contar quantos dados produtos existem para gerar os ID automaticamente seja interessante
 
@@ -170,6 +171,8 @@ void mostrarCliente(Cliente* c)
         Produto* aux = c->produtos;
         printf("\n\n----------------------------------------");
         printf("\n\nNome do cliente: %s", c->nome);
+
+        printf("\n\nCPF: %s", c->cpf);
 
         printf("\n\nCEP: %s", c->cep);
 
@@ -363,16 +366,34 @@ void concluirRota(Transportadora* t)
 void clienteRota(Transportadora* t)
 {
     // Cliente já cadastrado?
-    Cliente* cliente = buscarCliente(t->listaClientes);
+    Cliente* cliente = (Cliente*) malloc (sizeof(Cliente)); 
+    Cliente* buscado = buscarCliente(t->listaClientes);
     Cliente* fila;
 
-    if (cliente != NULL)
-    {
+
+    //se encontrar o cliente
+    if (buscado != NULL)
+    {   
+        //copiamos o cliente para não influenciar no cadastro que o cliente já havia realizado
+
+        // destino - origem
+        strcpy(cliente->nome, buscado->nome);
+        strcpy(cliente->cpf, buscado->cpf);
+        strcpy(cliente->cep, buscado->cep);
+        strcpy(cliente->bairro, buscado->bairro);
+        strcpy(cliente->rua, buscado->rua);
+        strcpy(cliente->referencia, buscado->referencia);
+        strcpy(cliente->telefone, buscado->telefone);
+        strcpy(cliente->email, buscado->email);
+
+        cliente->numero_casa = buscado->numero_casa;        
+
         // Fila está vazia?
         if (t->rotaAtiva->filaT1 == NULL)
         {
+            cliente->prox = NULL;
             t->rotaAtiva->filaT1 = cliente;
-            cliente->prox = NULL; // Garantir que o cliente adicionado seja o último da fila
+             // Garantir que o cliente adicionado seja o último da fila
             printf("\n\nCliente adicionado à fila de entrega");
             t->rotaAtiva->pessoas ++;
         }
@@ -383,8 +404,9 @@ void clienteRota(Transportadora* t)
             {
                 fila = fila->prox;
             }
+            cliente->prox = NULL;
             fila->prox = cliente;
-            cliente->prox = NULL; // Garantir que o cliente adicionado seja o último da fila
+            // Garantir que o cliente adicionado seja o último da fila
             printf("\n\nCliente adicionado à fila de entrega");
             t->rotaAtiva->pessoas ++;
         }
@@ -461,38 +483,8 @@ void mostrarFilaEntrega(Transportadora* t)
         printf("\n\nProdutos direcionados para a fila de devolucao!\nNao ha produtos para serem entregues");
     } 
 }
-/*
-Rota *adicionarProdutos(Cliente *clientes, Rota *rotas)
-{
-    Produto *newProduto = (Produto *)malloc(sizeof(Produto));
-    Cliente *aux;
-    char cpf[11];
 
-    printf("CPF cliente: ");
-    setbuf(stdin, NULL);
-    scanf("%s", cpf);
-    aux = buscarCliente(clientes, cpf);
-    if (aux != NULL)
-    {
-        newProduto->id = rand() % 100 + 10;
-        printf("Produto: ");
-        setbuf(stdin, NULL);
-        scanf("%[^\n]", newProduto->nome);
-        if (aux->produtos)
-        {
-            newProduto->prox = aux->produtos;
-            aux->produtos = newProduto;
-        }
-        else
-        {
-            newProduto->prox = NULL;
-            aux->produtos = newProduto;
-            rotas = inserirRota(rotas, aux);
-        }
-    }
-    return rotas;
-}*/
-//####################################################### TRANSPORTADORA ######################################3
+//####################################################### TRANSPORTADORA ######################################
 /*
 Uma transportadora é um local que recebe e envia produtos para seus respectivos donos
 
