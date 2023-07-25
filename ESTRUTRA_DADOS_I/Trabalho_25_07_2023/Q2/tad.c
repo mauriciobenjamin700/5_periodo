@@ -262,7 +262,7 @@ void liberarProdutos(Produto *produtos)
         aux = produtos;
         produtos = produtos->prox;
 
-        free(aux->nome);
+      
 
         free(aux);
     }
@@ -352,18 +352,19 @@ void ativarRota(Transportadora *t)
     }
 }
 
-void concluirRota(Transportadora *t)
+Transportadora* concluirRota(Transportadora *t)
 {
     
     Rota *r = t->rotaAtiva;
 
-    if (r->filaT1 == NULL && r->pilhaT2 == NULL && r->pilhaT3 == NULL)
+
+    if (r->filaT1 == NULL && r->pilhaT2 == NULL && r->pilhaT3 == NULL && r->pessoas == r->entregasRealizadas)
     {
         free(r->filaT1);
         free(r->pilhaT2);
         free(r->pilhaT3);
 
-        r = NULL;
+        t->rotaAtiva = NULL;
 
 
         printf("\n\nRota encerrada com sucesso!");
@@ -372,6 +373,8 @@ void concluirRota(Transportadora *t)
     {
         printf("\n\nRota em execucao ainda, nao pode ser encerrada!");
     }
+
+    return t;
 }
 
 void clienteRota(Transportadora *t)
@@ -452,11 +455,11 @@ void produtoCliente(Transportadora *t)
     else
     {
         aux = c->produtos;
-        while (aux != NULL)
+        while (aux->prox != NULL)
         {
             aux = aux->prox;
         }
-        aux = p;
+        aux->prox = p;
         printf("\n\nProduto Adicionado com sucesso!");
     }
 }
@@ -470,18 +473,19 @@ void mostrarFilaEntrega(Transportadora *t)
     {
         fila = t->rotaAtiva->filaT1;
 
+        printf("------------FILA DE ENTREGA-----------");
         mostrarTClientes(fila);
     }
     else if (t->rotaAtiva->tentativa == 2)
     {
         pilha = t->rotaAtiva->pilhaT2;
-
+        printf("------------PILHA DE ENTREGA SEGUNDA TENTATIVA DE ENTREGA-----------");
         mostrarTClientes(pilha);
     }
     else if (t->rotaAtiva->tentativa == 3)
     {
         pilha = t->rotaAtiva->pilhaT3;
-
+        printf("------------PILHA DE ENTREGA ULTIMA TENTATIVA DE ENTREGA-----------");
         mostrarTClientes(pilha);
     }
     else
@@ -507,6 +511,7 @@ Transportadora *criarTranspotadora()
         t->rotaAtiva = NULL;
         t->score = 0;
         t->entregasRealizadas = 0;
+        
     }
     else
     {
@@ -521,62 +526,30 @@ void imprimirEscore(Transportadora *t)
     printf("----------DESEMPENHO OBTIDO----------");
     printf("\n\nEntregas Realizadas: %d", t->entregasRealizadas);
     printf("\n\nScore: %.2f", t->score);
-    printf("\n\nPercentual de rendimento: %.2f", (t->score / (t->entregasRealizadas * 5)) * 100);
+    //printf("\n\nPercentual de rendimento: %.2f", (t->score / (t->entregasRealizadas * 5)) * 100);
 }
-/*
-Transportadora *EntregaConcluida(Transportadora *t)
-{
-    if(t->rotaAtiva->tentativa == 1)
-    {
-        t->rotaAtiva->filaT1 = t->rotaAtiva->filaT1->prox;
-
-        //remover da fila de entrega o cliente que recebeu
-        t->score += 5;
-
-        return t;
-    }
-    else if(t->rotaAtiva->tentativa == 2)
-    {
-        t->rotaAtiva->pilhaT2 = t->rotaAtiva->pilhaT2->prox;
-
-        //remover da pilha de entrega o cliente que recebeu
-        t->score += 3;
-
-        return t;
-    }
-    else if(t->rotaAtiva->tentativa == 3)
-    {
-        t->rotaAtiva->pilhaT3 = t->rotaAtiva->pilhaT3->prox;
-
-        //remover da pilha de entrega o cliente que recebeu
-        t->score += 2;
-
-        return t;
-    }
-    else
-    {
-        Cliente *aux = t->rotaAtiva->filaT1;
-
-        //remover da fila de devolução
-        t->score -= 0.8;
-
-        return t;
-    }
-
-}
-
-*/
 
 void concluirEntrega(Transportadora *t)
 {
     char resultado;
-    printf("\n\nEntrega Realizada com sucesso? [s/n]");
+    printf("\n\nEntrega Realizada com sucesso? [s/n]: ");
     setbuf(stdin, NULL);
     scanf("%c", &resultado);
 
     if (resultado == 's')
     {
-        sucesso(t);
+        if (t->rotaAtiva->tentativa == 1)
+        {
+            sucesso(t,5);
+        }
+        else if (t->rotaAtiva->tentativa == 2)
+        {
+            sucesso(t,3);
+        }
+        else if (t->rotaAtiva->tentativa == 3)
+        {
+            sucesso(t,2);
+        }
     }
     else if (resultado == 'n')
     {
@@ -599,20 +572,21 @@ void concluirEntrega(Transportadora *t)
     }
 }
 
-void sucesso(Transportadora *t)
+void sucesso(Transportadora *t, float score)
 {
     t->rotaAtiva->entregasRealizadas++;
-    t->score += 5;
+    t->score += score;
     t->rotaAtiva->filaT1 = t->rotaAtiva->filaT1->prox;
 }
 
-// faça usando void, será mais útil
-Transportadora *Falha1(Transportadora *t)
+void Falha1(Transportadora *t)
 {
     Rota *rota = t->rotaAtiva;
     Cliente *c = buscarCliente(t->rotaAtiva->filaT1);
 
     Cliente *aux;
+
+    rota->tentativa = 2;
 
     // caso a pilha de devoluções referentes a segunda tentativa esteja vazia
     if (rota->pilhaT2 == NULL)
@@ -628,15 +602,16 @@ Transportadora *Falha1(Transportadora *t)
         rota->pilhaT2 = aux;
     }
 
-    return t;
 }
 
-Transportadora *Falha2(Transportadora *t)
+void Falha2(Transportadora *t)
 {
     Rota *rota = t->rotaAtiva;
     Cliente *c = buscarCliente(t->rotaAtiva->pilhaT2);
 
     Cliente *aux;
+
+    rota->tentativa = 3;
 
     // caso a pilha de devoluções referentes a segunda tentativa esteja vazia
     if (rota->pilhaT3 == NULL)
@@ -652,10 +627,9 @@ Transportadora *Falha2(Transportadora *t)
         rota->pilhaT3 = aux;
     }
 
-    return t;
 }
 
-Transportadora *Falha3(Transportadora *t)
+void Falha3(Transportadora *t)
 {
     Cliente *c = buscarCliente(t->rotaAtiva->pilhaT3);
     Produto *fila = t->filaDevolucao;
@@ -678,5 +652,4 @@ Transportadora *Falha3(Transportadora *t)
         aux = c->produtos;
     }
 
-    return t;
 }

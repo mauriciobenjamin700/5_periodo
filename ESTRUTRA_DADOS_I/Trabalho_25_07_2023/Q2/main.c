@@ -30,7 +30,7 @@ int main(void)
 
         case 13:
             
-            removerCliente(&t->listaClientes);
+            removerCliente(&t->listaClientes); //ok
             break;
 
         case 21:
@@ -38,11 +38,11 @@ int main(void)
             break;
 
         case 22:
-            clienteRota(t); //ok
+            clienteRota(t); //ok (caso n haja uma rota, n permitir adicionar cliente)
             break;
 
         case 23:
-            produtoCliente(t); //ok
+            produtoCliente(t); //ok (caso n haja um cliente, n permitir adicionar produto)
             break;
         
         case 24:
@@ -50,11 +50,11 @@ int main(void)
             break;
         
         case 25:
-            concluirEntrega(t);
+            concluirEntrega(t); 
             break;
         
         case 26:
-            concluirRota(t);
+            t = concluirRota(t); //ok (a rota nao pode ser encerrada se ela não existir, tratar isso)
             break;
         case 31:
             imprimirEscore(t); //o importante que é o score funciona, as gracinhas n3
