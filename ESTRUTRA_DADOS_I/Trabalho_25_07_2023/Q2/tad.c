@@ -267,21 +267,7 @@ void liberarProdutos(Produto *produtos)
         free(aux);
     }
 }
-// Fica por sua conta implementar isso lazi,
 
-/* não faz sentido liberar todos os clientes de uma vez
-Cliente *liberarClientes(Cliente *clientes)
-{
-    Cliente *temp = clientes;
-    while (temp != NULL)
-    {
-        clientes = temp->prox; // clientes é atualizada para o próximo nó na lista, ou seja, temp->prox.
-        free(temp);            // A memória alocada para o nó atual, representada por temp, é liberada com a função free.
-        temp = clientes;       // A variável temp é atualizada para o próximo nó, ou seja, clientes.
-    }
-    return NULL; // O endereço cliente não aponta para nenhum endereço da memória válido.
-}
-*/
 
 int compara_str(char str1[], char str2[])
 {
@@ -295,18 +281,7 @@ int compara_str(char str1[], char str2[])
     {
         return 0;
     }
-    /*
-    int i = 0;
-    while (str1[i] != '\0')
-    {
-        if (str1[i] != str2[i])
-        {
-            return 0;
-        }
-        i++;
-    }
-    return 1;
-    */
+
 }
 // #################################################### ROTA #######################################################
 /*
