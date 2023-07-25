@@ -8,7 +8,7 @@ void cadastrarCliente(Cliente **clientes);
 Cliente *buscarCliente(Cliente *clientes);
 void mostrarCliente(Cliente* c);
 void mostrarTClientes(Cliente* clientes);
-void removerCliente(Cliente *clientes);
+void removerCliente(Cliente **clientes);
 void liberarCliente(Cliente *cliente);
 int compara_str(char str1[], char str2[]);
 Rota *criarRota();

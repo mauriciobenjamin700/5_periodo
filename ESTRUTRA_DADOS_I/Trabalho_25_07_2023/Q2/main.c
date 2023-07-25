@@ -30,7 +30,7 @@ int main(void)
 
         case 13:
             
-            removerCliente(t->listaClientes);
+            removerCliente(&t->listaClientes);
             break;
 
         case 21:
@@ -42,11 +42,22 @@ int main(void)
             break;
 
         case 23:
-            printf("\n\nREALIZAR  CADASTRO DO CLIENTE");
+            produtoCliente(t); //ok
             break;
         
+        case 24:
+            mostrarFilaEntrega(t); //ok
+            break;
+        
+        case 25:
+            concluirEntrega(t);
+            break;
+        
+        case 26:
+            concluirRota(t);
+            break;
         case 31:
-            imprimirEscore(t);
+            imprimirEscore(t); //o importante que é o score funciona, as gracinhas n3
             break;
 
         case 32:

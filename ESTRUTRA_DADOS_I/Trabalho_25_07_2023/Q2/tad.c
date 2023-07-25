@@ -3,8 +3,6 @@
 #include "tad.h"
 #include <string.h>
 
-// tavez o uso de uma váriavel global para contar quantos dados produtos existem para gerar os ID automaticamente seja interessante
-
 struct produto
 {
     int id;
@@ -49,7 +47,6 @@ struct rota
     Cliente *pilhaT2; // poderá realizar até 3 tentativas
     Cliente *pilhaT3;
 
-
     // talvez considerar ter mais de uma rota e apontar para a proxima rota -> "(por  ser  uma  transportadora  de  pequeno porte, épermitido apenas uma rota de entrega por vez, mas podendo ser feitas quantas  rotas  for  necessário)."
 
     int tentativa, pessoas, entregasRealizadas;
@@ -59,69 +56,59 @@ struct transportadora
 {
     float score;
     int entregasRealizadas;
-    Rota* rotaAtiva;
-    Cliente* listaClientes;
-    Produto* filaDevolucao;
+    Rota *rotaAtiva;
+    Cliente *listaClientes;
+    Produto *filaDevolucao;
 };
-
-
 
 // ###################################################### CLIENTE #############################################
 /*
 Clentes são pessoas das quais nos fornecem seus dados, tais dados serão armazenados na transportadora para facilitar
 na hora de realizar a entrega do produto para o cliente.
-
 */
 
-//poderia trocar pra void
-/*
-Cliente *criarListaCliente()
-{
-    return NULL;
-}
-*/
 void cadastrarCliente(Cliente **clientes)
 {
     // usa lista encadeada simples
-    Cliente* new = (Cliente *)malloc(sizeof(Cliente));
-    Cliente* aux = *clientes; // Usamos *clientes para acessar a variável original
+    Cliente *new = (Cliente *)malloc(sizeof(Cliente));
+    Cliente *aux = *clientes; // Usamos *clientes para acessar a variável original
 
     new->produtos = NULL;
 
     printf("\n\nNome do cliente: ");
-    setbuf(stdin,NULL);
+    setbuf(stdin, NULL);
     scanf("%[^\n]", new->nome);
 
     printf("\n\nCPF: ");
-    setbuf(stdin,NULL);
+    setbuf(stdin, NULL);
     scanf("%s", new->cpf);
 
     printf("\n\nCEP: ");
-    setbuf(stdin,NULL);
+    setbuf(stdin, NULL);
     scanf("%s", new->cep);
 
     printf("\n\nBairro: ");
-    setbuf(stdin,NULL);
+    setbuf(stdin, NULL);
     scanf("%[^\n]", new->bairro);
 
     printf("\n\nRua: ");
-    setbuf(stdin,NULL);
+    setbuf(stdin, NULL);
     scanf("%[^\n]", new->rua);
 
     printf("\n\nNº da casa: ");
-    setbuf(stdin,NULL);
+    setbuf(stdin, NULL);
     scanf("%d", &new->numero_casa);
 
     printf("\n\nTelefone: ");
-    setbuf(stdin,NULL);
+    setbuf(stdin, NULL);
     scanf("%s", new->telefone);
-    
+
     printf("\n\nEmail: ");
-    setbuf(stdin,NULL);
+    setbuf(stdin, NULL);
     scanf("%s", new->email);
 
     printf("\n\nReferencia: ");
-    setbuf(stdin,NULL);
+    setbuf(stdin, NULL);
     scanf("%[^\n]", new->referencia);
 
     new->prox = NULL;
@@ -129,9 +116,8 @@ void cadastrarCliente(Cliente **clientes)
     if (*clientes == NULL)
     {
         *clientes = new;
-        
-        printf("\nCliente Cadastrado com Sucesso!");
 
+        printf("\nCliente Cadastrado com Sucesso!");
     }
     else
     {
@@ -142,7 +128,6 @@ void cadastrarCliente(Cliente **clientes)
         }
         aux->prox = new;
         printf("\nCliente Cadastrado com Sucesso!");
-
     }
 }
 
@@ -152,13 +137,13 @@ Cliente *buscarCliente(Cliente *clientes)
     Cliente *aux = clientes;
 
     printf("\n\nCPF do cliente: ");
-    setbuf(stdin,NULL);
+    setbuf(stdin, NULL);
     scanf("%s", cpf);
 
     while (aux != NULL)
-    {   
-        
-        if (compara_str(cpf, aux->cpf))
+    {
+
+        if (compara_str(aux->cpf, cpf))
             return aux;
 
         aux = aux->prox;
@@ -167,11 +152,11 @@ Cliente *buscarCliente(Cliente *clientes)
     return NULL;
 }
 
-void mostrarCliente(Cliente* c)
+void mostrarCliente(Cliente *c)
 {
-    if(c != NULL)
-    {   
-        Produto* aux = c->produtos;
+    if (c != NULL)
+    {
+        Produto *aux = c->produtos;
         printf("\n\n----------------------------------------");
         printf("\n\nNome do cliente: %s", c->nome);
 
@@ -186,12 +171,12 @@ void mostrarCliente(Cliente* c)
         printf("\n\nNº da casa: %d", c->numero_casa);
 
         printf("\n\nTelefone: %s", c->telefone);
-        
+
         printf("\n\nEmail: %s", c->email);
 
-        printf("\n\nReferencia: %s",c->referencia);
+        printf("\n\nReferencia: %s", c->referencia);
 
-        if(c->produtos != NULL)
+        if (c->produtos != NULL)
         {
             printf("\n\nProdutos associados: ");
             while (aux != NULL)
@@ -201,8 +186,7 @@ void mostrarCliente(Cliente* c)
                 printf("\nNome: %s", aux->nome);
 
                 aux = aux->prox;
-            }      
-        
+            }
         }
     }
     else
@@ -211,13 +195,13 @@ void mostrarCliente(Cliente* c)
     }
 }
 
-    
-void mostrarTClientes(Cliente* clientes)
-{    Cliente* aux = clientes;
+void mostrarTClientes(Cliente *clientes)
+{
+    Cliente *aux = clientes;
 
     if (aux != NULL)
     {
-        while(aux != NULL)
+        while (aux != NULL)
         {
             mostrarCliente(aux);
             aux = aux->prox;
@@ -229,36 +213,39 @@ void mostrarTClientes(Cliente* clientes)
     }
 }
 
-void removerCliente(Cliente *clientes)
+void removerCliente(Cliente **clientes)
 {
-    //falta implementar
-    Cliente* c = buscarCliente(clientes);
-    Cliente* anterior;
+    // falta implementar
+    Cliente *c = buscarCliente(*clientes);
+    Cliente *anterior;
 
-    if(c != NULL)
+    if (c != NULL)
     {
-        anterior = clientes;
+        anterior = *clientes;
 
-        if(anterior == c){
-            clientes = c->prox;
-            printf("237");
-            liberarCliente(c);
+        if (anterior == c)
+        {
+
+            *clientes = c->prox;
+
+            liberarProdutos(c->produtos);
+
             free(c);
-        }else{
-        while (anterior->prox != c)
-        {   
-            anterior = anterior->prox;
         }
-       
+        else
+        {
+            while (anterior->prox != c)
+            {
+                anterior = anterior->prox;
+            }
 
-        anterior->prox = c->prox;
+            anterior->prox = c->prox;
 
-        liberarCliente(c);
-        free(c);
+            liberarProdutos(c->produtos);
 
+            free(c);
         }
         printf("\n\nCliente removido com sucesso!");
-        
     }
     else
     {
@@ -266,11 +253,20 @@ void removerCliente(Cliente *clientes)
     }
 }
 
-void liberarCliente(Cliente *cliente)
+void liberarProdutos(Produto *produtos)
 {
-    liberarProdutos(cliente->produtos);
-    
-} 
+    Produto *aux;
+
+    while (produtos != NULL)
+    {
+        aux = produtos;
+        produtos = produtos->prox;
+
+        free(aux->nome);
+
+        free(aux);
+    }
+}
 // Fica por sua conta implementar isso lazi,
 
 /* não faz sentido liberar todos os clientes de uma vez
@@ -289,6 +285,17 @@ Cliente *liberarClientes(Cliente *clientes)
 
 int compara_str(char str1[], char str2[])
 {
+    int resultado = strcmp(str1,str2);
+
+    if(resultado==0)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+    /*
     int i = 0;
     while (str1[i] != '\0')
     {
@@ -299,6 +306,7 @@ int compara_str(char str1[], char str2[])
         i++;
     }
     return 1;
+    */
 }
 // #################################################### ROTA #######################################################
 /*
@@ -315,7 +323,7 @@ Somente depois de uma rota ser completamente concluida que poderá ser iniciado 
 
 Rota *criarRota()
 {
-    Rota* r = (Rota*) malloc (sizeof(Rota));
+    Rota *r = (Rota *)malloc(sizeof(Rota));
 
     r->filaT1 = NULL;
     r->pilhaT2 = NULL;
@@ -329,11 +337,11 @@ Rota *criarRota()
     return r;
 }
 
-void ativarRota(Transportadora* t)
+void ativarRota(Transportadora *t)
 {
-    Transportadora* temp = t;
+    Transportadora *temp = t;
 
-    if(temp->rotaAtiva == NULL)
+    if (temp->rotaAtiva == NULL)
     {
         temp->rotaAtiva = criarRota();
         printf("\n\nRota criada com sucesso!");
@@ -342,24 +350,21 @@ void ativarRota(Transportadora* t)
     {
         printf("\n\nJa existe uma rota em andamento!");
     }
-
 }
 
-void concluirRota(Transportadora* t)
+void concluirRota(Transportadora *t)
 {
-    Transportadora* temp = t;
-    Rota* r = temp->rotaAtiva;
+    
+    Rota *r = t->rotaAtiva;
 
-    if(r->filaT1 == NULL && r->pilhaT2 == NULL && r->pilhaT3 == NULL)
+    if (r->filaT1 == NULL && r->pilhaT2 == NULL && r->pilhaT3 == NULL)
     {
         free(r->filaT1);
         free(r->pilhaT2);
         free(r->pilhaT3);
 
-
-        free(r);
-        
         r = NULL;
+
 
         printf("\n\nRota encerrada com sucesso!");
     }
@@ -369,18 +374,17 @@ void concluirRota(Transportadora* t)
     }
 }
 
-void clienteRota(Transportadora* t)
+void clienteRota(Transportadora *t)
 {
     // Cliente já cadastrado?
-    Cliente* cliente = (Cliente*) malloc (sizeof(Cliente)); 
-    Cliente* buscado = buscarCliente(t->listaClientes);
-    Cliente* fila;
+    Cliente *cliente = (Cliente *)malloc(sizeof(Cliente));
+    Cliente *buscado = buscarCliente(t->listaClientes);
+    Cliente *fila;
 
-
-    //se encontrar o cliente
+    // se encontrar o cliente
     if (buscado != NULL)
-    {   
-        //copiamos o cliente para não influenciar no cadastro que o cliente já havia realizado
+    {
+        // copiamos o cliente para não influenciar no cadastro que o cliente já havia realizado
 
         // destino - origem
         strcpy(cliente->nome, buscado->nome);
@@ -392,18 +396,18 @@ void clienteRota(Transportadora* t)
         strcpy(cliente->telefone, buscado->telefone);
         strcpy(cliente->email, buscado->email);
 
-        cliente->numero_casa = buscado->numero_casa;        
+        cliente->numero_casa = buscado->numero_casa;
 
         // Fila está vazia?
         if (t->rotaAtiva->filaT1 == NULL)
         {
             cliente->prox = NULL;
             t->rotaAtiva->filaT1 = cliente;
-             // Garantir que o cliente adicionado seja o último da fila
+            // Garantir que o cliente adicionado seja o último da fila
             printf("\n\nCliente adicionado à fila de entrega");
-            t->rotaAtiva->pessoas ++;
+            t->rotaAtiva->pessoas++;
         }
-        else //Detalhe importante, de tal forma não é possivel tratar caso o usuário adicione o mesmo cliente duas vezes a fila, pensamos em usar um vetor de string e checar se o nome na lista ja tinha sido adicionado mas provavelmente ia ficar pesado e desnecessário para essa etapa
+        else // Detalhe importante, de tal forma não é possivel tratar caso o usuário adicione o mesmo cliente duas vezes a fila, pensamos em usar um vetor de string e checar se o nome na lista ja tinha sido adicionado mas provavelmente ia ficar pesado e desnecessário para essa etapa
         {
             fila = t->rotaAtiva->filaT1;
             while (fila->prox != NULL)
@@ -414,7 +418,7 @@ void clienteRota(Transportadora* t)
             fila->prox = cliente;
             // Garantir que o cliente adicionado seja o último da fila
             printf("\n\nCliente adicionado à fila de entrega");
-            t->rotaAtiva->pessoas ++;
+            t->rotaAtiva->pessoas++;
         }
     }
     else
@@ -423,26 +427,25 @@ void clienteRota(Transportadora* t)
     }
 }
 
-void produtoCliente(Transportadora* t)
+void produtoCliente(Transportadora *t)
 {
-    Cliente* c = buscarCliente(t->listaClientes);
+    Cliente *c = buscarCliente(t->rotaAtiva->filaT1);
 
-    Produto* p = (Produto*) malloc(sizeof(Produto));
+    Produto *p = (Produto *)malloc(sizeof(Produto));
 
-    Produto* aux;
+    Produto *aux;
 
     p->id = rand() % 100;
 
     printf("\n\nNome do produto: ");
-    setbuf(stdin,NULL);
+    setbuf(stdin, NULL);
     scanf("%[^\n]", p->nome);
-    
+
     p->prox = NULL;
 
-       
     if (c->produtos == NULL)
     {
-       
+
         c->produtos = p;
         printf("\n\nProduto Adicionado com sucesso!");
     }
@@ -455,58 +458,55 @@ void produtoCliente(Transportadora* t)
         }
         aux = p;
         printf("\n\nProduto Adicionado com sucesso!");
-        
     }
-    
-    
 }
 
-void mostrarFilaEntrega(Transportadora* t)
+void mostrarFilaEntrega(Transportadora *t)
 {
-    Cliente* fila;
-    Cliente* pilha;
-    
-    if(t->rotaAtiva->tentativa == 1)
+    Cliente *fila;
+    Cliente *pilha;
+
+    if (t->rotaAtiva->tentativa == 1)
     {
         fila = t->rotaAtiva->filaT1;
 
         mostrarTClientes(fila);
     }
-    else if(t->rotaAtiva->tentativa == 2)
+    else if (t->rotaAtiva->tentativa == 2)
     {
         pilha = t->rotaAtiva->pilhaT2;
-        
+
         mostrarTClientes(pilha);
     }
-    else if(t->rotaAtiva->tentativa == 3)
+    else if (t->rotaAtiva->tentativa == 3)
     {
         pilha = t->rotaAtiva->pilhaT3;
-        
+
         mostrarTClientes(pilha);
     }
     else
     {
         printf("\n\nProdutos direcionados para a fila de devolucao!\nNao ha produtos para serem entregues");
-    } 
+    }
 }
 
-//####################################################### TRANSPORTADORA ######################################
+// ####################################################### TRANSPORTADORA ######################################
 /*
 Uma transportadora é um local que recebe e envia produtos para seus respectivos donos
 
 */
 
-//troquei pra void pra testar
-Transportadora* criarTranspotadora()
+// troquei pra void pra testar
+Transportadora *criarTranspotadora()
 {
-    Transportadora* t = (Transportadora*) malloc(sizeof(Transportadora));
+    Transportadora *t = (Transportadora *)malloc(sizeof(Transportadora));
 
-    if(t)
+    if (t)
     {
-    t->listaClientes = NULL;
-    t->rotaAtiva = NULL;
-    t->score = 0;
-    t->entregasRealizadas = 0;
+        t->listaClientes = NULL;
+        t->rotaAtiva = NULL;
+        t->score = 0;
+        t->entregasRealizadas = 0;
     }
     else
     {
@@ -514,7 +514,6 @@ Transportadora* criarTranspotadora()
     }
 
     return t;
-  
 }
 
 void imprimirEscore(Transportadora *t)
@@ -522,8 +521,7 @@ void imprimirEscore(Transportadora *t)
     printf("----------DESEMPENHO OBTIDO----------");
     printf("\n\nEntregas Realizadas: %d", t->entregasRealizadas);
     printf("\n\nScore: %.2f", t->score);
-    printf("\n\nPercentual de rendimento: %.2f", (t->score/(t->entregasRealizadas*5))*100);
-    
+    printf("\n\nPercentual de rendimento: %.2f", (t->score / (t->entregasRealizadas * 5)) * 100);
 }
 /*
 Transportadora *EntregaConcluida(Transportadora *t)
@@ -564,61 +562,57 @@ Transportadora *EntregaConcluida(Transportadora *t)
 
         return t;
     }
-    
+
 }
 
 */
 
-void concluirEntrega(Transportadora* t)
+void concluirEntrega(Transportadora *t)
 {
     char resultado;
     printf("\n\nEntrega Realizada com sucesso? [s/n]");
-    setbuf(stdin,NULL);
+    setbuf(stdin, NULL);
     scanf("%c", &resultado);
 
-
-    if(resultado == 's')
+    if (resultado == 's')
     {
         sucesso(t);
-        
     }
-    else if(resultado == 'n')
+    else if (resultado == 'n')
     {
-        if(t->rotaAtiva->tentativa == 1)
+        if (t->rotaAtiva->tentativa == 1)
         {
             Falha1(t);
         }
-        else if(t->rotaAtiva->tentativa == 2)
+        else if (t->rotaAtiva->tentativa == 2)
         {
             Falha2(t);
         }
-        else if(t->rotaAtiva->tentativa == 3)
+        else if (t->rotaAtiva->tentativa == 3)
         {
             Falha3(t);
         }
-        
     }
     else
     {
         printf("\n\nOpcao invalida");
     }
-
 }
 
-void sucesso(Transportadora* t)
+void sucesso(Transportadora *t)
 {
-    t->rotaAtiva->entregasRealizadas ++;
+    t->rotaAtiva->entregasRealizadas++;
     t->score += 5;
     t->rotaAtiva->filaT1 = t->rotaAtiva->filaT1->prox;
 }
 
-// faça usando void, será mais útil 
+// faça usando void, será mais útil
 Transportadora *Falha1(Transportadora *t)
 {
     Rota *rota = t->rotaAtiva;
     Cliente *c = buscarCliente(t->rotaAtiva->filaT1);
 
-    Cliente* aux;
+    Cliente *aux;
 
     // caso a pilha de devoluções referentes a segunda tentativa esteja vazia
     if (rota->pilhaT2 == NULL)
@@ -628,11 +622,10 @@ Transportadora *Falha1(Transportadora *t)
     }
     else
     {
-        //caso não seja o primeiro elemento, devemos adicionar no fim pois é uma pilha
+        // caso não seja o primeiro elemento, devemos adicionar no fim pois é uma pilha
         aux = c;
         aux->prox = rota->pilhaT2;
         rota->pilhaT2 = aux;
-
     }
 
     return t;
@@ -643,7 +636,7 @@ Transportadora *Falha2(Transportadora *t)
     Rota *rota = t->rotaAtiva;
     Cliente *c = buscarCliente(t->rotaAtiva->pilhaT2);
 
-    Cliente* aux;
+    Cliente *aux;
 
     // caso a pilha de devoluções referentes a segunda tentativa esteja vazia
     if (rota->pilhaT3 == NULL)
@@ -653,11 +646,10 @@ Transportadora *Falha2(Transportadora *t)
     }
     else
     {
-        //caso não seja o primeiro elemento, devemos adicionar no fim pois é uma pilha
+        // caso não seja o primeiro elemento, devemos adicionar no fim pois é uma pilha
         aux = c;
         aux->prox = rota->pilhaT3;
         rota->pilhaT3 = aux;
-   
     }
 
     return t;
@@ -665,9 +657,9 @@ Transportadora *Falha2(Transportadora *t)
 
 Transportadora *Falha3(Transportadora *t)
 {
-    Cliente* c = buscarCliente(t->rotaAtiva->pilhaT3);
-    Produto* fila = t->filaDevolucao;
-    Produto* aux;
+    Cliente *c = buscarCliente(t->rotaAtiva->pilhaT3);
+    Produto *fila = t->filaDevolucao;
+    Produto *aux;
 
     // caso a pilha de devoluções referentes a segunda tentativa esteja vazia
     if (fila == NULL)
@@ -678,48 +670,13 @@ Transportadora *Falha3(Transportadora *t)
     else
     {
         aux = fila;
-        while(aux->prox != NULL){
+        while (aux->prox != NULL)
+        {
             aux = aux->prox;
         }
-        
+
         aux = c->produtos;
-        
     }
 
     return t;
 }
-//######################################################PRODUTO####################################################
-
-void liberarProdutos(Produto *produtos)
-{   
-    Produto* aux;
-
-    while(produtos != NULL)
-    {   
-        aux = produtos;
-        produtos = produtos->prox;
-        printf("701\n");
-        free(aux->nome);
-
-        free(aux);
-    }
-
-}
-/*
-void liberarListaClientes(Cliente *listaClientes){
-    Cliente *aux = listaClientes;
-
-    if(listaVaziaClientes(listaClientes)){
-        printf("\nLista esvaziada!\n");
-
-    }else{
-        while(aux){
-            aux = aux->proximo;
-            free(listaClientes);
-            listaClientes = aux;
-        }
-
-        printf("\nLista Esvaziada!\n");
-    }
-}
-*/
