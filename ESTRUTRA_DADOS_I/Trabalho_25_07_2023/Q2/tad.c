@@ -532,44 +532,50 @@ void imprimirEscore(Transportadora *t)
 void concluirEntrega(Transportadora *t)
 {
     char resultado;
-    printf("\n\nEntrega Realizada com sucesso? [s/n]: ");
-    setbuf(stdin, NULL);
-    scanf("%c", &resultado);
+    Cliente *aux;
+    if (t->rotaAtiva->tentativa == 1){
+        for(aux = t->rotaAtiva->filaT1;aux;aux = aux->prox){
+            printf("\n\nEntrega Realizada com sucesso? [s/n]: ");
+            setbuf(stdin, NULL);
+            scanf("%c", &resultado);
 
-    if (resultado == 's')
-    {
-        if (t->rotaAtiva->tentativa == 1)
-        {
-            sucesso(t,5);
-        }
-        else if (t->rotaAtiva->tentativa == 2)
-        {
-            sucesso(t,3);
-        }
-        else if (t->rotaAtiva->tentativa == 3)
-        {
-            sucesso(t,2);
+            if (resultado == 's')
+            {
+                if (t->rotaAtiva->tentativa == 1)
+                {
+                    sucesso(t,5);
+                }
+                else if (t->rotaAtiva->tentativa == 2)
+                {
+                    sucesso(t,3);
+                }
+                else if (t->rotaAtiva->tentativa == 3)
+                {
+                    sucesso(t,2);
+                }
+            }
+            else if (resultado == 'n')
+            {
+                if (t->rotaAtiva->tentativa == 1)
+                {
+                    Falha1(t);
+                }
+                else if (t->rotaAtiva->tentativa == 2)
+                {
+                    Falha2(t);
+                }
+                else if (t->rotaAtiva->tentativa == 3)
+                {
+                    Falha3(t);
+                }
+            }
+            else
+            {
+                printf("\n\nOpcao invalida");
+            }
         }
     }
-    else if (resultado == 'n')
-    {
-        if (t->rotaAtiva->tentativa == 1)
-        {
-            Falha1(t);
-        }
-        else if (t->rotaAtiva->tentativa == 2)
-        {
-            Falha2(t);
-        }
-        else if (t->rotaAtiva->tentativa == 3)
-        {
-            Falha3(t);
-        }
-    }
-    else
-    {
-        printf("\n\nOpcao invalida");
-    }
+
 }
 
 void sucesso(Transportadora *t, float score)
@@ -582,8 +588,8 @@ void sucesso(Transportadora *t, float score)
 void Falha1(Transportadora *t)
 {
     Rota *rota = t->rotaAtiva;
-    Cliente *c = buscarCliente(t->rotaAtiva->filaT1);
-
+    Cliente *c = t->rotaAtiva->filaT1;
+    t->rotaAtiva->filaT1 = c->prox;
     Cliente *aux;
 
     rota->tentativa = 2;
@@ -607,8 +613,8 @@ void Falha1(Transportadora *t)
 void Falha2(Transportadora *t)
 {
     Rota *rota = t->rotaAtiva;
-    Cliente *c = buscarCliente(t->rotaAtiva->pilhaT2);
-
+    Cliente *c = t->rotaAtiva->pilhaT2;
+    t->rotaAtiva->pilhaT2 = c->prox;
     Cliente *aux;
 
     rota->tentativa = 3;
@@ -631,7 +637,8 @@ void Falha2(Transportadora *t)
 
 void Falha3(Transportadora *t)
 {
-    Cliente *c = buscarCliente(t->rotaAtiva->pilhaT3);
+    Cliente *c = t->rotaAtiva->pilhaT3;
+    t->rotaAtiva->pilhaT3 = c->prox;
     Produto *fila = t->filaDevolucao;
     Produto *aux;
 
