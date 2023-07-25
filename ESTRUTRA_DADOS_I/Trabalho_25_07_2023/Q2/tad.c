@@ -327,7 +327,6 @@ Rota *criarRota()
 
     r->filaT1 = NULL;
     r->pilhaT2 = NULL;
-    r->pilhaT2 = NULL;
     r->pilhaT3 = NULL;
     r->pessoas = 0;
     r->entregasRealizadas = 0;
@@ -469,6 +468,12 @@ void mostrarFilaEntrega(Transportadora *t)
     Cliente *fila;
     Cliente *pilha;
 
+    if(t->rotaAtiva == NULL)
+    {
+        printf("\n\nNao existe uma fila de entrega ainda, CRIE UMA!");
+    }
+    else
+    {
     if (t->rotaAtiva->tentativa == 1)
     {
         fila = t->rotaAtiva->filaT1;
@@ -491,6 +496,7 @@ void mostrarFilaEntrega(Transportadora *t)
     else
     {
         printf("\n\nProdutos direcionados para a fila de devolucao!\nNao ha produtos para serem entregues");
+    }
     }
 }
 
@@ -533,6 +539,12 @@ void concluirEntrega(Transportadora *t)
 {
     char resultado;
     Cliente *aux;
+    if(t->rotaAtiva == NULL)
+    {
+        printf("\n\nNAO PODE CONCLUIR ENTREGA SEM EXISTIR UMA ENTREGA!");
+    }
+    else
+    {
     if (t->rotaAtiva->tentativa == 1){
         for(aux = t->rotaAtiva->filaT1; aux; aux = aux->prox){
             printf("\n\nEntrega de %s Realizada com sucesso? [s/n]: ",aux->nome);
@@ -592,13 +604,14 @@ void concluirEntrega(Transportadora *t)
             }
             else if (resultado == 'n')
             {
-                Falha1(t);
+                Falha3(t);
             }
             else
             {
                 printf("\n\nOpcao invalida");
             }
         }
+    }
     }
 }
 
@@ -661,6 +674,7 @@ void Falha3(Transportadora *t)
     t->rotaAtiva->pilhaT3 = c->prox;
     Produto *fila = t->filaDevolucao;
     Produto *aux;
+    t->score -= 0.8;
 
     // caso a pilha de devoluções referentes a segunda tentativa esteja vazia
     if (fila == NULL)
