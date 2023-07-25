@@ -93,12 +93,10 @@ int main()
                 mostrarTodos(lista_criador);
                 break;
             case 3:
-                printf("digite o criador a ser removido");
-                scanf("%d", &cria);
-                lista_criador = removerCriador(lista_criador, cria);
+                removerCriador(&lista_criador);
                 break;
             case 4:
-                buscarCriador(lista_criador);
+                mostarCriador(buscarCriador(lista_criador));
                 break;
             case 0:
                 break;

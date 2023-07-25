@@ -2,9 +2,10 @@ typedef struct criador Criador;
 
 Criador *criarListaDuplaCriadores();
 Criador *cadastrarCriador(Criador *criadores);
-Criador *removerCriador(Criador *criadores, int id);//nao é permitido remover criador com fazendas cadastradas
+void removerCriador(Criador **criador);//nao é permitido remover criador com fazendas cadastradas
+void mostarCriador(Criador* criador);
 void mostrarTodos(Criador *criadores);
-int buscarCriador(Criador *criadores);
+Criador* buscarCriador(Criador *criadores);
 void liberarMemoria(Criador *criadores);
 
 /*

@@ -60,9 +60,7 @@ void mostrarTodos(Criador *criadores)
 
     for (aux = criadores; aux != NULL; aux = aux->prox)
     {
-        printf("%d\n", aux->id);
-        printf("%s\n", aux->nome);
-        printf("%.2f\n", aux->patrimonio);
+        mostarCriador(aux);
         
         if(aux->fazendas != NULL)
         {
@@ -72,50 +70,66 @@ void mostrarTodos(Criador *criadores)
     }
 }
 
-Criador *removerCriador(Criador *criadores, int id)
+void mostarCriador(Criador* criador)
 {
-    Criador *aux;
-    aux = criadores;
-    for (aux = criadores; aux != NULL && aux->id != id; aux = aux->prox)
+    if(criador!= NULL)
     {
-
-    if (aux != NULL)
+        printf("\n\n--------------------CRIADOR--------------------");
+        printf("\n\n%d\n", criador->id);
+        printf("%s\n", criador->nome);
+        printf("%.2f\n", criador->patrimonio);
+    }
+    else
     {
-        if (aux->fazendas == NULL)
-        {
-            if (aux->ant != NULL)
-            {
-                aux->ant->prox = aux->prox;
-            }
-            else
-            {
-                criadores = aux->prox;
-            }
-
-            if (aux->prox != NULL)
-            {
-                aux->prox->ant = aux->ant;
-            }
-
-            if (aux->ant == NULL && aux->prox == NULL)
-            {
-                criadores = NULL;
-            }
-
-            free(aux);
-        }
-        else
-        {
-            printf("\n\nremovido com sucesso");
-        }
+        printf("\n\nCRIADOR NAO ENCONTRADO!");
     }
-    }
-
-    return criadores;
 }
 
 
-int buscarCriador(Criador *criadores)
+void removerCriador(Criador** criadores)
+{   
+
+    Criador* aux =  buscarCriador(*criadores);
+    //Criador* temp;
+
+    //se achei algum criador
+    if (aux != NULL)
+    {   
+        //se esse criador nao tiver uma fazenda
+        if (aux->fazendas == NULL)
+        {
+            //se ele for o primeiro da lista
+            if (aux->ant == NULL)
+            {
+                *criadores = aux->prox;
+                aux->prox->ant = NULL;
+                free(aux);
+            }
+            //caso ele esteja no "meio"
+            else if (aux->prox == NULL)
+            {
+                aux->ant->prox = NULL;
+                free(aux);
+            }
+            else
+            {
+                aux->ant->prox = aux->prox;
+                aux->prox->ant = aux->ant;
+                free(aux);
+            }
+        }
+        else
+        {
+            printf("\n\nCRIADOR POSSUI FAZENDA\nNAO PODE REMOVER!");
+        }
+    }
+    else
+    printf("\n\nCRIADOR NAO ENCONTRADO!");
+
+}
+
+
+Criador* buscarCriador(Criador *criadores)
 {
     Criador *aux;
     
@@ -126,18 +140,17 @@ int buscarCriador(Criador *criadores)
     setbuf(stdin,NULL);
     scanf("%d", &id);
 
-    for (aux = criadores; aux != NULL && aux->id != id; aux = aux->prox)
+    for (aux = criadores; aux != NULL ; aux = aux->prox)
     {
 
-        if (aux != NULL)
+        if (aux->id == id)
         {
-            printf("%d", id);
-        }
-        else
-        {
-            return -1;
+            return aux; 
         }
     }
+
+    return NULL;
+
     return 0;
 }
 
