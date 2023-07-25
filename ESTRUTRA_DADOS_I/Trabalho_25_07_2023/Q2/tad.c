@@ -150,22 +150,24 @@ Cliente *buscarCliente(Cliente *clientes)
     printf("\n\nCPF do cliente: ");
     setbuf(stdin,NULL);
     scanf("%s", cpf);
-    
+
     while (aux != NULL)
-    {
+    {   
+        
         if (compara_str(cpf, aux->cpf))
             return aux;
         aux = aux->prox;
+        
     }
+
     return NULL;
 }
 
 void mostrarCliente(Cliente* c)
 {
-    Produto* aux = c->produtos;
-
-    if(c!= NULL)
-    {
+    if(c != NULL)
+    {   
+        Produto* aux = c->produtos;
         printf("\n\n----------------------------------------");
         printf("\n\nNome do cliente: %s", c->nome);
 
@@ -201,14 +203,14 @@ void mostrarCliente(Cliente* c)
         printf("\n\nCliente sem Cadastro!");
     }
 }
+}
     
 void mostrarTClientes(Cliente* clientes)
-{
-    Cliente* aux = clientes;
+{    Cliente* aux = clientes;
 
     if (aux != NULL)
     {
-        while (aux != NULL)
+        while(aux != NULL)
         {
             mostrarCliente(aux);
             aux = aux->prox;
@@ -225,22 +227,29 @@ void removerCliente(Cliente *clientes)
     //falta implementar
     Cliente* c = buscarCliente(clientes);
     Cliente* anterior;
-    printf("212");
+
     if(c != NULL)
     {
         anterior = clientes;
 
+        if(anterior == c){
+            clientes = c->prox;
+            printf("237");
+            liberarCliente(c);
+            free(c);
+        }else{
         while (anterior->prox != c)
-        {
+        {   
             anterior = anterior->prox;
         }
+       
 
-        anterior = c->prox;
+        anterior->prox = c->prox;
 
-        //free(c);
-        printf("225\n");
         liberarCliente(c);
         free(c);
+
+        }
         printf("\n\nCliente removido com sucesso!");
         
     }
@@ -251,10 +260,7 @@ void removerCliente(Cliente *clientes)
 }
 
 void liberarCliente(Cliente *cliente){
-    printf("237\n");
     liberarProdutos(cliente->produtos);
-    free(cliente);
-
     
 } // Fica por sua conta implementar isso lazi,
 
@@ -590,7 +596,7 @@ void concluirEntrega(Transportadora* t)
         }
         else if(t->rotaAtiva->tentativa == 3)
         {
-            Falha3(t,t->fDev);
+            Falha3(t);
         }
         
     }
@@ -659,26 +665,26 @@ Transportadora *Falha2(Transportadora *t)
     return t;
 }
 
-Transportadora *Falha3(Transportadora *t, FilaDevolucao *fila)
+Transportadora *Falha3(Transportadora *t)
 {
-    Cliente *c = buscarCliente(t->rotaAtiva->pilhaT3);
-    Cliente* aux;
+    Cliente* c = buscarCliente(t->rotaAtiva->pilhaT3);
+    Produto* fila = t->filaDevolucao;
+    Produto* aux;
 
     // caso a pilha de devoluções referentes a segunda tentativa esteja vazia
-    if (fila->produto== NULL)
+    if (fila == NULL)
     {
         // o cliente sera adicionado na pilha de devolução como primeiro elemento
-        fila->produto = c;
+        fila = c->produtos;
     }
     else
     {
-        aux = fila->produto;
+        aux = fila;
         while(aux->prox != NULL){
             aux = aux->prox;
         }
         
-        aux = c;
-
+        aux = c->produtos;
         
     }
 
@@ -689,12 +695,12 @@ Transportadora *Falha3(Transportadora *t, FilaDevolucao *fila)
 void liberarProdutos(Produto *produtos)
 {   
     Produto* aux;
-    printf("504\n");
+
     while(produtos != NULL)
     {   
         aux = produtos;
         produtos = produtos->prox;
-        printf("510\n");
+        printf("701\n");
         free(aux->nome);
 
         free(aux);

@@ -26,4 +26,4 @@ void sucesso(Transportadora* t);
 
 Transportadora *Falha1(Transportadora *t);
 Transportadora *Falha2(Transportadora *t);
-Transportadora *Falha3(Transportadora *t, FilaDevolucao *fila);
+Transportadora *Falha3(Transportadora *t);
