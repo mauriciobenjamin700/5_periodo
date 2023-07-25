@@ -28,7 +28,6 @@ int main(void)
             mostrarCliente(buscarCliente(t->listaClientes)); //ok
             break;
 
-
         case 13:
             
             removerCliente(t->listaClientes);

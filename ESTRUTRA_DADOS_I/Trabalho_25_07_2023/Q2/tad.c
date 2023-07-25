@@ -60,13 +60,10 @@ struct transportadora
     int entregasRealizadas;
     Rota* rotaAtiva;
     Cliente* listaClientes;
-    FilaDevolucao* fDev;
+    Produto* filaDevolucao;
 };
 
-struct filaDevolucao
-{
-    Produto *produto;
-};
+
 
 // ###################################################### CLIENTE #############################################
 /*
@@ -196,10 +193,7 @@ void mostrarCliente(Cliente* c)
                 printf("\nNome: %s", aux->nome);
 
                 aux = aux->prox;
-            }
-        }
-
-        
+            }      
         
     }
     else
@@ -219,7 +213,6 @@ void mostrarTClientes(Cliente* clientes)
             mostrarCliente(aux);
             aux = aux->prox;
         }
-    
     }
     else
     {
@@ -579,8 +572,6 @@ void concluirEntrega(Transportadora* t)
     setbuf(stdin,NULL);
     scanf("%c", &resultado);
 
-    Cliente* primeiro;
-
 
     if(resultado == 's')
     {
@@ -638,7 +629,6 @@ Transportadora *Falha1(Transportadora *t)
         aux->prox = rota->pilhaT2;
         rota->pilhaT2 = aux;
 
-        
     }
 
     return t;
@@ -663,8 +653,7 @@ Transportadora *Falha2(Transportadora *t)
         aux = c;
         aux->prox = rota->pilhaT3;
         rota->pilhaT3 = aux;
-
-        
+   
     }
 
     return t;
