@@ -129,6 +129,8 @@ void cadastrarCliente(Cliente **clientes)
     if (*clientes == NULL)
     {
         *clientes = new;
+        
+        printf("\nCliente Cadastrado com Sucesso!");
 
     }
     else
@@ -139,6 +141,7 @@ void cadastrarCliente(Cliente **clientes)
             aux = aux->prox;
         }
         aux->prox = new;
+        printf("\nCliente Cadastrado com Sucesso!");
 
     }
 }
@@ -157,8 +160,8 @@ Cliente *buscarCliente(Cliente *clientes)
         
         if (compara_str(cpf, aux->cpf))
             return aux;
+
         aux = aux->prox;
-        
     }
 
     return NULL;
@@ -200,13 +203,14 @@ void mostrarCliente(Cliente* c)
                 aux = aux->prox;
             }      
         
+        }
     }
     else
     {
         printf("\n\nCliente sem Cadastro!");
     }
 }
-}
+
     
 void mostrarTClientes(Cliente* clientes)
 {    Cliente* aux = clientes;
@@ -262,10 +266,12 @@ void removerCliente(Cliente *clientes)
     }
 }
 
-void liberarCliente(Cliente *cliente){
+void liberarCliente(Cliente *cliente)
+{
     liberarProdutos(cliente->produtos);
     
-} // Fica por sua conta implementar isso lazi,
+} 
+// Fica por sua conta implementar isso lazi,
 
 /* não faz sentido liberar todos os clientes de uma vez
 Cliente *liberarClientes(Cliente *clientes)

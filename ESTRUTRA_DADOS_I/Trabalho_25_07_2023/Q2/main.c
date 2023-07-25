@@ -20,7 +20,6 @@ int main(void)
         case 11:
 
             cadastrarCliente(&t->listaClientes); //ok
-            printf("\n\nCadastro Realizado com sucesso!");
             break;
         
         case 12:
@@ -81,7 +80,7 @@ int menu()
     {
     case 1:
         printf("----------CLIENTE----------");
-        printf("\n\n1 - Cadastrar\n2 - Buscar\n3 - Remover\n\nOPC: ");
+        printf("\n\n1 - Cadastrar\n2 - Buscar\n3 - Remover\n4 - Voltar\n\nOPC: ");
         scanf("%d", &opc);
 
         if(opc==1)
@@ -92,13 +91,16 @@ int menu()
 
         else if(opc==3)
             return 13; 
+        
+        else if(opc==4)
+            return -1; 
 
         else return 0;       
         break;
 
     case 2:
         printf("----------ROTA----------");
-        printf("\n\n1 - Nova Rota\n2 - Adicionar Cliente a fila de entrega\n3 - Adicionar produto para o cliente\n4 - Mostrar fila de entrega\n5 - Concluir entrega\n6 - Concluir Rota\n\nOPC: ");
+        printf("\n\n1 - Nova Rota\n2 - Adicionar Cliente a fila de entrega\n3 - Adicionar produto para o cliente\n4 - Mostrar fila de entrega\n5 - Concluir entrega\n6 - Concluir Rota\n7 - Voltar\n\nOPC: ");
         scanf("%d", &opc);
 
         if(opc==1)
@@ -117,14 +119,17 @@ int menu()
             return 25;
 
         else if(opc==6)
-            return 26; 
+            return 26;
+
+        else if(opc==7)
+            return -1; 
 
         else return 0;       
         break;
 
     case 3:
         printf("----------TRANSPORTADORA----------");
-        printf("\n\n1 - Mostrar desempenho da Transportadora\n2 - Mostrar todos os clientes\n\nOPC: ");
+        printf("\n\n1 - Mostrar desempenho da Transportadora\n2 - Mostrar todos os clientes\n3 - Voltar\n\nOPC: ");
         scanf("%d", &opc);
 
         if(opc==1)
@@ -134,7 +139,10 @@ int menu()
             return 32; 
         
         else if(opc==3)
-            return 33; 
+            return 33;
+
+        else if(opc==3)
+            return -1; 
 
         else return 0;       
         break;
