@@ -534,40 +534,65 @@ void concluirEntrega(Transportadora *t)
     char resultado;
     Cliente *aux;
     if (t->rotaAtiva->tentativa == 1){
-        for(aux = t->rotaAtiva->filaT1;aux;aux = aux->prox){
-            printf("\n\nEntrega Realizada com sucesso? [s/n]: ");
+        for(aux = t->rotaAtiva->filaT1; aux; aux = aux->prox){
+            printf("\n\nEntrega de %s Realizada com sucesso? [s/n]: ",aux->nome);
+
+            scanf(" %c", &resultado);
+
+            if (resultado == 's')
+            {
+                sucesso(t,5);
+
+            }
+            else if (resultado == 'n')
+            {
+                Falha1(t);
+            }
+            else
+            {
+                printf("\n\nOpcao invalida");
+            }
+        }
+        t->rotaAtiva->tentativa=2;
+    }
+
+    else if (t->rotaAtiva->tentativa == 2){
+        for(aux = t->rotaAtiva->pilhaT2; aux; aux = aux->prox){
+            printf("\n\nEntrega de %s Realizada com sucesso? [s/n]: ",aux->nome);
             setbuf(stdin, NULL);
             scanf("%c", &resultado);
 
             if (resultado == 's')
             {
-                if (t->rotaAtiva->tentativa == 1)
-                {
-                    sucesso(t,5);
-                }
-                else if (t->rotaAtiva->tentativa == 2)
-                {
-                    sucesso(t,3);
-                }
-                else if (t->rotaAtiva->tentativa == 3)
-                {
-                    sucesso(t,2);
-                }
+                sucesso(t,3);
+
             }
             else if (resultado == 'n')
             {
-                if (t->rotaAtiva->tentativa == 1)
-                {
-                    Falha1(t);
-                }
-                else if (t->rotaAtiva->tentativa == 2)
-                {
-                    Falha2(t);
-                }
-                else if (t->rotaAtiva->tentativa == 3)
-                {
-                    Falha3(t);
-                }
+                Falha2(t);
+            }
+            else
+            {
+                printf("\n\nOpcao invalida");
+            }
+        }
+        t->rotaAtiva->tentativa=3;
+    }
+
+    else if (t->rotaAtiva->tentativa == 3){
+        for(aux = t->rotaAtiva->pilhaT3; aux; aux = aux->prox){
+            printf("\n\nEntrega de %s Realizada com sucesso? [s/n]: ",aux->nome);
+            setbuf(stdin, NULL);
+            scanf("%c", &resultado);
+
+            if (resultado == 's')
+            {
+                sucesso(t,2);
+
+            }
+            else if (resultado == 'n')
+            {
+                Falha1(t);
             }
             else
             {
@@ -575,7 +600,6 @@ void concluirEntrega(Transportadora *t)
             }
         }
     }
-
 }
 
 void sucesso(Transportadora *t, float score)
@@ -591,8 +615,6 @@ void Falha1(Transportadora *t)
     Cliente *c = t->rotaAtiva->filaT1;
     t->rotaAtiva->filaT1 = c->prox;
     Cliente *aux;
-
-    rota->tentativa = 2;
 
     // caso a pilha de devoluções referentes a segunda tentativa esteja vazia
     if (rota->pilhaT2 == NULL)
@@ -616,8 +638,6 @@ void Falha2(Transportadora *t)
     Cliente *c = t->rotaAtiva->pilhaT2;
     t->rotaAtiva->pilhaT2 = c->prox;
     Cliente *aux;
-
-    rota->tentativa = 3;
 
     // caso a pilha de devoluções referentes a segunda tentativa esteja vazia
     if (rota->pilhaT3 == NULL)
