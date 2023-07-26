@@ -7,15 +7,16 @@
 int menuGeral()
 {
     int opc;
-
-    printf("\n\n1 - operacoes de Criador\n");
-    printf("2 - operacoes de animal\n");
-    printf("3 - operacoes de fazenda\n");
-    printf("0 - para sair dos menus\n\n");
+    printf("\n\n---------------MENU GERAL----------");
+    printf("\n\n1 - Criador\n");
+    printf("2 - Animal\n");
+    printf("3 - Fazenda\n");
+    printf("0 - Sair\n\n");
 
     setbuf(stdin,NULL);
 
     scanf("%d", &opc);
+    printf("\n-----------------------------------");
 
     return opc;
 }
@@ -23,13 +24,16 @@ int menuGeral()
 int menuCriador()
 {
     int opc;
-
-    printf("\n\n1 - cadastrar criador\n");
-    printf("2 - mostrar atributos de criador\n");
-    printf("3 - remover criador\n");
-    printf("4 - para realizar busca de criador\n\n");
+    printf("\n\n---------------MENU DO CRIADOR----------");
+    printf("\n\n1 - Cadastrar\n");
+    printf("2 - Mostrar Todos\n");
+    printf("3 - Remover criador\n");
+    printf("4 - Busca Criador\n");
+    printf("5 - Voltar\n\n");
+    
             
     scanf("%d", &opc);
+    printf("\n-----------------------------------");
     return opc;
 }
 
@@ -38,12 +42,20 @@ int menuAnimal()
 
     int opc;
 
-    printf("digite 1 - cadastrar criador\n");
-    printf("digite 2 - mostrar atributos de criador\n");
-    printf("digite 3 - remover criador\n");
-    printf("Digite 4 - para realizar busca de criador\n\n");
+    printf("\n\n---------------MENU DO ANIMAL----------");
+    printf("\n\n1 - Cadastrar\n");
+    printf("2 - Permuta\n");
+    printf("3 - Remover \n");
+    printf("4- Mostrar Todos\n");
+    printf("5 - Contar Animais\n");
+    printf("6 - Arroba\n"); //n ta funcionando
+    printf("7 - Status \n");
+    //printf("4 - Buscar\n");
+    printf("8 - Voltar\n\n");
+    
 
     scanf("%d", &opc);
+    printf("\n-----------------------------------");
     return opc;
     
 }
@@ -52,13 +64,16 @@ int menuFazenda()
 {
 
     int opc;
-
-    printf("1 - cadastrar fazenda\n");
-    printf("2 - remover a fazenda\n");
-    printf("3 - buscar fazenda\n");
-    printf("4 - mostrar fazenda\n\n");
+    printf("\n\n---------------MENU DA FAZENDA----------");
+    printf("\n\n1 - Cadastrar\n");
+    printf("2 - Remover\n");
+    printf("3 - Buscar\n");
+    printf("4 - Mostrar\n");
+    printf("5 - Voltar\n\n");
+    
 
     scanf("%d", &opc);
+    printf("\n-----------------------------------");
     return opc;
     
 }
@@ -66,20 +81,20 @@ int menuFazenda()
 int main()
 {
 
-    Criador *lista_criador;
-    Fazenda *lista_fazenda;
-    Animal *lista_animal;
+    Criador *lista_criador = criarListaDuplaCriadores();;
+    Fazenda *lista_fazenda = criarListaEncadeadaCircularFazendas();
+    Animal *lista_animal = criaListaEncadeadaSimplesAnimais();
 
-    lista_animal = criaListaEncadeadaSimplesAnimais();
-    lista_fazenda = criarListaEncadeadaCircularFazendas();
-    lista_criador = criarListaDuplaCriadores();
+    int quantidade_M, quantidade_F;
 
-    int op, sub_op, cria;
 
+    int op, sub_op, id;
+    int idC1,idC2;
+    //laço de repetição central
     do
     {   
         op = menuGeral();
-
+        //caso queira opções do Criador
         if (op == 1)
         {
             sub_op = menuCriador();
@@ -102,34 +117,62 @@ int main()
                 break;
             }
         }
+        //caso queira opções do Animal
         else if (op == 2)
         {
-
             sub_op = menuAnimal();
 
             switch (sub_op)
             {
             case 1:
-                lista_animal = cadastrar_animal(lista_animal);
+                lista_animal = cadastrarAnimal(lista_animal);
                 break;
             case 2:
             {
-                printf("infoma o id do animal!");
-                scanf("%d", &cria);
-                lista_animal = permutasAnimais(lista_fazenda, lista_fazenda, cria);
+                printf("\n\nID do criador em posso do animal: ");
+                scanf("%d",&idC1);
+
+                printf("\n\nID do criador que vai receber o animal: ");
+                scanf("%d",&idC1);
+
+                
+
+                printf("\n\nID do animal: ");
+                scanf("%d", &id);
+                lista_animal = permutasAnimais(lista_animal, lista_animal, id);
                 break;
             }
             case 3:
             {
-                printf("digite o animal a ser removido");
-                scanf("%d", &cria);
-                lista_animal = remover_animal(lista_fazenda, cria);
+                printf("\n\nID Animal: ");
+                scanf("%d", &id);
+                lista_animal = removerAnimal(lista_animal, id);
                 break;
             }
+            case 4:
+            mostrarAnimais(lista_animal);
+                break;
+            
+            case 5:
+            quantidade_M = contarAnimais(lista_animal,'M');
+            quantidade_F = contarAnimais(lista_animal,'F');
+
+            printf("\n\nQuantide de Animais: M = %d & F = %d", quantidade_M, quantidade_F);
+
+                break;
+
+            case 6:
+            printf("\n\nArrobas: %.2f", contarArroba(lista_animal)); //falta ajustar
+                break;
+            
+            case 7:
+            printStatus(lista_animal);
+                break;
             case 0:
                 break;
             }
         }
+        //caso queira opções da Fazenda
         else if (op == 3)
         {
 
@@ -141,13 +184,11 @@ int main()
                 lista_fazenda = cadastrarFazenda(lista_fazenda);
                 break;
             case 2:
-                printf("digite o id da fazenda a ser excluida!\n");
-                scanf("%d", &cria);
-                lista_fazenda = removerFazenda(lista_fazenda, cria);
+                printf("\n\nID Fazenda: ");
+                scanf("%d", &id);
+                lista_fazenda = removerFazenda(lista_fazenda, id);
                 break;
             case 3:
-                printf("digite o id da fazenda a ser localizada");
-                scanf("%d", &cria);
                 buscarFazenda(lista_fazenda);
                 break;
 
@@ -159,4 +200,6 @@ int main()
             }
         }
     } while (op != 0);
+
+    printf("\n\nSistema Encerrado...");
 }

@@ -17,5 +17,6 @@ Desenvolva funcoes que, dado uma FAZENDA, informar
 - lista de animais por tipo de status
 - Funcao para liberar a memoria
 */
+void mostrar(Fazenda* f);
 
                                 
