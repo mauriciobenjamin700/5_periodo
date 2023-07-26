@@ -161,7 +161,6 @@ int buscarFazenda(Fazenda *fazendas)
 		printf("A lista de fazendas esta vazia. Nao ha o que buscar\n");
 		return 0;
 	}
-
 	do
 	{
 		if (aux_fazenda->id_fazenda == id)
@@ -216,6 +215,5 @@ void mostrar(Fazenda* f)
 	printf("\nNome Fazenda: %s\n", f->nome);
 	printf("\nPatrimonio: %.2f", f->valor_fazenda);
 	printf("\nLocalizacao: \n\tCidade: %s \n\tEstado: %s \n\tLogradouro: %s",f->localizacao.cidade, f->localizacao.estado,f->localizacao.logradouro);
-
 
 }

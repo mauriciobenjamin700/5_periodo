@@ -1,0 +1,25 @@
+typedef struct produto Produto;
+typedef struct cliente Cliente;
+typedef struct rota Rota;
+typedef struct transportadora Transportadora;
+
+void cadastrarCliente(Cliente **clientes);
+Cliente *buscarCliente(Cliente *clientes);
+void mostrarCliente(Cliente *c);
+void mostrarTClientes(Cliente *clientes);
+void removerCliente(Cliente **clientes);
+void liberarProdutos(Produto *produtos);
+int compara_str(char str1[], char str2[]);
+Rota *criarRota();
+void ativarRota(Transportadora *t);
+Transportadora *concluirRota(Transportadora *t);
+void clienteRota(Transportadora *t);
+void produtoCliente(Transportadora *t);
+void mostrarFilaEntrega(Transportadora *t);
+Transportadora *criarTranspotadora();
+void imprimirEscore(Transportadora *t);
+void concluirEntrega(Transportadora *t);
+void sucesso(Transportadora *t, float score);
+void Falha1(Transportadora *t);
+void Falha2(Transportadora *t);
+void Falha3(Transportadora *t);

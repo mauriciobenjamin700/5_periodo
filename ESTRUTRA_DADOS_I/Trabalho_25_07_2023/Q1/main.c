@@ -89,6 +89,7 @@ int main()
 
 
     int op, sub_op, id;
+    int idC1,idC2;
     //laço de repetição central
     do
     {   
@@ -128,6 +129,14 @@ int main()
                 break;
             case 2:
             {
+                printf("\n\nID do criador em posso do animal: ");
+                scanf("%d",&idC1);
+
+                printf("\n\nID do criador que vai receber o animal: ");
+                scanf("%d",&idC1);
+
+                
+
                 printf("\n\nID do animal: ");
                 scanf("%d", &id);
                 lista_animal = permutasAnimais(lista_animal, lista_animal, id);
