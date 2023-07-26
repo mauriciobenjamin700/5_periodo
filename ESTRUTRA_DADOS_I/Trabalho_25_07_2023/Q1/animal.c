@@ -15,102 +15,212 @@ Animal *criaListaEncadeadaSimplesAnimais(){
 	return NULL;
 }
 
-Animal *cadastrar_animal(Animal *rebanho){
-	Animal *novo = (Animal*) malloc(sizeof(Animal));
-	int id_animal, id_fazenda, status;
-	float peso;
-	char sexo;
+Animal *cadastrarAnimal(Animal *rebanho){
+	Animal* new = (Animal *) malloc(sizeof(Animal));
+    Animal* aux = rebanho;
 
-	if(novo){
+	new->id_animal = rand() % 100;
 
-		printf("\tDigite o id do animal\n");
-		scanf("%d", &id_animal);
-		printf("\tDigite o id da fazenda\n");
-		scanf("%d",&id_fazenda);
-		printf("\tDigite o peso do animal em Kg\n");
-		scanf("%f", &peso);
-		printf("\tdigite o status do animal\n\t1 - Nascimento na propria fazenda\n\t2 - venda\n\t3 - troca\n");
-		scanf("%d", &status);
-		printf("\tdigite o sexo do anima M ou F\n");
-		setbuf(stdin,NULL);
-		scanf("%c", &sexo);
+	printf("ID do Animal: %d\n", new->id_animal);
+	printf("ID da Fazenda: "); scanf("%d", &new->id_fazenda);
+	setbuf(stdin,NULL);
+	printf("Sexo: "); scanf("%c", &new->sexo);
+	setbuf(stdin,NULL);
+	printf("Peso (Em KG): "); scanf("%f", &new->peso);
+	setbuf(stdin,NULL);
+	printf("Digite o status do animal: \n\t1 - Nascimento na propria fazenda\n\t2 - Venda\n\t3 - Troca\n");
+	scanf("%d", &new->status);
+	setbuf(stdin,NULL);
 
+	if(aux == NULL){
+		new->prox = NULL;
+		return new;
+	}	
 
-		novo->id_animal = id_animal;
-		novo->id_fazenda = id_fazenda;
-		novo->peso = peso;
-		novo->sexo = sexo;
-		novo->status = status;
-		novo->prox = rebanho;
-		rebanho = novo;
+	new->prox = aux;
+
+	return new;
+}
+
+Animal *permutasAnimais(Animal *RebanhoOrigem, Animal *ReabanhoDestino, int id_animal){
+	int status, id_fazenda;
+	Animal *aux = RebanhoOrigem, *aux2 = ReabanhoDestino;
+
+	printf("\n\nQual o tipo de permuta:\n1 - Venda\n2 - Troca\n- "); scanf("%d", &status);
+
+	if(listaVaziaAnimal(RebanhoOrigem) || listaVaziaAnimal(ReabanhoDestino)){
+		printf("\nUm dos reabanhos vazios!\nCadastre pelo menos um animal para permutar!\n");
+		return RebanhoOrigem;
 	}
-	else
-		printf("Erro ao alocar memoria");
+
+	if(!buscarAnimal(RebanhoOrigem, id_animal)){
+		printf("\nAnimal nao cadastrado!\n");
+		return RebanhoOrigem;
+	}
+
+	if(aux->id_animal == id_animal){
+
+		while(aux2->prox != NULL){
+			aux2 = aux2->prox;
+		}
+		
+		aux2->prox = aux;
+		RebanhoOrigem = RebanhoOrigem->prox;
+		aux->prox = NULL;
+
+		aux->id_fazenda = aux2->id_fazenda;
+		aux->status = status+1;
+		return RebanhoOrigem;
+	}
+
+	while(aux->prox != NULL && aux->prox->id_animal != id_animal){
+		aux = aux->prox;
+	}
+
+	if(aux->prox == NULL){
+		printf("\nAnimal de origem nao encontrado!\n");
+		return RebanhoOrigem;
+	}
+
+	while(aux2->prox != NULL){
+		aux2 = aux2->prox;
+	}
+
+	aux2->prox = aux->prox;
+	aux->prox = aux->prox->prox;
+	aux2->prox->prox = NULL;
+	aux2->prox->id_fazenda = aux2->id_fazenda;
+	aux2->status = status+1;
+	
+	return RebanhoOrigem;
+}
+
+Animal *removerAnimal(Animal *rebanho, int id_animal){
+	Animal *aux = rebanho, *aux2;
+
+	if(listaVaziaAnimal(rebanho)){
+		printf("\nLista vazia\n");
+		return rebanho;
+	}
+
+	if(!buscarAnimal(rebanho, id_animal)){
+		printf("\nAnimal nao cadastrado!\n");
+		return rebanho;
+	}
+
+	if(aux->id_animal == id_animal){
+		rebanho = aux->prox;
+		free(aux);
+		return rebanho;
+	}
+
+	while(aux->prox->id_animal != id_animal){
+		aux = aux->prox;
+	}
+
+	aux2 = aux->prox;
+	aux->prox = aux2->prox;
+	free(aux2);
 
 	return rebanho;
 }
 
-//obervar para atualizar o status do animal na fazenda de destino
-Animal *permutasAnimais(Fazenda *origem, Fazenda *destino, int id_animal) {
-    // Criar uma variável auxiliar para armazenar a lista de animais da fazenda de origem
-    Animal *aux;
-
-	aux = origem->rebanho;
-
-
-    // Procurar o animal com o ID especificado na lista de animais da fazenda de origem
-    while (aux != NULL) {
-        if (aux->id_animal == id_animal) {
-            // Remover o animal da fazenda de origem
-            origem->rebanho = remover_animal(origem, id_animal);
-            // Cadastrar o animal na fazenda de destino
-            destino->rebanho = cadastrar_animal(destino->rebanho);
-            // Liberar a memória da fazenda de origem temporária
-            liberar_memoria(aux);
-            // Retornar a fazenda de destino com o novo animal cadastrado
-            return destino->rebanho;
-        }
-        aux = aux->prox;
-    }
-
-    // Se o animal não foi encontrado na fazenda de origem, imprimir uma mensagem de erro
-    printf("Animal com o ID %d não encontrado na fazenda de origem.\n", id_animal);
-	
-    return destino->rebanho; // Retorna a fazenda de destino sem alterações
+int listaVaziaAnimal(Animal *animais){
+	return animais == NULL ? 1 : 0;
 }
 
-Animal *remover_animal(Fazenda *fazenda, int id_animal) {
-    Animal *aux, *remover = NULL;
+void mostrarAnimais(Animal *animais){
+	Animal *aux = animais;
 
-    // Verifica se a lista de animais da fazenda não está vazia
-    if (fazenda->rebanho) {
-        // Verifica se o animal a ser removido é o primeiro da lista
-        if (fazenda->rebanho->id_animal == id_animal) {
-            remover = fazenda->rebanho;
-            fazenda->rebanho = remover->prox;
-        } else {
-            // Procura o animal na lista de animais da fazenda
-            aux = fazenda->rebanho;
-            while (aux->prox && aux->prox->id_animal != id_animal) {
-                aux = aux->prox;
-            }
-            // Se o animal foi encontrado, o remove da lista
-            if (aux->prox) {
-                remover = aux->prox;
-                aux->prox = remover->prox;
-            }
-        }
-    }
-
-	//  caso o animal seja encontrado a memoria será alocada para ele será liberada
-	if(remover){
-		liberar_memoria(remover);
+	if(listaVaziaAnimal(aux)){
+		printf("\nNao ha animais nesta fazenda!\n");
+		return;
 	}
 
-    // Retorna o ponteiro para o animal removido (ou NULL se o animal não foi encontrado)
-    return remover;
+	printf("\n----------------ANIMAIS------------------");
+	while(aux != NULL){
+		printf("\nID ANIMAL: %d\n", aux->id_animal); 
+		printf("ID FAZENDA: %d\n", aux->id_fazenda); 
+		printf("SEXO: %c\n", aux->sexo); 
+		printf("PESO: %.2f\n", aux->peso); 
+		printf("STATUS: %d\n", aux->status);
+
+		aux = aux->prox; 
+	}
+	printf("-------------------------------------------\n");
 }
 
-void liberar_memoria(Animal *rebanho){
-	free(rebanho);
+int buscarAnimal(Animal *rebanho, int id){
+	Animal *aux = rebanho;
+
+	if(listaVaziaAnimal(rebanho)){
+		return 0;
+	}
+
+	while(aux != NULL && aux->id_animal != id){
+		aux = aux->prox;
+	}
+
+	return aux == NULL ? 0 : 1;
 }
+
+void liberarMemoriaAnimal(Animal *animais){
+	Animal *aux = animais;
+
+	while(aux != NULL){
+		aux = aux->prox;
+		free(animais);
+		animais = aux;
+	}
+
+	free(animais);
+}
+
+int contarAnimais(Animal *animais, char sexo){
+	int count = 0;
+
+	while(animais != NULL){
+
+		if(animais->sexo == sexo){
+			count++;
+		}
+
+		animais = animais->prox;
+	}
+
+	return count;
+}
+
+float contarArroba(Animal *animais){
+	float soma = 0;
+
+	while(animais != NULL){
+
+		soma += animais->peso;
+
+		animais = animais->prox;
+	}
+
+	return soma/15;
+}
+
+void printStatus(Animal *animais){
+	Animal *aux = animais;
+	for(int i = 1; i <= 3; i++){
+		aux = animais;
+		printf("\n------------Status %d--------------\n", i);
+		while(aux != NULL){
+			if(aux->status == i){
+				printf("\nID ANIMAL: %d\n", aux->id_animal); 
+				printf("ID FAZENDA: %d\n", aux->id_fazenda); 
+				printf("SEXO: %c\n", aux->sexo); 
+				printf("PESO: %.2f\n", aux->peso); 
+				printf("STATUS: %d\n", aux->status);
+			}
+
+			aux = aux->prox;
+		}
+	}
+}
+
+

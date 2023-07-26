@@ -46,6 +46,11 @@ Criador *cadastrarCriador(Criador *criadores)
     }
     else
     {
+        while (aux->prox != NULL)
+        {
+            aux = aux->prox;
+        }
+        
         aux->prox = new;
         new->ant = aux;
     }
@@ -78,6 +83,7 @@ void mostarCriador(Criador* criador)
         printf("\n\n%d\n", criador->id);
         printf("%s\n", criador->nome);
         printf("%.2f\n", criador->patrimonio);
+        printf("-----------------------------------");
     }
     else
     {
@@ -90,7 +96,7 @@ void removerCriador(Criador** criadores)
 {   
 
     Criador* aux =  buscarCriador(*criadores);
-    //Criador* temp;
+    Criador* temp;
 
     //se achei algum criador
     if (aux != NULL)
@@ -101,16 +107,28 @@ void removerCriador(Criador** criadores)
             //se ele for o primeiro da lista
             if (aux->ant == NULL)
             {
-                *criadores = aux->prox;
-                aux->prox->ant = NULL;
-                free(aux);
+                if(aux->prox == NULL)
+                {
+                    free(aux);
+                    *criadores=NULL;
+                }
+                else
+                {
+                    //aux->prox->ant
+                    temp = aux;
+                    aux->prox->ant = NULL;
+                    *criadores = aux->prox;
+                    free(temp);
+                }
+                
             }
-            //caso ele esteja no "meio"
+            //caso ele esteja o ultimo
             else if (aux->prox == NULL)
             {
                 aux->ant->prox = NULL;
                 free(aux);
             }
+            
             else
             {
                 aux->ant->prox = aux->prox;
