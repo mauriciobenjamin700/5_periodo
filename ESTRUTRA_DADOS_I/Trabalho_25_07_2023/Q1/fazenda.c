@@ -34,6 +34,7 @@ Fazenda *cadastrarFazenda(Fazenda *fazendas)
 
 	cad_Fazenda->id_fazenda = rand() % 100;
 	int id;
+
 	printf("\n\nId da fazenda: %d\n", cad_Fazenda->id_fazenda);
 
 	printf("\n\nID do criador: ");
@@ -204,14 +205,17 @@ void mostrarFazenda(Fazenda *fazendas)
 	do
 	{
 		mostrar(aux);
-
 		aux = aux->prox;
 	} while (aux->prox != aux);
 }
 
 void mostrar(Fazenda* f)
 {
-	printf("\n\nID: %d\n", f->id_fazenda);
-	printf("\nNome: %s\n", f->nome);
+	printf("\n\nID Fazenda: %d\n", f->id_fazenda);
+	printf("\n\nID Criador: %d\n", f->id_criador);
+	printf("\nNome Fazenda: %s\n", f->nome);
+	printf("\nPatrimonio: %.2f", f->valor_fazenda);
+	printf("\nLocalizacao: \n\tCidade: %s \n\tEstado: %s \n\tLogradouro: %s",f->localizacao.cidade, f->localizacao.estado,f->localizacao.logradouro);
+
 
 }
