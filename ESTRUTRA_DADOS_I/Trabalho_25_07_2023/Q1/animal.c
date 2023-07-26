@@ -43,7 +43,7 @@ Animal *cadastrarAnimal(Animal *rebanho){
 }
 
 Animal *permutasAnimais(Animal *RebanhoOrigem, Animal *ReabanhoDestino, int id_animal){
-	int status, id_fazenda;
+	int status;
 	Animal *aux = RebanhoOrigem, *aux2 = ReabanhoDestino;
 
 	printf("\n\nQual o tipo de permuta:\n1 - Venda\n2 - Troca\n- "); scanf("%d", &status);

@@ -46,10 +46,10 @@ int menuAnimal()
     printf("\n\n1 - Cadastrar\n");
     printf("2 - Permuta\n");
     printf("3 - Remover \n");
-    printf("4- Mostrar Todos\n\n");
-    printf("5 - Contar Animais\n\n");
-    printf("6 - Arroba\n\n");
-    printf("7 - Status \n\n");
+    printf("4- Mostrar Todos\n");
+    printf("5 - Contar Animais\n");
+    printf("6 - Arroba\n"); //n ta funcionando
+    printf("7 - Status \n");
     //printf("4 - Buscar\n");
     printf("8 - Voltar\n\n");
     
@@ -88,7 +88,7 @@ int main()
     int quantidade_M, quantidade_F;
 
 
-    int op, sub_op, cria;
+    int op, sub_op, id;
     //laço de repetição central
     do
     {   
@@ -124,20 +124,20 @@ int main()
             switch (sub_op)
             {
             case 1:
-                lista_animal = cadastrar_animal(lista_animal);
+                lista_animal = cadastrarAnimal(lista_animal);
                 break;
             case 2:
             {
-                printf("infoma o id do animal!");
-                scanf("%d", &cria);
-                lista_animal = permutasAnimais(lista_fazenda, lista_fazenda, cria);
+                printf("\n\nID do animal: ");
+                scanf("%d", &id);
+                lista_animal = permutasAnimais(lista_animal, lista_animal, id);
                 break;
             }
             case 3:
             {
-                printf("digite o animal a ser removido");
-                scanf("%d", &cria);
-                lista_animal = remover_animal(lista_fazenda, cria);
+                printf("\n\nID Animal: ");
+                scanf("%d", &id);
+                lista_animal = removerAnimal(lista_animal, id);
                 break;
             }
             case 4:
@@ -153,7 +153,7 @@ int main()
                 break;
 
             case 6:
-            contarArroba(lista_animal);
+            printf("\n\nArrobas: %.2f", contarArroba(lista_animal)); //falta ajustar
                 break;
             
             case 7:
@@ -176,8 +176,8 @@ int main()
                 break;
             case 2:
                 printf("\n\nID Fazenda: ");
-                scanf("%d", &cria);
-                lista_fazenda = removerFazenda(lista_fazenda, cria);
+                scanf("%d", &id);
+                lista_fazenda = removerFazenda(lista_fazenda, id);
                 break;
             case 3:
                 buscarFazenda(lista_fazenda);

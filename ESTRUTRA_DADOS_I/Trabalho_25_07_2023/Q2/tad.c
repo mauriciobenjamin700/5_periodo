@@ -505,7 +505,7 @@ Transportadora *criarTranspotadora()
 void imprimirEscore(Transportadora *t)
 {
     printf("----------DESEMPENHO OBTIDO----------");
-    printf("\n\nEntregas Realizadas: %d", t->entregasRealizadas);
+    //printf("\n\nEntregas Realizadas: %d", t->entregasRealizadas);
     printf("\n\nScore: %.2f", t->score);
     //printf("\n\nPercentual de rendimento: %.2f", (t->score / (t->entregasRealizadas * 5)) * 100);
 }
