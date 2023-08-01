@@ -1,0 +1,22 @@
+
+a) Alterar o produtor para gerar os itens randômicos no intervalo de [0-10]. 
+Linha (31)
+
+b) Inserir mensagens indicando que o buffer está cheio, que o buffer está vazio e que
+o programa acabou;
+Linhas (27,28,60,61,95,96)
+
+c) Definir o tamanho do buffer para 3;
+Linha (7)
+d) Extrapolar o código para m produtores e n consumidores e apresente a saída para
+os seguintes cenários:
+● Alterar o código para gerar a saída do cenário com 0 produtores e 1
+consumidor;
+● Alterar o código para gerar a saída do cenário com 1 produtor e 0
+consumidor;
+● Alterar o código para gerar uma saída do cenário com 3 produtores e 3
+consumidores;
+● Alterar o código para gerar uma saída do cenário com 3 produtores e 1
+consumidor;
+● Alterar o código para gerar uma saída do cenário com 1 produtor e 3
+consumidores.
