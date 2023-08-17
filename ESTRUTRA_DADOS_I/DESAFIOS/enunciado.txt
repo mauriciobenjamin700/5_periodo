@@ -1,0 +1,3 @@
+Desenvolver uma função em C que ordena os produtos em ordem crescente de preço usando o algoritmo Heap Sort e também modificar o problema para que os produtos de maior valor estejam em uma fila de prioridade.
+
+obs: Faça uma uma alocação dinámica de 30 números aleatórios.
